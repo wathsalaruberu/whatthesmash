@@ -775,6 +775,8 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .lbox .gmeta img{max-width:none;max-height:none;box-shadow:none;border-radius:inherit}.gdel{padding:10px 12px;border-radius:12px;background:var(--surface2);color:#ff8aa6;font-weight:800;font-size:13px}
 @media (min-width:900px){.ggrid{grid-template-columns:repeat(6,minmax(0,1fr))}.ggrid.g4{grid-template-columns:repeat(8,minmax(0,1fr))}}
 @media (pointer:coarse){.btn.sm{min-height:36px}}
+.hgreet{display:flex;flex-direction:column;min-width:0}.hgreet small{color:var(--sub);font-size:12px;font-weight:600}.hgreet b{font-weight:800;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hbr{display:flex;align-items:center;gap:10px;flex:none}.hav{display:grid;place-items:center;border-radius:50%}
 </style>
 </head>
 <body>
@@ -1758,7 +1760,7 @@ function timg(k) { return AP("assets/titles/" + k + ".webp"); }
 function bimg(k) { return AP("assets/badges/" + k + ".webp"); }
 function greeting() { var h = new Date().getHours(); return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening"; }
 function viewHome() {
-  var me = P[S.me], h = '<div class="hc1"><div class="hero h-hero"><div class="bar">' + (me ? '<button type="button" class="me" data-act="pmenu">' + av(S.me) + "<span><small>" + greeting() + "</small><b>" + esc(me.display) + "</b></span></button>" : '<button type="button" class="btn sm ghost" data-act="gate">Log in</button>') + bellBtn() + '</div><img class="logo" src="' + ASSET.logo + '" alt="What the Smash"><p class="slogan"><span class="grad-t">Let\'s get smashed.</span></p></div>';
+  var me = P[S.me], h = '<div class="hc1"><div class="hero h-hero"><div class="bar"><span class="hgreet"><small>' + greeting() + "</small><b>" + (me ? esc(me.display) : "Welcome") + '</b></span><span class="hbr">' + bellBtn() + (me ? '<button type="button" class="hav" data-act="pmenu" aria-label="My profile">' + av(S.me) + "</button>" : '<button type="button" class="btn sm ghost" data-act="gate">Log in</button>') + '</span></div><img class="logo" src="' + ASSET.logo + '" alt="What the Smash"><p class="slogan"><span class="grad-t">Let\'s get smashed.</span></p></div>';
   var ks = seasonsAll();
   if (!ks.length) {
     return h + '</div><div class="empty"><b>No playing days yet</b>' + (isHost() ? "Schedule this month's playing days to start the first season." : "The first season starts once playing days are scheduled.") + "</div>" + (isHost() ? '<button type="button" class="btn big" data-act="schedule">Schedule playing days</button>' : "");
@@ -1783,7 +1785,7 @@ function seasonTrack(sk) {
   }).join("");
   var note = "";
   if (!over && nx >= 0) { var x = sl[nx], lv = x.st === "live" || x.st === "setup"; note = (lv ? "Playing now · " : "Next · ") + (nx === n - 1 ? (n === 1 ? "Day 1 decides the season" : "Day " + n + " is the deciding day") : "Day " + (nx + 1) + " of " + n) + " · " + fmtD(x.date) + (x.sched ? "" : " (not scheduled yet)"); }
-  return '<div class="sec h-track"><div class="sh"><h2>Season days</h2><span class="r">' + r + '</span></div><div class="strk" style="--n:' + n + '">' + cells + "</div>" + (note ? '<p class="trk-n">' + note + "</p>" : "") + "</div>";
+  return '<div class="sec h-track"><div class="sh"><h2>Season days</h2></div><div class="strk" style="--n:' + n + '">' + cells + "</div>" + (note ? '<p class="trk-n">' + note + "</p>" : "") + "</div>";
 }
 function homeCombo(sk) {
   var lv = liveMini(), sl = seasonSlots(sk); if (!lv || !sl.length || sk !== seasonKey(todayStr())) return "";
