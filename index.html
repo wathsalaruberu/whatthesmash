@@ -68,7 +68,7 @@ body.gate #app{min-height:calc(100vh - 32px);justify-content:center}
 .tag.setup{background:rgba(244,197,66,.16);color:var(--gold)}
 .tag.len{background:rgba(139,92,255,.22);color:#d9ccff}
 .av{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-style:italic;font-size:12.5px;color:#0a0a14;border:2px solid var(--bg);overflow:hidden;background:#555}
-.av img{width:100%;height:100%;object-fit:cover}
+.av img,.av>img{width:100%!important;height:100%!important;max-width:none;object-fit:cover!important;display:block}
 .av.g{background:#2a2a40;color:#e7e7f2;border:2px dashed #8a8aa8}
 .av.sm{width:28px;height:28px;font-size:10.5px}
 .av.lg{width:58px;height:58px;font-size:19px}
@@ -199,7 +199,7 @@ body.gate #app{min-height:calc(100vh - 32px);justify-content:center}
 .race-strip small{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub)}
 .race-strip b{display:block;font-style:italic;font-weight:900;font-size:18px;line-height:1.1}
 .tbl{border-radius:22px;background:var(--surface);overflow:hidden}
-.th,.tr{display:grid;grid-template-columns:18px minmax(0,1fr) 24px 36px 36px 30px;gap:5px;align-items:center;padding:0 10px}
+.th,.tr{display:grid;grid-template-columns:18px minmax(0,1fr) 30px 40px 42px 34px;gap:5px;align-items:center;padding:0 10px}
 .th{padding-top:10px;padding-bottom:8px;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--sub)}
 .th span:not(:nth-child(2)),.tr .n{text-align:right}
 .tr{padding-top:10px;padding-bottom:10px;border-top:1px solid var(--edge);font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:700;width:100%;text-align:left}
@@ -207,7 +207,7 @@ body.gate #app{min-height:calc(100vh - 32px);justify-content:center}
 .tr.top{background:linear-gradient(90deg,rgba(139,92,255,.16),transparent 80%)}
 .who{display:flex;align-items:center;gap:8px;min-width:0}
 .who .t{min-width:0;flex:1}
-.who b{display:block;font-weight:900;font-style:italic;font-size:15px;line-height:1.1;white-space:normal;overflow-wrap:anywhere}
+.who b{display:block;font-weight:900;font-style:italic;font-size:15px;line-height:1.1;white-space:normal;overflow-wrap:normal;word-break:normal;hyphens:none}
 .form{display:flex;gap:3px;margin-top:3px}
 .sub2{display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;margin-top:3px;min-width:0}.sub2 .form{margin-top:0;flex:none}
 .nmrow{display:flex;align-items:center;gap:6px;min-width:0}.tr .who{gap:7px}.tr .who .avs .av{width:32px;height:32px;font-size:11.5px}.tr .who .avs .av+.av{margin-left:-12px}.tr .nmrow b{font-size:14.5px}.nmrow b{min-width:0;flex:0 1 auto}.nmrow .form{margin-top:0;flex:none;gap:2px}.nmrow .form i{width:6px;height:6px}
@@ -237,7 +237,8 @@ body.gate #app{min-height:calc(100vh - 32px);justify-content:center}
 .mc .mr{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center}
 .side{display:flex;align-items:center;gap:6px;min-width:0}
 .side.r{justify-content:flex-end;text-align:right}
-.side b{font-weight:900;font-style:italic;font-size:14px;line-height:1.1;overflow-wrap:anywhere}
+.side b{font-weight:900;font-style:italic;font-size:14px;line-height:1.1;overflow-wrap:normal;word-break:normal;min-width:0}
+.side>b{overflow:hidden;text-overflow:ellipsis}@media (max-width:380px){.side b{font-size:12.5px}.side .av{width:30px;height:30px}}
 .scr{font-weight:900;font-size:22px;font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap}
 .scr .w{color:var(--pink)}
 .scr small{display:block;font-size:11px;color:var(--sub);font-weight:700}
@@ -506,7 +507,7 @@ button.prac small{color:var(--sub)}
 .pickh{margin:4px 0 0;font-size:20px;font-weight:900;font-style:italic}
 .pickt .t small{line-height:1.35}.pickt .avrow,.tc2 .avrow{display:flex;gap:3px;margin-top:4px}.pickt.dim{opacity:.55}.gs{filter:grayscale(1)}
 .tc2{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;border-radius:22px;background:radial-gradient(120% 120% at 0% 0%,var(--tg),transparent 60%),var(--surface);border:1.5px solid var(--edge)}
-.tc2 img{width:64px;height:64px;object-fit:contain}.tc2 .t{min-width:0;display:flex;flex-direction:column}.tc2 b{font-size:19px;font-style:italic;font-weight:900;color:var(--tc)}.tc2 small{color:var(--sub);font-size:12px;font-weight:700}
+.tc2>img{width:64px;height:64px;object-fit:contain}.tc2 .t{min-width:0;display:flex;flex-direction:column}.tc2 b{font-size:19px;font-style:italic;font-weight:900;color:var(--tc)}.tc2 small{color:var(--sub);font-size:12px;font-weight:700}
 .tc2 .pv{font-weight:900;font-size:22px;text-align:right;line-height:1}.tc2 .pv small{display:block;font-size:10px}
 .uncl{display:flex;flex-wrap:wrap;gap:10px;padding:12px;border-radius:20px;background:var(--surface);align-items:flex-start}.uncl button{display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.6}.uncl img{width:56px;height:56px;object-fit:contain;filter:grayscale(1)}.uncl span{font-size:11.5px;font-weight:800;color:var(--sub)}.uncl small{flex-basis:100%;color:var(--sub);font-size:12px;font-weight:600}
 .splash{min-height:60vh;justify-content:center;gap:14px}.splash .spin img{width:48px;animation:spn 1.4s ease-in-out infinite}
@@ -535,7 +536,7 @@ button.prac small{color:var(--sub)}
 .fseas{display:flex;flex-direction:column;border-radius:18px;background:var(--surface);overflow:hidden}.fseas button,.fseas .all{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;font-weight:800;font-size:14px;text-align:left;border-top:1px solid rgba(255,255,255,.05)}.fseas button:first-child{border-top:0}.fseas button small{color:var(--lime);font-size:11px;margin-left:6px}.fseas button.on{background:rgba(139,92,255,.18);box-shadow:inset 3px 0 0 var(--violet)}.fseas b{font-variant-numeric:tabular-nums}.fseas .all{background:rgba(255,255,255,.04);color:var(--sub)}.fseas .all b{color:var(--text)}
 .fbars{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:18px;background:var(--surface)}.fb{display:grid;grid-template-columns:34px minmax(0,1.3fr) 1fr 64px;align-items:center;gap:8px;font-size:13px;font-weight:800}.fb .trk{height:8px;border-radius:5px;background:var(--surface2);overflow:hidden}.fb .trk i{display:block;height:100%;border-radius:5px;background:var(--grad)}.fb b{text-align:right;font-variant-numeric:tabular-nums}
 .stk{display:flex;height:14px;border-radius:8px;overflow:hidden;gap:2px;background:var(--surface2)}.stk i{display:block;height:100%}
-.pchips{display:flex;flex-wrap:wrap;gap:6px}.pchips label{margin:0;cursor:pointer;position:relative}.pchips input{position:absolute;opacity:0;pointer-events:none}.pchips span{display:flex;align-items:center;gap:6px;padding:5px 10px 5px 5px;border-radius:999px;background:var(--surface2);font-weight:800;font-size:13px;color:var(--sub)}.pchips input:checked+span{background:rgba(139,92,255,.3);color:#fff;box-shadow:inset 0 0 0 1.5px var(--violet)}.pchips input:focus-visible+span{outline:2px solid var(--cyan)}
+.pchips{display:flex;flex-wrap:wrap;gap:6px}.pchips label{margin:0;cursor:pointer;position:relative;display:inline-flex;flex-direction:row;text-transform:none;letter-spacing:0;font-size:13px;color:inherit;gap:0}.pchips input{position:absolute;opacity:0;pointer-events:none}.pchips span{display:flex;align-items:center;gap:6px;padding:5px 10px 5px 5px;border-radius:999px;background:var(--surface2);font-weight:800;font-size:13px;color:var(--sub)}.pchips input:checked+span{background:rgba(139,92,255,.3);color:#fff;box-shadow:inset 0 0 0 1.5px var(--violet)}.pchips input:focus-visible+span{outline:2px solid var(--cyan)}
 .li.stl{align-items:center}.setd summary{cursor:pointer;font-weight:800;color:var(--sub);font-size:13px;padding:6px 2px}.setd[open] summary{margin-bottom:8px}
 .bitem{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:16px;background:rgba(255,255,255,.04);margin-bottom:8px}.bitem .irm{align-self:flex-start;margin-top:4px}
 a.btn{display:flex;align-items:center;justify-content:center;text-decoration:none}
@@ -575,6 +576,7 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 @media (min-width:760px) and (max-width:1179px){ body:not(.gate) #app.v-home{display:flex;columns:auto;max-width:640px} }
 @media (min-width:1180px){
   body:not(.gate) #app.v-home{columns:auto;display:grid;max-width:1560px;grid-template-columns:minmax(250px,280px) minmax(0,1fr) minmax(260px,300px);gap:18px;align-items:start}
+  #app.v-home>.priv{grid-column:1/-1}
   #app.v-home .hc1,#app.v-home .hc2,#app.v-home .hc3{display:flex;flex-direction:column;gap:14px;min-width:0}
   #app.v-home .hc1>*,#app.v-home .hc2>*,#app.v-home .hc3>*{margin:0}
   #app.v-home .h-hero{margin:0;padding:10px 12px 12px;border-radius:24px}
@@ -624,6 +626,8 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 .pm-p{display:flex;align-items:center;gap:6px;min-width:0;font-weight:900;font-style:italic;font-size:14px;max-width:100%}.pm-mid>.pm-side:last-child .pm-p{flex-direction:row-reverse}.pm-p>span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pm-sc{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pairh{flex-direction:column;text-align:center;align-items:center}.pairh .pp{display:flex;justify-content:center}.pairh .pp .av+.av{margin-left:-18px}.pairh b{white-space:normal;overflow-wrap:anywhere}
+.phtags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.phgear{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:6px;color:var(--sub);font-size:12.5px;font-weight:700}.phgear span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}.phgear svg{flex:none;color:var(--tc,var(--sub))}
+@media (max-width:480px){.tbl.prt .th,.tbl.prt .tr{grid-template-columns:18px minmax(0,1fr) 22px 34px 34px}.tbl.prt .th>span:nth-child(5),.tbl.prt .tr>span:nth-child(5){display:none}.tbl.prt .tr .who .avs .av{width:32px!important;height:32px!important}.tbl.prt .tr .who .avs .av+.av{margin-left:-12px!important}}
 .stars.four{grid-template-columns:repeat(2,1fr)}
 .stars.four .star img{max-width:104px}
 .nextses{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;width:100%;text-align:left;padding:14px;border-radius:24px;border:1.5px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(120deg,rgba(255,23,79,.75),rgba(139,92,255,.75)) border-box;position:relative;overflow:hidden}
@@ -725,7 +729,7 @@ function cfg() {
     courts: Array.isArray(c.courts) && c.courts.length ? c.courts : ["A"],
     time: c.time || "19:00", end: c.end || "21:00", dow: c.dow == null ? 1 : num(c.dow),
     toS: num(c.toS) || 11, toD: num(c.toD) || 21, minDays: num(c.minDays) || 2,
-    sc: { sw: def(sc.sw, 10), sd: def(sc.sd, 5), sc: def(sc.sc, 3), dw: def(sc.dw, 8), dd: def(sc.dd, 4), dc: def(sc.dc, 2), us: def(sc.us, 3), ud: def(sc.ud, 2), fs: def(sc.fs, 3), fd: def(sc.fd, 2), att: def(sc.att, 2), tod: def(sc.tod, 10) }
+    sc: { sw: def(sc.sw, 10), sd: def(sc.sd, 5), sc: def(sc.sc, 3), dw: def(sc.dw, 8), dd: def(sc.dd, 4), dc: def(sc.dc, 2), us: def(sc.us, 3), ud: def(sc.ud, 2), fs: def(sc.fs, 3), fd: def(sc.fd, 2), att: def(sc.att, 2), tod: def(sc.tod, 10), full: def(sc.full, 5) }
   };
 }
 function def(v, d) { return v === undefined || v === null || v === "" ? d : num(v); }
@@ -779,7 +783,7 @@ function normMatch(d) {
 function normDay(d) {
   var x = plain(d); x.date = x.date || x.id; x.att = x.att || {}; x.reps = x.reps || {}; x.rsvp = x.rsvp || {};
   x.fmt = x.fmt || {}; x.courts = Array.isArray(x.courts) && x.courts.length ? x.courts : cfg().courts; x.status = x.status || "upcoming";
-  x.season = x.season || seasonKey(x.date); x.lineup = x.lineup || {}; x.shuttles = num(x.shuttles); return x;
+  x.season = x.season || seasonKey(x.date); x.lineup = x.lineup || {}; x.squads = x.squads && typeof x.squads === "object" ? x.squads : null; x.shuttles = num(x.shuttles); return x;
 }
 
 /* ================= engine ================= */
@@ -818,6 +822,14 @@ function seasonInfo(sk) {
     var status = !ds.length ? "up" : (done.length === 0 && !ds.some(function (d) { return d.status === "live" || d.status === "setup"; }) && ds[0].date > t) ? "up" : (monthOver || (open.length === 0 && done.length >= cfg().minDays)) ? "done" : "run";
     var valid = done.length >= cfg().minDays;
     return { key: sk, days: ds, done: done, status: status, valid: valid, final: status === "done" && valid, n: ds.length };
+  });
+}
+/* playing days in a season: scheduled ones plus the club's usual weekday for the rest of the month */
+function seasonTotal(sk) {
+  return memo("stot" + sk, function () {
+    var days = seasonDays(sk).filter(function (d) { return d.status !== "cancelled"; }), last = days.reduce(function (m, d) { return d.date > m ? d.date : m; }, todayStr()), dt = parseD(last), extra = 0;
+    if (seasonKey(last) === sk) for (var q = 1; q <= 31; q++) { var x = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() + q); if (seasonKey(ymd(x)) !== sk) break; if (x.getDay() === cfg().dow) extra++; }
+    return days.length + extra;
   });
 }
 function defaultSeason() {
@@ -906,6 +918,7 @@ function compute(sk) {
           });
         }
         if (wT && lT && wT !== lT) {
+          var DS = da.dset = da.dset || {}; DS[wT] = DS[wT] || {}; DS[lT] = DS[lT] || {}; W.forEach(function (id) { DS[wT][id] = 1; }); L.forEach(function (id) { DS[lT][id] = 1; });
           [acc(tm, wT), acc(da.tm, wT)].forEach(function (x) { x.dp = (x.dp || 0) + wpts; x.w++; });
           [acc(tm, lT), acc(da.tm, lT)].forEach(function (x) { x.dp = (x.dp || 0) + lpts; x.l++; });
         }
@@ -916,7 +929,7 @@ function compute(sk) {
       tms.slice(0, hn).forEach(function (m) { var T = matchTeams(m); half[T[m._calc.w]] = (half[T[m._calc.w]] || 0) + m._calc.wpts; var lt = T[m._calc.w === "a" ? "b" : "a"]; half[lt] = (half[lt] || 0) + m._calc.lpts; });
       da.half = hn ? half : null;
       // team day score: 40% singles (average per player, vs the best team) + 60% team doubles (vs the best team)
-      teamDayScores(da, tm, acc);
+      teamDayScores(da, tm, acc, day);
       // team of the day (done days only)
       if (day.status === "done") {
         var tp = Object.keys(da.tm).filter(function (t) { return da.tm[t].played; }).map(function (t) { return [t, da.tm[t].pts || 0]; }).sort(function (a, b) { return b[1] - a[1]; });
@@ -949,21 +962,31 @@ function compute(sk) {
 }
 function r1(n) { return Math.round(n * 10) / 10; }
 var TW = { s: 0.4, d: 0.6 };
-function teamDayScores(da, tm, acc) {
-  var rows = {};
+function teamDayScores(da, tm, acc, day) {
+  var rows = {}, sc = cfg().sc;
   Object.keys(da.pl).forEach(function (id) { var x = da.pl[id], t = teamOf(id); if (!t || x.sw + x.sl === 0) return; var r = rows[t] = rows[t] || { n: 0, s: 0 }; r.n++; r.s += x.s; });
   Object.keys(da.tm).forEach(function (t) { if ((da.tm[t].w || 0) + (da.tm[t].l || 0) > 0) rows[t] = rows[t] || { n: 0, s: 0 }; });
   var ts = Object.keys(rows).filter(function (t) { return TEAM[t]; }); if (!ts.length) return;
-  ts.forEach(function (t) { var r = rows[t], x = da.tm[t] || {}; r.avg = r.n ? r.s / r.n : 0; r.dp = x.dp || 0; r.dpl = (x.w || 0) + (x.l || 0) > 0; });
+  // doubles: points per player who played team doubles, so team size doesn't skew it
+  ts.forEach(function (t) { var r = rows[t], x = da.tm[t] || {}, np = da.dset && da.dset[t] ? Object.keys(da.dset[t]).length : 0; r.avg = r.n ? r.s / r.n : 0; r.dp = np ? (x.dp || 0) / np : 0; r.dpl = (x.w || 0) + (x.l || 0) > 0; });
   var sMax = Math.max.apply(null, ts.map(function (t) { return rows[t].avg; })), dMax = Math.max.apply(null, ts.map(function (t) { return rows[t].dp; }));
   var anyS = ts.some(function (t) { return rows[t].n > 0; }), anyD = ts.some(function (t) { return rows[t].dpl; });
   var wS = anyD ? TW.s : 1, wD = anyS ? TW.d : 1;
   ts.forEach(function (t) {
-    var r = rows[t], si = sMax > 0 ? r.avg / sMax * 100 : 0, di = dMax > 0 ? r.dp / dMax * 100 : 0, score = r1((anyS ? wS * si : 0) + (anyD ? wD * di : 0));
-    var x = acc(da.tm, t); x.played = true; x.sAvg = r1(r.avg); x.sIdx = r1(si); x.dIdx = r.dpl ? r1(di) : null; x.pts = score; x.sn = r.n;
-    var y = acc(tm, t); y.pts = r1(y.pts + score); y.dn = (y.dn || 0) + 1;
+    var r = rows[t], si = sMax > 0 ? r.avg / sMax * 100 : 0, di = dMax > 0 ? r.dp / dMax * 100 : 0;
+    var mem = day ? squadOf(day, t) : [], full = mem.length >= MINTEAM && mem.every(function (id) { return (day.att || {})[id] === "p"; });
+    var score = Math.round((anyS ? wS * si : 0) + (anyD ? wD * di : 0)) + (full ? sc.full : 0);
+    var x = acc(da.tm, t); x.played = true; x.sAvg = r1(r.avg); x.sIdx = Math.round(si); x.dIdx = r.dpl ? Math.round(di) : null; x.pts = score; x.sn = r.n; x.full = full;
+    var y = acc(tm, t); y.pts = y.pts + score; y.dn = (y.dn || 0) + 1;
   });
 }
+/* the squad a team had on a playing day: saved when the day starts, so later transfers don't change old results */
+function squadOf(day, t) {
+  if (day.squads && Array.isArray(day.squads[t])) return day.squads[t].filter(function (id) { return P[id]; });
+  var end = parseD(day.date).getTime() + 86400000;
+  return teamMembers(t).filter(function (p) { return !onBreak(p, day.date) && (!p.ts || p.ts < end) && (!p.teamSince || p.teamSince <= day.season); }).map(function (p) { return p.id; });
+}
+function squadSnap(date) { var o = {}; TEAMS.forEach(function (t) { var ids = teamMembers(t).filter(function (p) { return !onBreak(p, date); }).map(function (p) { return p.id; }); if (ids.length) o[t] = ids; }); return o; }
 function fmtPts(n) { n = r1(num(n)); return n % 1 ? n.toFixed(1) : String(n); }
 function topOf(map, f, g) {
   var ids = Object.keys(map).filter(function (k) { return f(map[k]) > 0; });
@@ -981,16 +1004,17 @@ function h2hWins(sk, a, b, kind) {
 function standings(sk, kind) {
   return memo("st" + sk + kind, function () {
     var C = compute(sk), map = kind === "pr" ? C.pr : kind === "tm" ? C.tm : C.pl;
-    var val = function (x) { return kind === "s" ? x.s : x.pts; };
+    var val = function (x) { return kind === "s" ? x.s : kind === "pr" ? (x.w + x.l ? r1(x.pts / (x.w + x.l)) : 0) : x.pts; };
+    var ok = function (x) { return kind !== "pr" || x.w + x.l >= PAIRMIN; };
     var mp = function (x) { return kind === "s" ? x.sw + x.sl : x.w + x.l; };
     var wins = function (x) { return kind === "s" ? x.sw : x.w; };
     var ids = Object.keys(map).filter(function (id) {
       var x = map[id]; if (kind === "s") return x.sw + x.sl > 0; if (kind === "tm") return (x.dn || 0) > 0 || (TEAM[id] && !TEAM[id].archived && teamSize(id) >= 1); return x.pts > 0 || x.w + x.l > 0;
     });
     ids.sort(function (a, b) {
-      var A = map[a], B = map[b]; return val(B) - val(A) || wins(B) - wins(A) || (h2hWins(sk, b, a, kind) - h2hWins(sk, a, b, kind)) || A.con - B.con;
+      var A = map[a], B = map[b]; return (ok(B) ? 1 : 0) - (ok(A) ? 1 : 0) || val(B) - val(A) || wins(B) - wins(A) || (h2hWins(sk, b, a, kind) - h2hWins(sk, a, b, kind)) || A.con - B.con;
     });
-    return ids.map(function (id) { var x = map[id]; return { id: id, pts: val(x), mp: mp(x), w: wins(x), l: mp(x) - wins(x), x: x }; });
+    return ids.map(function (id) { var x = map[id]; return { id: id, pts: val(x), tot: x.pts, ok: ok(x), mp: mp(x), w: wins(x), l: mp(x) - wins(x), x: x }; });
   });
 }
 function formOf(sk, id, kind, n) {
@@ -1006,7 +1030,7 @@ function seasonTitles(sk) {
   return memo("ti" + sk, function () {
     var si = seasonInfo(sk); if (!si.final) return null;
     var s = standings(sk, "s"), a = standings(sk, "all"), p = standings(sk, "pr"), t = standings(sk, "tm");
-    return { pots: a[0] && a[0].id, s1: s[0] && s[0].id, s2: s[1] && s[1].id, s3: s[2] && s[2].id, pair: p[0] && p[0].id, team: t[0] && t[0].pts > (t[1] ? t[1].pts : -1) ? t[0].id : null };
+    return { pots: a[0] && a[0].id, s1: s[0] && s[0].id, s2: s[1] && s[1].id, s3: s[2] && s[2].id, pair: p[0] && p[0].ok && p[0].id, team: t[0] && t[0].pts > (t[1] ? t[1].pts : -1) ? t[0].id : null };
   });
 }
 function cabinet(pid) {
@@ -1156,23 +1180,67 @@ function maxPerEntrant(n, cap) {
 }
 /* doubles: which teams can field a pair tonight, and the pairs they field */
 function dayTeamsD(day) {
-  var pres = expectedIds(day), reps = day.reps || {}, spare = day.spare || {}, out = [];
+  var pres = expectedIds(day), out = [];
   TEAMS.forEach(function (t) {
-    var mem = pres.filter(function (id) { return teamOf(id) === t; });
-    if (spare[t] && mem.length % 2 && mem.indexOf(spare[t]) >= 0) mem = mem.filter(function (id) { return id !== spare[t]; });
-    var pairs = [], used = {}, sp = [], L = day.lineup && day.lineup[t];
-    if (L && Array.isArray(L.pairs)) {
-      if (!spare[t] && L.reserve && mem.length % 2 && mem.indexOf(L.reserve) >= 0) { mem = mem.filter(function (id) { return id !== L.reserve; }); sp.push(L.reserve); }
-      L.pairs.forEach(function (p0) { var pp = Array.isArray(p0) ? p0 : [p0.a, p0.b]; if (pp && pp.length === 2 && mem.indexOf(pp[0]) >= 0 && mem.indexOf(pp[1]) >= 0 && !used[pp[0]] && !used[pp[1]]) { pairs.push({ ids: [pp[0], pp[1]], pid: findPairId(pp) || "auto:" + pp.slice().sort().join("+") }); used[pp[0]] = used[pp[1]] = 1; } });
+    var mem = pres.filter(function (id) { return teamOf(id) === t; }), pairs = [], used = {}, L = day.lineup && day.lineup[t];
+    var mk = function (a, b) { return { ids: [a, b], pid: findPairId([a, b]) || "auto:" + [a, b].sort().join("+") }; };
+    if (mem.length === 3) { // teams of 3: all three pairs rotate, so everyone plays the same number of doubles
+      pairs = [mk(mem[0], mem[1]), mk(mem[0], mem[2]), mk(mem[1], mem[2])];
+      out.push({ team: t, pairs: pairs, spare: [], rot: true, off: parseD(day.date).getDate() % 3 }); return;
     }
+    if (L && Array.isArray(L.pairs)) L.pairs.forEach(function (p0) { var pp = Array.isArray(p0) ? p0 : [p0.a, p0.b]; if (pp && pp.length === 2 && mem.indexOf(pp[0]) >= 0 && mem.indexOf(pp[1]) >= 0 && !used[pp[0]] && !used[pp[1]]) { pairs.push(mk(pp[0], pp[1])); used[pp[0]] = used[pp[1]] = 1; } });
     D.pairs.filter(function (p) { return p.active !== false && p.team === t; }).forEach(function (p) { if (mem.indexOf(p.a) >= 0 && mem.indexOf(p.b) >= 0 && !used[p.a] && !used[p.b]) { pairs.push({ ids: [p.a, p.b], pid: p.id }); used[p.a] = used[p.b] = 1; } });
     var rest = mem.filter(function (id) { return !used[id]; });
-    while (rest.length >= 2) { var a = rest.shift(), b = rest.shift(); pairs.push({ ids: [a, b], pid: findPairId([a, b]) || "auto:" + [a, b].sort().join("+") }); }
-    if (rest.length === 1) sp.push(rest[0]);
-    if (spare[t] && pres.indexOf(spare[t]) >= 0 && teamOf(spare[t]) === t) sp.push(spare[t]);
-    if (pairs.length) out.push({ team: t, pairs: pairs, spare: sp });
+    while (rest.length >= 2) { var a = rest.shift(), b = rest.shift(); pairs.push(mk(a, b)); }
+    if (pairs.length) out.push({ team: t, pairs: pairs, spare: rest, rot: false });
   });
   return out;
+}
+/* team doubles where every player gets k matches: each team's pair slots, then teams are matched against each other */
+function doublesPlan(tl, k) {
+  var slots = {}, left = {}, faced = {};
+  tl.forEach(function (x) {
+    var cnt = x.pairs.map(function () { return 0; }), q = [];
+    if (x.rot) { var tot = Math.ceil(k * 3 / 2); for (var i = 0; i < tot; i++) cnt[(i + (x.off || 0)) % 3]++; } // the extra match moves around from week to week
+    else cnt = x.pairs.map(function () { return k; });
+    var c2 = cnt.slice(); while (c2.some(function (v) { return v > 0; })) c2.forEach(function (v, j) { if (v > 0) { q.push(x.pairs[j]); c2[j]--; } });
+    slots[x.team] = q; left[x.team] = q.length; faced[x.team] = {};
+  });
+  var out = [], guard = 0;
+  while (guard++ < 500) {
+    var ts = tl.map(function (x) { return x.team; }).filter(function (t) { return slots[t].length; });
+    if (ts.length < 2) break;
+    ts.sort(function (a, b) { return slots[b].length - slots[a].length; });
+    var A = ts[0], B = ts.slice(1).sort(function (a, b) { return (faced[A][a] || 0) - (faced[A][b] || 0) || slots[b].length - slots[a].length; })[0];
+    faced[A][B] = (faced[A][B] || 0) + 1; faced[B][A] = (faced[B][A] || 0) + 1;
+    out.push({ A: A, B: B, pa: slots[A].shift(), pb: slots[B].shift() });
+  }
+  var spare = {}; tl.forEach(function (x) { if (slots[x.team].length) spare[x.team] = slots[x.team].length; });
+  return { list: out, unplayed: spare };
+}
+/* order matches so nobody plays twice in a row where it can be avoided */
+function spreadOrder(list, courts) {
+  // rounds of up to one match per court: nobody twice in the same round (a court waits if needed), and as few as possible straight after playing
+  var res = [], rest = list.slice(), c = Math.max(1, courts), prev = {};
+  while (rest.length) {
+    var cur = {}, round = [];
+    while (round.length < c && rest.length) {
+      var best = -1, bv = 1e9;
+      rest.forEach(function (m, i) { var ids = m.a.concat(m.b); if (ids.some(function (id) { return cur[id]; })) return; var v = ids.filter(function (id) { return prev[id]; }).length; if (v < bv) { bv = v; best = i; } });
+      if (best < 0) break;
+      var m = rest.splice(best, 1)[0]; m._c = round.length; round.push(m); m.a.concat(m.b).forEach(function (id) { cur[id] = 1; });
+    }
+    prev = cur; res = res.concat(round);
+  }
+  return res;
+}
+var MAXEACH = 4, PAIRMIN = 3;
+function bestK(tl, capD) {
+  // largest number each that fits the time and keeps every player within one match of the others
+  var spread = function (k) { var c = {}; tl.forEach(function (x) { x.pairs.forEach(function (p) { p.ids.forEach(function (id) { c[id] = 0; }); }); }); doublesPlan(tl, k).list.forEach(function (m) { m.pa.ids.concat(m.pb.ids).forEach(function (id) { c[id]++; }); }); var v = Object.keys(c).map(function (i) { return c[i]; }); return v.length ? Math.max.apply(null, v) - Math.min.apply(null, v) : 0; };
+  var best = 0, bs = 1e9;
+  for (var k = MAXEACH; k >= 1; k--) { if (doublesPlan(tl, k).list.length > capD) continue; var sp = spread(k); if (sp <= 1) return k; if (sp < bs) { bs = sp; best = k; } }
+  return best || 1;
 }
 function findPairId(ids) { var p = D.pairs.filter(function (x) { return x.active !== false && ids.indexOf(x.a) >= 0 && ids.indexOf(x.b) >= 0; })[0]; return p ? p.id : ""; }
 function planDay(day, opts) {
@@ -1181,47 +1249,45 @@ function planDay(day, opts) {
   var pres = expectedIds(day);
   if (fmt.s && fmt.s.on) {
     var ids = mixOrder(pres.filter(function (id) { return teamOf(id); })), n = ids.length, est = slotEst("s", fmt.s.to), slotMin = Math.max(0, minsOf(fmt.s.until) - minsOf(fmt.s.from));
-    var cap = Math.floor(slotMin * courts / est), m = Math.min(maxPerEntrant(n, cap), Math.max(1, n - 1) * 2);
-    if (opts.rounds && opts.rounds.s != null) m = opts.rounds.s;
+    var cap = Math.floor(slotMin * courts / est), m = Math.min(maxPerEntrant(n, cap), Math.max(1, n - 1) * 2, MAXEACH);
+    if (opts.rounds && opts.rounds.s != null) m = Math.min(opts.rounds.s, MAXEACH);
     if (n % 2 && m % 2) m--;
     if (n < 2) warn.push("Singles needs at least 2 players.");
     else if (n % 2) warn.push("With " + n + " players, everyone plays an even number of singles so the count stays equal.");
     rrSchedule(n, m).forEach(function (pr) { out.push({ type: "s", cat: "season", a: [ids[pr[0]]], b: [ids[pr[1]]], to: fmt.s.to }); });
   }
   if (fmt.d && fmt.d.on) {
-    var tl = dayTeamsD(day), k = tl.length, estD = slotEst("d", fmt.d.to), slotD = Math.max(0, minsOf(fmt.d.until) - minsOf(fmt.d.from)), capD = Math.floor(slotD * courts / estD);
-    var md = Math.min(maxPerEntrant(k, capD), Math.max(1, k - 1) * 4);
-    if (opts.rounds && opts.rounds.d != null) md = opts.rounds.d;
-    if (k % 2 && md % 2) md--;
-    if (k < 2) warn.push("Team doubles needs at least 2 teams with 2 players present.");
-    var rot = {}; tl.forEach(function (x) { rot[x.team] = 0; });
-    rrSchedule(k, md).forEach(function (pr) {
-      var A = tl[pr[0]], B = tl[pr[1]], pa = A.pairs[rot[A.team]++ % A.pairs.length], pb = B.pairs[rot[B.team]++ % B.pairs.length];
-      var mm = { type: "d", cat: "season", a: pa.ids.slice(), b: pb.ids.slice(), pa: pa.pid, pb: pb.pid, ta: A.team, tb: B.team, to: fmt.d.to };
-      if (pa.rep || pb.rep) mm.rep = pa.rep ? { side: "a", for: pa.rep.for, id: pa.rep.id } : { side: "b", for: pb.rep.for, id: pb.rep.id };
-      out.push(mm);
-    });
+    var tl = dayTeamsD(day), estD = slotEst("d", fmt.d.to), slotD = Math.max(0, minsOf(fmt.d.until) - minsOf(fmt.d.from)), capD = Math.floor(slotD * courts / estD);
+    var k = opts.rounds && opts.rounds.d != null ? Math.max(1, Math.min(opts.rounds.d, MAXEACH)) : bestK(tl, capD);
+    if (tl.length < 2) warn.push("Team doubles needs at least 2 teams with 2 players present.");
+    else {
+      var dp = doublesPlan(tl, k);
+      dp.list.forEach(function (x) { out.push({ type: "d", cat: "season", a: x.pa.ids.slice(), b: x.pb.ids.slice(), pa: x.pa.pid, pb: x.pb.pid, ta: x.A, tb: x.B, to: fmt.d.to }); });
+      var un = Object.keys(dp.unplayed); if (un.length) warn.push("Doubles don't split perfectly tonight: a few " + un.map(function (t) { return tname(t); }).join(" and ") + " players play one doubles fewer than the rest.");
+    }
   }
-  var late = function (m) { return m.a.concat(m.b).some(function (id) { return (day.att || {})[id] === "o"; }); };
-  out = out.filter(function (m) { return m.type === "s" && !late(m); }).concat(out.filter(function (m) { return m.type === "s" && late(m); }), out.filter(function (m) { return m.type === "d" && !late(m); }), out.filter(function (m) { return m.type === "d" && late(m); }));
-  out.forEach(function (m, i) { m.ord = i + 1; m.court = day.courts[i % courts]; if (m.type === "s") { m.ta = ""; m.tb = ""; } });
+  var late = function (m) { return m.a.concat(m.b).some(function (id) { return (day.att || {})[id] === "o"; }); }, gap = courts;
+  var grp = function (type, lt) { return spreadOrder(out.filter(function (m) { return m.type === type && (lt ? late(m) : !late(m)); }), gap); };
+  out = grp("s", false).concat(grp("s", true), grp("d", false), grp("d", true));
+  out.forEach(function (m, i) { m.ord = i + 1; m.court = day.courts[(m._c != null ? m._c : i) % courts]; delete m._c; if (m.type === "s") { m.ta = ""; m.tb = ""; } });
   return { matches: out, warn: warn };
 }
 function fitOf(day, seg, list) {
   var fmt = (day.fmt || {})[seg]; if (!fmt || !fmt.on) return null;
   var ms = list.filter(function (m) { return m.type === seg && m.status !== "np" && m.cat === "season"; }), est = slotEst(seg, fmt.to), courts = day.courts.length || 1;
-  var need = Math.ceil(ms.length * est / courts), slot = Math.max(0, minsOf(fmt.until) - minsOf(fmt.from));
-  var n = seg === "s" ? presentIds(day).length : dayTeamsD(day).length;
-  return { n: ms.length, need: need, slot: slot, est: est, courts: courts, over: need - slot, fitRounds: maxPerEntrant(n, Math.floor(slot * courts / est)), perRound: 1 };
+  var need = Math.ceil(ms.length * est / courts), slot = Math.max(0, minsOf(fmt.until) - minsOf(fmt.from)), capN = Math.floor(slot * courts / est);
+  var fr = seg === "s" ? Math.min(maxPerEntrant(presentIds(day).length, capN), MAXEACH) : (function () { var tl = dayTeamsD(day); return doublesPlan(tl, 1).list.length > capN ? 0 : bestK(tl, capN); })();
+  return { n: ms.length, need: need, slot: slot, est: est, courts: courts, over: need - slot, fitRounds: fr, perRound: 1 };
 }
 /* equal-matches check: singles per player, doubles per team */
+/* equal-matches check: singles exactly equal per player, doubles at most one apart */
 function fairness(list) {
-  var cnt = {}, tc = {}; list.filter(function (m) { return m.cat === "season" && m.status !== "np"; }).forEach(function (m) {
-    if (m.type === "s") m.a.concat(m.b).forEach(function (id) { if (!isGuest(id)) cnt[id] = (cnt[id] || 0) + 1; });
-    else [m.ta, m.tb].forEach(function (t) { if (t) tc[t] = (tc[t] || 0) + 1; });
+  var cnt = {}, dc = {}; list.filter(function (m) { return m.cat === "season" && m.status !== "np"; }).forEach(function (m) {
+    var tgt = m.type === "s" ? cnt : dc; m.a.concat(m.b).forEach(function (id) { if (!isGuest(id)) tgt[id] = (tgt[id] || 0) + 1; });
   });
-  var sv = uniq(Object.keys(cnt).map(function (i) { return cnt[i]; })), dv = uniq(Object.keys(tc).map(function (i) { return tc[i]; }));
-  return { ok: sv.length <= 1 && dv.length <= 1, cnt: cnt, tc: tc };
+  var sv = uniq(Object.keys(cnt).map(function (i) { return cnt[i]; })), dv = Object.keys(dc).map(function (i) { return dc[i]; });
+  var dOk = !dv.length || Math.max.apply(null, dv) - Math.min.apply(null, dv) <= 1;
+  return { ok: sv.length <= 1 && dOk, cnt: cnt, dc: dc, tc: dc };
 }
 /* ================= win chance (Monte Carlo) ================= */
 function strength(sk, id) {
@@ -1259,10 +1325,10 @@ function chanceRun(sk, drop) {
     Object.keys(pd.pl).forEach(function (id) { if (!P[id]) return; var g = (pd.pl[id].pts || 0) + (pd.pl[id].att || 0); pb[id] = (pb[id] || 0) + g; (ps[id] = ps[id] || []).push(g); });
   });
   Object.keys(P).forEach(function (id) { if (teamOf(id) && pb[id] == null) { pb[id] = 0; ps[id] = []; } });
-  var st = function (a, m0, s0) { if (!a.length) return { m: m0, s: s0 }; var m = sum(a) / a.length, v = sum(a.map(function (x) { return (x - m) * (x - m); })) / a.length; return { m: (m * a.length + m0) / (a.length + 1), s: Math.max(s0 / 2, Math.sqrt(v) + s0 / (a.length + 1)) }; };
+  var st = function (a, m0, s0) { if (!a.length) return { m: m0, s: s0 }; var m = sum(a) / a.length, v = sum(a.map(function (x) { return (x - m) * (x - m); })) / a.length; return { m: (m * a.length + m0 * 2) / (a.length + 2), s: Math.max(s0, Math.sqrt(v)) }; }; // with few days played, lean towards average and allow big swings
   var allP = [].concat.apply([], Object.keys(ps).map(function (k) { return ps[k]; })), pm0 = allP.length ? sum(allP) / allP.length : 20;
   var TS = {}, PS = {}, nH = Math.max(1, hist.length);
-  teams.forEach(function (t) { TS[t] = st(ts[t], 50, 25); TS[t].p = ts[t].length ? Math.min(1, ts[t].length / nH + .1) : (teamSize(t) ? .8 : 0); });
+  teams.forEach(function (t) { TS[t] = st(ts[t], 50, 32); TS[t].p = ts[t].length ? Math.min(1, ts[t].length / nH + .1) : (teamSize(t) ? .8 : 0); });
   var pids = Object.keys(pb); pids.forEach(function (id) { PS[id] = st(ps[id], pm0 * .6, pm0 * .5 + 2); PS[id].p = hist.length ? Math.min(1, ps[id].length / nH + .1) : .7; });
   var lv = null;
   if (live) { var pd = C.perDay[live.date] || { pl: {}, tm: {} }, ms = dayMatches(live.date, "season"), dn = ms.filter(function (m) { return m.status === "done"; }).length, fr = ms.length ? dn / ms.length : 0; lv = { fr: fr, tm: {}, pl: {} }; teams.forEach(function (t) { lv.tm[t] = pd.tm[t] && pd.tm[t].played ? pd.tm[t].pts : null; }); pids.forEach(function (id) { lv.pl[id] = pd.pl[id] ? (pd.pl[id].pts || 0) + (pd.pl[id].att || 0) : null; }); }
@@ -1288,14 +1354,16 @@ function chanceRun(sk, drop) {
   if (s2 !== 100) { var big = teams.slice().sort(function (a, b) { return tw[b] - tw[a]; })[0]; season[big] += 100 - s2; }
   var pots = pids.map(function (id) { return { id: id, p: Math.round(pw[id] / N * 100) }; }).filter(function (x) { return x.p > 0; }).sort(function (a, b) { return b.p - a.p || pb[b.id] - pb[a.id]; }).slice(0, 3);
   var nd2 = left + (live ? 1 : 0), lead = Math.max.apply(null, teams.map(function (t) { return tb[t]; })), lab = {};
-  teams.forEach(function (t) { var can = tb[t] + (100 + sc.tod) * nd2 > lead || tb[t] === lead; lab[t] = season[t] === 0 && can ? "<1" : season[t] === 100 && teams.some(function (u) { return u !== t && tb[u] + (100 + sc.tod) * nd2 > tb[t]; }) ? ">99" : String(season[t]); });
-  pots.forEach(function (x) { x.lab = x.p >= 100 ? ">99" : String(x.p); });
+  teams.forEach(function (t) { var can = tb[t] + (105 + sc.tod) * nd2 > lead || tb[t] === lead; lab[t] = season[t] === 0 && can ? "1" : season[t] === 100 && teams.some(function (u) { return u !== t && tb[u] + (105 + sc.tod) * nd2 > tb[t]; }) ? "99" : String(season[t]); });
+  pots.forEach(function (x) { x.lab = x.p >= 100 && pots.length > 1 ? "99" : String(x.p); });
   return { lab: lab, teams: teams.slice().sort(function (a, b) { return season[b] - season[a] || tb[b] - tb[a]; }), season: season, mv: {}, pots: pots, early: hist.length < 2, live: !!live, done: hist.length, total: days.length };
 }
 /* ---- end core ---- */
 
 /* ================= UI helpers ================= */
 var IC = {
+  hand: '<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11M11 10.5V4.5a1.5 1.5 0 0 1 3 0V11M14 10.5V6a1.5 1.5 0 0 1 3 0v8a6 6 0 0 1-6 6h-.5A5.5 5.5 0 0 1 6 16.5l-1.8-3.2a1.4 1.4 0 0 1 2.4-1.4L8 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+  racket: '<ellipse cx="14.5" cy="9.5" rx="5.2" ry="6.4" transform="rotate(45 14.5 9.5)" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10.6 13.4 4 20M11.2 6.5l6.3 6.3M12.6 5.2l6.2 6.2M9.9 8.1l6 6M8.9 10l4.9 4.9" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M4 20l1.2 1.2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>',
   bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
   home: '<path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
   board: '<path d="M7 4h10v5a5 5 0 0 1-10 0zM7 6H4c0 3 1 5 3.5 5.5M17 6h3c0 3-1 5-3.5 5.5M12 14v4M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
@@ -1535,17 +1603,17 @@ function homeRaces() {
   var si = seasonInfo(S.season), T = seasonTitles(S.season), live = si.status !== "done";
   if (si.status === "up") return '<div class="sec"><div class="sh"><h2>Title race</h2></div><div class="empty"><b>' + seasonLabel(S.season) + " hasn't started</b>The title race opens after the first playing day, " + fmtD(si.days[0].date) + ".</div></div>";
   if (si.status === "done" && !si.valid) return '<div class="sec"><div class="sh"><h2>' + seasonLabel(S.season) + '</h2></div><div class="empty"><b>Not counted as a season</b>Only ' + plural(si.done.length, "playing day") + " was completed. A season needs at least " + cfg().minDays + ", so these matches don't decide titles.</div></div>";
-  var h = '<div class="sec"><div class="sh"><h2>' + (live ? "Title race" : seasonLabel(S.season) + " winners") + '</h2><span class="r">' + (live ? "After " + si.done.length + " of " + si.n + " days" : "Final standings") + '</span></div><div class="races">';
+  var h = '<div class="sec"><div class="sh"><h2>' + (live ? "Title race" : seasonLabel(S.season) + " winners") + '</h2><span class="r">' + (live ? "After " + si.done.length + " of " + seasonTotal(S.season) + " days" : "Final standings") + '</span></div><div class="races">';
   RACES.forEach(function (r) {
     var st = standings(S.season, r.k).slice(0, r.n), kind = r.kind;
     if (!st.length || (r.k !== "tm" && !st[0].pts && !st[0].mp)) { h += '<div class="race' + (live ? " live" : "") + '" style="--tint:linear-gradient(90deg,' + TINT[r.k] + ',transparent 80%)"><div class="rh"><img src="' + timg(r.logo) + '" alt=""><div><small>' + (live ? "Race for" : "Season winner") + "</small><b>" + r.t + '</b><span class="muted small">No results yet</span></div></div></div>'; return; }
     if (!live) {
       var w = ent(kind, st[0].id);
-      var rn = st.slice(1).map(function (x, i) { var e = ent(kind, x.id); return "<div><span class=\"pos\">" + ["2nd", "3rd"][i] + "</span>" + e.ph + "<span>" + e.nm + '</span><span class="muted">' + fmtPts(x.pts) + " pts</span></div>"; }).join("");
-      h += '<button type="button" class="race" style="--tint:linear-gradient(90deg,' + TINT[r.k] + ',transparent 80%);text-align:left" data-act="' + (kind === "pl" ? "perf" : kind === "pr" ? "pairpage" : "team") + '" data-id="' + st[0].id + '"><div class="award"><img class="t" src="' + timg(r.logo) + '" alt="' + r.t + '"><div><small>' + seasonLabel(S.season) + " · " + r.t + "</small><div>" + w.ph.replace('class="tlogo"', 'class="tlogo" style="width:56px;height:56px"') + '</div><span class="nm">' + w.nm + '</span><span class="pts" style="font-weight:900">' + fmtPts(st[0].pts) + " <small>PTS</small></span></div></div>" + (rn ? '<div class="runners">' + rn + "</div>" : "") + "</button>";
+      var rn = st.slice(1).map(function (x, i) { var e = ent(kind, x.id); return "<div><span class=\"pos\">" + ["2nd", "3rd"][i] + "</span>" + e.ph + "<span>" + e.nm + '</span><span class="muted">' + fmtPts(x.pts) + (kind === "pr" ? " a match" : " pts") + "</span></div>"; }).join("");
+      h += '<button type="button" class="race" style="--tint:linear-gradient(90deg,' + TINT[r.k] + ',transparent 80%);text-align:left" data-act="' + (kind === "pl" ? "perf" : kind === "pr" ? "pairpage" : "team") + '" data-id="' + st[0].id + '"><div class="award"><img class="t" src="' + timg(r.logo) + '" alt="' + r.t + '"><div><small>' + seasonLabel(S.season) + " · " + r.t + "</small><div>" + w.ph.replace('class="tlogo"', 'class="tlogo" style="width:56px;height:56px"') + '</div><span class="nm">' + w.nm + '</span><span class="pts" style="font-weight:900">' + fmtPts(st[0].pts) + " <small>" + (kind === "pr" ? "/MATCH" : "PTS") + "</small></span></div></div>" + (rn ? '<div class="runners">' + rn + "</div>" : "") + "</button>";
       return;
     }
-    var rows = st.map(function (x, i) { var e = ent(kind, x.id), tl = kind !== "tm" ? '<span class="tmn" style="color:' + (e.t && TEAM[e.t] ? tdef(e.t).light : "var(--dim)") + '">' + (e.t && TEAM[e.t] ? '<img src="' + tlogo(e.t) + '" alt="">' + esc(tname(e.t)) : "No team") + "</span>" : i === 0 ? "<small>Leading</small>" : ""; return '<div class="rrow' + (i === 0 ? " first" : "") + '"><span class="pos">' + (i + 1) + '</span><span class="avs">' + e.ph + '</span><span class="nm">' + e.nm + tl + '</span><span class="p">' + fmtPts(x.pts) + "<small>PTS</small></span></div>"; }).join("");
+    var rows = st.map(function (x, i) { var e = ent(kind, x.id), tl = kind !== "tm" ? '<span class="tmn" style="color:' + (e.t && TEAM[e.t] ? tdef(e.t).light : "var(--dim)") + '">' + (e.t && TEAM[e.t] ? '<img src="' + tlogo(e.t) + '" alt="">' + esc(tname(e.t)) : "No team") + "</span>" : i === 0 ? "<small>Leading</small>" : ""; return '<div class="rrow' + (i === 0 ? " first" : "") + '"><span class="pos">' + (i + 1) + '</span><span class="avs">' + e.ph + '</span><span class="nm">' + e.nm + tl + '</span><span class="p">' + fmtPts(x.pts) + "<small>" + (kind === "pr" ? "/MATCH" : "PTS") + "</small></span></div>"; }).join("");
     h += '<div class="race live" style="--tint:linear-gradient(90deg,' + TINT[r.k] + ',transparent 80%)"><div class="rh"><img src="' + timg(r.logo) + '" alt=""><div><small>Race for</small><b>' + r.t + '</b><span class="pill">Still in play · decided after the last day of the season</span></div></div><div class="rrows">' + rows + "</div></div>";
   });
   return h + "</div></div>";
@@ -1602,18 +1670,19 @@ h += seasonPicker() + '<div class="tabs" style="grid-template-columns:1.35fr 1fr
   var winner = T ? (bt.k === "all" ? T.pots : bt.k === "s" ? T.s1 : bt.k === "pr" ? T.pair : T.team) : null;
   h += '<div class="race-strip"><img src="' + timg(bt.race.logo) + '" alt=""' + (winner ? "" : ' class="grey"') + "><div><small>" + (winner ? seasonLabel(S.season) + " winner" : si.status === "done" ? "Not awarded" : "Race for") + "</small><b>" + bt.race.t + "</b>" + (winner ? '<span class="muted small" style="font-weight:800">' + ent(kind, winner).nm + "</span>" : si.status === "done" ? '<span class="muted small">Fewer than ' + cfg().minDays + " days played</span>" : '<span class="pill">Still in play · decided after the last day</span>') + "</div></div>";
   if (!st.length || (bt.k !== "tm" && !st.some(function (x) { return x.mp; }))) return h + '<div class="empty"><b>No results yet</b>Standings fill in as season matches are played.</div>' + rbLink();
-  var cols = bt.k === "tm" ? ["Days", "Won", "W–L", "Pts"] : ["MP", "W–L", "Win%", "Pts"];
-  h += '<div class="tbl"><div class="th"><span>#</span><span>' + (kind === "pr" ? "Pair" : kind === "tm" ? "Team" : "Player") + "</span>" + cols.map(function (c) { return "<span>" + c + "</span>"; }).join("") + "</div>";
+  var cols = bt.k === "tm" ? ["Days", "Won", "W–L", "Pts"] : bt.k === "pr" ? ["MP", "W–L", "Pts", "Avg"] : ["MP", "W–L", "Win%", "Pts"];
+  h += '<div class="tbl' + (bt.k === "pr" ? " prt" : "") + '"><div class="th"><span>#</span><span>' + (kind === "pr" ? "Pair" : kind === "tm" ? "Team" : "Player") + "</span>" + cols.map(function (c) { return "<span>" + c + "</span>"; }).join("") + "</div>";
   var C = compute(S.season);
   st.forEach(function (x, i) {
     var e = ent(kind, x.id), f = formOf(S.season, x.id, bt.k === "s" ? "s" : kind === "pr" ? "pr" : kind === "tm" ? "tm" : "all", 5).map(function (r) { return '<i class="' + r + '"></i>'; }).join("");
     var c1, c2, c3;
     if (bt.k === "tm") { var dw = 0, dp = 0; Object.keys(C.perDay).forEach(function (d) { if (DAY[d] && DAY[d].status === "done") { if (C.perDay[d].tod === x.id) dw++; } }); c1 = x.x.dn || 0; c2 = dw; c3 = x.x.w + "–" + x.x.l; }
+    else if (bt.k === "pr") { c1 = x.mp; c2 = x.w + "–" + x.l; c3 = fmtPts(x.tot); }
     else { c1 = x.mp; c2 = x.w + "–" + x.l; c3 = x.mp ? Math.round(x.w / x.mp * 100) + "%" : "–"; }
     var act = kind === "pl" ? "perf" : kind === "pr" ? "pairpage" : "team";
-    h += '<button type="button" class="tr' + (i === 0 ? " top" : "") + '" data-act="' + act + '" data-id="' + x.id + '"><span class="pos">' + (i + 1) + '</span><span class="who"><span class="avs">' + e.ph + '</span><span class="t"><span class="nmrow"><b>' + e.nm + "</b></span>" + (kind !== "tm" ? '<span class="tmn" style="color:' + (e.t && TEAM[e.t] ? tdef(e.t).light : "var(--dim)") + '">' + (e.t && TEAM[e.t] ? '<img src="' + tlogo(e.t) + '" alt="">' + esc(tname(e.t)) : "No team") + "</span>" : "") + (f ? '<span class="form fl">' + f + "</span>" : "") + '</span></span><span class="n">' + c1 + '</span><span class="n">' + c2 + '</span><span class="n">' + c3 + '</span><span class="pts">' + fmtPts(x.pts) + "</span></button>";
+    h += '<button type="button" class="tr' + (i === 0 ? " top" : "") + '" data-act="' + act + '" data-id="' + x.id + '"><span class="pos">' + (i + 1) + '</span><span class="who"><span class="avs">' + e.ph + '</span><span class="t"><span class="nmrow"><b>' + e.nm + "</b></span>" + (kind !== "tm" ? '<span class="tmn" style="color:' + (e.t && TEAM[e.t] ? tdef(e.t).light : "var(--dim)") + '">' + (e.t && TEAM[e.t] ? '<img src="' + tlogo(e.t) + '" alt="">' + esc(tname(e.t)) : "No team") + "</span>" : "") + (f ? '<span class="form fl">' + f + "</span>" : "") + '</span></span><span class="n">' + c1 + '</span><span class="n">' + c2 + '</span><span class="n">' + c3 + '</span><span class="pts"' + (x.ok === false ? ' style="color:var(--dim)"' : "") + ">" + fmtPts(x.pts) + "</span></button>";
   });
-  return h + '</div><div class="row muted tiny" style="gap:12px;padding:0 4px"><span class="row" style="gap:5px"><i style="width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block"></i>Win</span><span class="row" style="gap:5px"><i style="width:7px;height:7px;border-radius:50%;background:#5a5a78;display:inline-block"></i>Loss</span><span>Last 5 matches, newest on the right</span></div>' + rbLink();
+  return h + '</div><div class="row muted tiny" style="gap:12px;padding:0 4px"><span class="row" style="gap:5px"><i style="width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block"></i>Win</span><span class="row" style="gap:5px"><i style="width:7px;height:7px;border-radius:50%;background:#5a5a78;display:inline-block"></i>Loss</span><span>Last 5 matches, newest on the right</span></div>' + (bt.k === "pr" ? '<p class="muted tiny" style="margin:0 4px">Pairs are ranked by points per match (Avg). A pair needs ' + PAIRMIN + " matches to rank; greyed pairs aren't there yet.</p>" : "") + rbLink();
 }
 function rbLink() { return '<button type="button" class="li" data-act="rulebook" style="background:linear-gradient(90deg,rgba(139,92,255,.18),var(--surface));border:1px solid rgba(139,92,255,.4)"><span class="iconbtn" style="background:var(--grad)">' + icon("book") + '</span><span class="t"><b>How points work</b><small>Scoring, titles and badges in the Playbook</small></span><span class="ch">›</span></button>'; }
 
@@ -1690,7 +1759,7 @@ function seasonCardCanvas(sk) {
   var A = standings(sk, "all"), Sx = standings(sk, "s"), Pr = standings(sk, "pr"), Tm = standings(sk, "tm"), pts = function (st, id) { var z = st.filter(function (x) { return x.id === id; })[0]; return z ? fmtPts(z.pts) : ""; };
   var rows = [];
   [["s1", "singles-champion", "Singles Champion"], ["s2", "singles-runner-up", "Runner-up"], ["s3", "singles-third-place", "Third place"]].forEach(function (z) { if (T[z[0]]) rows.push({ t: z[1], ids: [T[z[0]]], name: pname(T[z[0]]), label: z[2] + " · " + pts(Sx, T[z[0]]), col: pcol(T[z[0]]) }); });
-  if (T.pair && PAIR[T.pair]) { var pr = PAIR[T.pair]; rows.push({ t: "champion-pair", ids: [pr.a, pr.b], name: pname(pr.a) + " & " + pname(pr.b), label: "Champion Pair · " + pts(Pr, T.pair), col: pcol(pr.a) }); }
+  if (T.pair && PAIR[T.pair]) { var pr = PAIR[T.pair]; rows.push({ t: "champion-pair", ids: [pr.a, pr.b], name: pname(pr.a) + " & " + pname(pr.b), label: "Champion Pair · " + pts(Pr, T.pair) + " a match", col: pcol(pr.a) }); }
   if (T.team) rows.push({ t: "champion-team", crest: T.team, ids: [], name: tname(T.team), label: "Champion Team · " + pts(Tm, T.team), col: tdef(T.team).color });
   var srcs = [ASSET.logo, timg("player-of-the-season"), T.pots && P[T.pots] && okPhoto(P[T.pots].photo) ? P[T.pots].photo : ""].concat(rows.map(function (r) { return timg(r.t); }), rows.map(function (r) { return r.crest ? tlogo(r.crest) : ""; }), [].concat.apply([], rows.map(function (r) { return r.ids.map(function (id) { return P[id] && okPhoto(P[id].photo) ? P[id].photo : ""; }); })));
   return Promise.all(srcs.map(shImg)).then(function (im) {
@@ -1796,7 +1865,7 @@ function viewSetup(d) {
   h += '<div class="step"><i>3</i>Playing order</div>';
   var plan = planDay(d);
   if (!ms.length) {
-    h += (plan.warn.length ? '<div class="priv">' + plan.warn.map(esc).join("<br>") + "</div>" : "") + '<button type="button" class="btn big" data-act="suggest">Suggest a fair order</button><p class="muted small" style="text-align:center;margin:-6px 0 0">Singles: every present player gets the same number of matches. Team doubles: every team gets the same number of matches.</p>';
+    h += (plan.warn.length ? '<div class="priv">' + plan.warn.map(esc).join("<br>") + "</div>" : "") + '<button type="button" class="btn big" data-act="suggest">Suggest a fair order</button><p class="muted small" style="text-align:center;margin:-6px 0 0">Everyone present gets the same number of singles and doubles (doubles at most one apart), up to 4 of each, as many as fit the court time. Nobody plays twice in a row if it can be avoided.</p>';
   } else {
     h += orderList(d, ms, true);
     var fr = fairness(ms);
@@ -1950,7 +2019,7 @@ function teamDoublesBox(d, t) {
   var h = '<div class="repbox"><span class="h">' + esc(tname(t)) + " · team doubles tonight</span>";
   if (x) {
     h += x.pairs.map(function (p) { return '<span style="font-size:13.5px;font-weight:700">' + avs(p.ids, "sm") + " " + names(p.ids) + "</span>"; }).join("");
-    if (pres.length % 2 && pres.length > 1) h += '<span class="muted small">Reserve tonight: <b style="color:#fff">' + esc(pname(x.spare[0] || "")) + '</b>. The reserve can come in for an injured player during a match. Tap to change who starts as reserve:</span><div class="row" style="flex-wrap:wrap;gap:6px">' + pres.map(function (id) { return '<button type="button" class="btn sm ' + (x.spare[0] === id ? "" : "ghost") + '" data-act="spare" data-id="' + t + '" data-v="' + id + '">' + esc(pname(id)) + "</button>"; }).join("") + "</div>";
+    if (x.rot) h += '<span class="muted small">All three pairs rotate tonight, so each player plays the same number of doubles.</span>';
   } else if (pres.length === 1) {
     h += '<span class="muted small">Only ' + esc(pname(pres[0])) + " is here, so " + esc(tname(t)) + " sits out of team doubles tonight. " + esc(pname(pres[0])) + " still plays singles.</span>";
   }
@@ -1980,10 +2049,10 @@ function liveRanks(d, skipLast) {
   done.forEach(function (m) {
     var c = m._calc, wS = c.w, lS = wS === "a" ? "b" : "a", wp = c.wpts + c.ups + c.fast;
     if (m.type === "s") { m[wS].forEach(function (id) { if (P[id]) { var x = ac(pd.pl, id); x.s += wp; x.sw++; } }); m[lS].forEach(function (id) { if (P[id]) { var x = ac(pd.pl, id); x.s += c.lpts; x.sl++; } }); return; }
-    var T = matchTeams(m); if (T[wS] && T[lS] && T[wS] !== T[lS]) { var a = ac(pd.tm, T[wS]), b = ac(pd.tm, T[lS]); a.dp += c.wpts; a.w++; b.dp += c.lpts; b.l++; }
+    var T = matchTeams(m); if (T[wS] && T[lS] && T[wS] !== T[lS]) { var a = ac(pd.tm, T[wS]), b = ac(pd.tm, T[lS]); a.dp += c.wpts; a.w++; b.dp += c.lpts; b.l++; var DS = pd.dset = pd.dset || {}; [[T[wS], m[wS]], [T[lS], m[lS]]].forEach(function (z) { DS[z[0]] = DS[z[0]] || {}; z[1].forEach(function (id) { DS[z[0]][id] = 1; }); }); }
     [[wS, wp, 1], [lS, c.lpts, 0]].forEach(function (z) { var k = m[z[0]].slice().sort().join("+"), x = du[k] = du[k] || { ids: m[z[0]].slice(), pts: 0, w: 0 }; x.pts += z[1]; x.w += z[2]; });
   });
-  teamDayScores(pd, {}, ac);
+  teamDayScores(pd, {}, ac, d);
   var tm = Object.keys(pd.tm).filter(function (t) { return pd.tm[t].played && TEAM[t]; }).sort(function (a, b) { return pd.tm[b].pts - pd.tm[a].pts; });
   var sg = Object.keys(pd.pl).filter(function (id) { return pd.pl[id].sw + pd.pl[id].sl > 0; }).sort(function (a, b) { return pd.pl[b].s - pd.pl[a].s || pd.pl[b].sw - pd.pl[a].sw || (a < b ? -1 : 1); });
   var dk = Object.keys(du).sort(function (a, b) { return du[b].pts - du[a].pts || du[b].w - du[a].w || (a < b ? -1 : 1); });
@@ -1997,7 +2066,7 @@ function liveBoard(d) {
   var R = liveRanks(d), mv = rankMove(d, R), h = "", now = R.ms.filter(function (m) { return m.status === "live"; }), next = R.ms.filter(function (m) { return m.status === "planned"; })[0];
   if (now.length || next) h += '<div class="nowp">' + now.map(function (m) { return '<small>NOW PLAYING' + (m.paused ? " · PAUSED" : ' · <span class="timer" data-start="' + m.st + '">' + mmss(Date.now() - m.st) + "</span>") + "</small><b>" + names(m.a) + " vs " + names(m.b) + "</b>"; }).join("") + (next ? "<small>Up next: " + names(next.a) + " vs " + names(next.b) + "</small>" : "") + "</div>";
   h += '<div class="sh"><h3>Teams tonight</h3><span class="r">Provisional</span></div>';
-  h += R.tm.length ? '<div class="list">' + R.tm.map(function (t, i) { var x = R.pd.tm[t]; return '<div class="lr">' + '<img class="tlogo" src="' + tlogo(t) + '" alt=""><span class="t"><b style="color:' + tdef(t).color + '">' + esc(tname(t)) + '</b><span class="trk"><i style="width:' + Math.min(100, x.pts) + "%;background:" + tdef(t).color + '"></i></span><small>Singles ' + fmtPts(x.sIdx) + " · Doubles " + (x.dIdx == null ? "—" : fmtPts(x.dIdx)) + '</small></span><b class="tot">' + fmtPts(x.pts) + "</b>" + mv("tm", t, i) + "</div>"; }).join("") + "</div>" : '<div class="empty" style="padding:16px">Team scores appear after the first match.</div>';
+  h += R.tm.length ? '<div class="list">' + R.tm.map(function (t, i) { var x = R.pd.tm[t]; return '<div class="lr">' + '<img class="tlogo" src="' + tlogo(t) + '" alt=""><span class="t"><b style="color:' + tdef(t).color + '">' + esc(tname(t)) + '</b><span class="trk"><i style="width:' + Math.min(100, x.pts) + "%;background:" + tdef(t).color + '"></i></span><small>Singles ' + fmtPts(x.sIdx) + " · Doubles " + (x.dIdx == null ? "—" : fmtPts(x.dIdx)) + (x.full ? " · Full squad +" + cfg().sc.full : "") + '</small></span><b class="tot">' + fmtPts(x.pts) + "</b>" + mv("tm", t, i) + "</div>"; }).join("") + "</div>" : '<div class="empty" style="padding:16px">Team scores appear after the first match.</div>';
   h += '<div class="sh"><h3>Singles</h3><span class="r">Points tonight</span></div>';
   h += R.sg.length ? '<div class="list">' + R.sg.map(function (id, i) { var x = R.pd.pl[id]; return '<div class="lr"><span class="pos">' + (i + 1) + "</span>" + av(id) + '<span class="t"><b>' + nm(id) + "</b><small>" + x.sw + "–" + x.sl + '</small></span><b class="tot">' + x.s + "</b>" + mv("sg", id, i) + "</div>"; }).join("") + "</div>" : '<div class="empty" style="padding:16px">No singles finished yet.</div>';
   if (R.dk.length) h += '<div class="sh"><h3>Doubles duos</h3><span class="r">Points tonight</span></div><div class="list">' + R.dk.map(function (k, i) { var x = R.du[k]; return '<div class="lr"><span class="pos">' + (i + 1) + "</span>" + avs(x.ids, "sm") + '<span class="t"><b>' + names(x.ids) + "</b><small>" + plural(x.w, "win") + '</small></span><b class="tot">' + x.pts + "</b>" + mv("dk", k, i) + "</div>"; }).join("") + "</div>";
@@ -2151,8 +2220,8 @@ function captainCorner(t) {
     h += '<div class="cbox"><b>Line-up · ' + fmtD(d.date) + "</b>";
     if (mem.length < MINTEAM) h += "<small>Singles only until a second player joins.</small>";
     else {
-      var pairs = L ? L.pairs : auto ? auto.pairs.map(function (p) { return p.ids; }) : [], res = L ? L.reserve : auto && auto.spare[0];
-      h += pairs.map(function (p) { return '<div class="lu">' + avs(p, "sm") + "<span>" + names(p) + "</span></div>"; }).join("") + (res ? "<small>Reserve: " + esc(pname(res)) + "</small>" : "") + "<small>" + (L ? "Set by " + esc(pname(L.by)) : "Picked by the app. Set your own before the day starts.") + "</small>" + (d.status === "upcoming" ? '<button type="button" class="lnk" data-act="lineup" data-id="' + t + '">' + (L ? "Change line-up" : "Set line-up") + "</button>" : "<small>Locked: the day has started.</small>");
+      var rot = auto && auto.rot, pairs = L && !rot ? L.pairs : auto ? auto.pairs.map(function (p) { return p.ids; }) : [], res = "";
+      h += pairs.map(function (p) { return '<div class="lu">' + avs(p, "sm") + "<span>" + names(p) + "</span></div>"; }).join("") + (res ? "<small>Reserve: " + esc(pname(res)) + "</small>" : "") + "<small>" + (rot ? "All three pairs rotate, so everyone plays the same number of doubles." : mem.length < 4 ? "Your two players are the pair." : L ? "Set by " + esc(pname(L.by)) : "Picked by the app. Set your own before the day starts.") + "</small>" + (d.status === "upcoming" && mem.length >= 4 ? '<button type="button" class="lnk" data-act="lineup" data-id="' + t + '">' + (L ? "Change line-up" : "Set line-up") + "</button>" : "<small>Locked: the day has started.</small>");
     }
     h += "</div>";
     var noReply = mem.filter(function (p) { return !d.rsvp[p.id] && !onBreak(p, d.date); });
@@ -2310,7 +2379,7 @@ function seasonBudget() {
   var done = D.settles.filter(function (s) { return s.season === sk; }).sort(function (a, b) { return num(b.ts) - num(a.ts); });
   if (done.length) h += '<details class="sec setd"><summary>Settled payments · ' + done.length + '</summary><div class="list">' + done.map(function (s) { return '<div class="li"><span class="t"><b>' + nm(s.from) + " paid " + nm(s.to) + "</b><small>" + money(num(s.amount)) + " · " + fmtD(dateOf(s.ts)) + "</small></span>" + (staff() ? '<button type="button" class="btn sm ghost" data-act="unsettle" data-id="' + s.id + '">Undo</button>' : "") + "</div>"; }).join("") + "</div></details>";
   var f = fundState();
-  h += '<div class="fund"><small>Club fund · all time</small><span class="bigv">' + money(f.fund) + ' left</span><div class="ln"><span>Donations in</span><b>' + money(f.don) + '</b></div><div class="ln"><span>Used</span><b>' + money(f.used) + "</b></div>" + (f.owed.length ? '<div class="ln"><span>Still to pay back</span><b>' + money(sum(f.owed.map(function (x) { return x.amount; }))) + "</b></div>" : "") + (f.bought ? '<div class="ln"><span>Shuttlecocks in stock</span><b>' + f.stock + "</b></div>" : "") + "</div>";
+  h += '<div class="fund"><small>Club fund · all time</small><span class="bigv">' + money(f.fund) + ' left</span><div class="ln"><span>Donations in</span><b>' + money(f.don) + '</b></div><div class="ln"><span>Used</span><b>' + money(f.used) + "</b></div>" + (f.owed.length ? '<div class="ln"><span>Still to pay back</span><b>' + money(sum(f.owed.map(function (x) { return x.amount; }))) + "</b></div>" : "") + "</div>";
   if (f.owed.length) { var by = {}; f.owed.forEach(function (x) { by[x.payer] = (by[x.payer] || 0) + x.amount; }); h += Object.keys(by).map(function (k) { return '<div class="owe"><span>Club fund owes ' + esc(pname(k)) + " " + money(by[k]) + "</span>" + (staff() ? '<button type="button" class="btn sm ghost" data-act="repay" data-id="' + k + '">Mark as repaid</button>' : "") + "</div>"; }).join(""); }
   return h;
 }
@@ -2318,13 +2387,12 @@ function dateOf(ts) { var d = new Date(num(ts) || Date.now()); return d.getFullY
 function expRow(e) {
   var x = e.cat && e.season ? e : exN(e), title = x.item || exLabel(x);
   if (x.cat === "court" && x.hours && x.rate && !x.item) title = "Court fees · " + x.hours + " h × " + money(x.rate).replace("LKR ", "");
-  return '<button type="button" class="li"' + (staff() ? ' data-act="expedit" data-id="' + x.id + '"' : "") + '><span class="fi sm ' + x.cat + '">' + FCAT[x.cat][1] + '</span><span class="t"><b>' + esc(title) + "</b><small>" + (x.item ? esc(exLabel(x)) + " · " : "") + fmtD(x.date) + (x.day ? "" : " · off day") + (x.qty ? " · " + x.qty + " pcs" : "") + (x.payer ? " · paid by " + esc(pname(x.payer)) : "") + "</small><small>" + exHow(x) + (x.mode === "fund" && x.payer ? (x.repaid ? " · repaid" : " · to repay") : "") + '</small></span><span class="amt out">' + money(x.amount).replace("LKR ", "") + "</span></button>";
+  return '<button type="button" class="li"' + (staff() ? ' data-act="expedit" data-id="' + x.id + '"' : "") + '><span class="fi sm ' + x.cat + '">' + FCAT[x.cat][1] + '</span><span class="t"><b>' + esc(title) + "</b><small>" + (x.item ? esc(exLabel(x)) + " · " : "") + fmtD(x.date) + (x.day ? "" : " · off day") + (x.payer ? " · paid by " + esc(pname(x.payer)) : "") + "</small><small>" + exHow(x) + (x.mode === "fund" && x.payer ? (x.repaid ? " · repaid" : " · to repay") : "") + '</small></span><span class="amt out">' + money(x.amount).replace("LKR ", "") + "</span></button>";
 }
 function budgetDay(d) {
   var ex = exAll().filter(function (x) { return x.day === d.date; }), t = sum(ex.map(function (x) { return x.amount; })), n = presentIds(d).length;
-  if (!S.me || (!ex.length && !staff() && !d.shuttles)) return "";
+  if (!S.me || (!ex.length && !staff())) return "";
   var h = '<div class="sec"><div class="sh"><h3>Day costs</h3><span class="r">' + money(t) + (n ? " · " + money(t / n) + " a head" : "") + '</span></div><div class="list">' + ex.map(expRow).join("") + "</div>";
-  h += '<div class="set"><button type="button" class="r"' + (staff() ? ' data-act="shuttles" data-v="' + d.date + '"' : "") + "><span>Shuttles used<small>Stock left: " + fundState().stock + "</small></span><b>" + (d.shuttles || 0) + (staff() ? " ›" : "") + "</b></button></div>";
   if (staff()) h += '<button type="button" class="add" data-act="expnew" data-v="' + d.date + '">+ Add a cost for this day</button>';
   return h + "</div>";
 }
@@ -2441,16 +2509,16 @@ function viewPerf(pid) {
   var p = P[pid]; if (!p) return hdr("Player", true) + '<div class="empty">This player isn\'t in the club any more.</div>';
   if (seasonsAll().indexOf(S.season) < 0) S.season = defaultSeason();
   var t = p.team, x = accFor("pl", pid), ms = matchesFor("pl", pid), rk = p.racket && p.racket.brand ? p.racket.brand + (p.racket.model ? " " + p.racket.model : "") : "";
-  var h = hdr("Player", true) + '<div class="ph" style="' + teamVars(t) + '">' + (okPhoto(p.photo) ? '<button type="button" class="phb" data-act="photo" data-id="' + pid + '" aria-label="View photo full screen">' + av(pid) + "</button>" : av(pid)) + "<div><b>" + esc(p.display) + "</b><small>" + esc(p.first + " " + p.last) + "</small><small>" + teamTag(t) + " " + roleTag(pid) + (p.arm ? " · " + (p.arm === "left" ? "Left" : "Right") + "-handed" : "") + (rk ? " · " + esc(rk) : "") + (onBreak(p) ? ' · <span class="tag brk">On break</span>' : "") + "</small></div></div>";
+  var h = hdr("Player", true) + '<div class="ph" style="' + teamVars(t) + '">' + (okPhoto(p.photo) ? '<button type="button" class="phb" data-act="photo" data-id="' + pid + '" aria-label="View photo full screen">' + av(pid) + "</button>" : av(pid)) + "<div><b>" + esc(p.display) + "</b><small>" + esc(p.first + " " + p.last) + '</small><span class="phtags">' + teamTag(t) + " " + roleTag(pid) + (onBreak(p) ? '<span class="tag brk">On break</span>' : "") + "</span>" + (p.arm || rk ? '<span class="phgear">' + (p.arm ? "<span>" + icon("hand", 15) + (p.arm === "left" ? "Left" : "Right") + "-handed</span>" : "") + (rk ? "<span>" + icon("racket", 15) + esc(rk) + "</span>" : "") + "</span>" : "") + "</div></div>";
   var mine = pid === S.me, canEd = mine || canManageTeam(t);
   if (canEd) h += '<div class="row" style="gap:8px">' + '<button type="button" class="btn sm ghost" data-act="pedit" data-id="' + pid + '">Edit profile</button>' + (mine ? '<button type="button" class="btn sm ghost" data-act="breaknew" data-id="' + pid + '">Set a break</button>' : "") + "</div>";
   var bk = bankOf(pid); if (S.me && bk.no) h += '<div class="set"><div class="r"><span>Bank details<small>' + esc([bk.name, bk.bank, bk.branch].filter(Boolean).join(" · ")) + "</small></span><b>" + esc(bk.no) + "</b></div></div>";
   if (seasonsAll().length) h += segSwitch();
   if (S.perfSeg === "season" && seasonsAll().length) {
     var si = seasonInfo(S.season), pr = myPairOf(pid), rows = [["all", "player-of-the-season", pid], ["s", "singles-champion", pid], ["pr", "champion-pair", pr]];
-    h += '<div class="sh"><h3>Title races</h3><span class="r">' + (si.status === "done" ? "Final" : "Day " + si.done.length + " of " + si.n) + '</span></div><div class="pos3">' + rows.map(function (r) {
+    h += '<div class="sh"><h3>Title races</h3><span class="r">' + (si.status === "done" ? "Final" : "Day " + si.done.length + " of " + seasonTotal(S.season)) + '</span></div><div class="pos3">' + rows.map(function (r) {
       var st = standings(S.season, r[0]), i = r[2] ? st.map(function (z) { return z.id; }).indexOf(r[2]) : -1, live = si.status !== "done";
-      return '<div><img src="' + timg(r[1]) + '" alt=""' + (live ? ' class="grey"' : "") + "><b>" + (i >= 0 ? ordinal(i + 1) : "–") + "</b><small>" + (i >= 0 ? (r[0] === "pr" ? "with " + esc(pname(PAIR[pr].a === pid ? PAIR[pr].b : PAIR[pr].a)) + " · " : "") + st[i].pts + " pts" : r[0] === "pr" && !pr ? "No pair" : "Not ranked") + "</small></div>";
+      return '<div><img src="' + timg(r[1]) + '" alt=""' + (live ? ' class="grey"' : "") + "><b>" + (i >= 0 ? ordinal(i + 1) : "–") + "</b><small>" + (i >= 0 ? (r[0] === "pr" ? "with " + esc(pname(PAIR[pr].a === pid ? PAIR[pr].b : PAIR[pr].a)) + " · " : "") + fmtPts(st[i].pts) + (r[0] === "pr" ? " a match" : " pts") : r[0] === "pr" && !pr ? "No pair" : "Not ranked") + "</small></div>";
     }).join("") + "</div>";
   }
   var sp = x.sw + x.sl, dp = x.dw + x.dl;
@@ -2515,7 +2583,7 @@ function viewRulebook(embedded) {
     var sec = function (id, ic, title, sub, body) { return '<section class="rbs" id="rb-' + id + '"><div class="rbh"><span class="rbi">' + ic + "</span><div><h3>" + title + "</h3>" + (sub ? "<small>" + sub + "</small>" : "") + "</div></div>" + body + "</section>"; };
     var J = [["basics", "Basics"], ["roles", "Who does what"], ["s", "Singles"], ["d", "Doubles"], ["bon", "Bonus points"], ["tm", "Team score"], ["where", "Titles"], ["ties", "Ties"]];
     h += '<div class="rbjump">' + J.map(function (j) { return '<button type="button" data-act="rbjump" data-v="' + j[0] + '">' + j[1] + "</button>"; }).join("") + "</div>";
-    h += sec("basics", "1", "The basics", "How the club plays", '<ul class="rbl stack">' + R("Seasons", "", "Each calendar month is a season. It needs at least " + c.minDays + " completed playing days to award titles.") + R("Who plays the season", "", "Only players in a team. Players without a team and guests play practice and open matches.") + R("Each playing day", "", "Singles first, then team doubles. Every present player plays the same number of singles, and every team with 2 players there plays the same number of team doubles.") + R("Games", "", "Played to 11, 15 or 21, set for the day.") + R("Deuce", "", "At 10-all (to 11), 14-all (to 15) or 20-all (to 21) you must win by 2. The game is capped at 15, 21 or 30.") + R("Partners", "", "Season doubles partners come from your own team. No guests in season matches.") + R("Reserves", "", "A team of 3 or 4 has a reserve. The reserve plays if a pair member is absent, or comes in for an injury mid-match. An injured player keeps the attendance point; an absent player doesn\'t get one.") + R("Practice match", "", "Club members only. Scores and head-to-head only: no season points, no day titles.") + R("Open match", "", "At least one guest. No season points. Decides Lone Wolf of the Day.") + R("Courts", "", "Up to 6 courts (A to F), ticked for each day. When only one court is booked, court labels are hidden.") + R("Attendance", "", "The Host marks each player Present, On the way or Absent. On the way players stay in the order, with their matches moved later. When they arrive they become Present. If they don\'t come, they\'re marked Absent and their matches become Not played. Attendance points are only for Present.") + "</ul>");
+    h += sec("basics", "1", "The basics", "How the club plays", '<ul class="rbl stack">' + R("Seasons", "", "Each calendar month is a season. It needs at least " + c.minDays + " completed playing days to award titles.") + R("Who plays the season", "", "Only players in a team. Players without a team and guests play practice and open matches.") + R("Each playing day", "", "Singles first, then team doubles. Everyone present plays the same number of singles and the same number of doubles (doubles at most one apart), up to 4 of each: as many as fit the court time. Nobody plays twice in a row if it can be avoided.") + R("Games", "", "Played to 11, 15 or 21, set for the day.") + R("Deuce", "", "At 10-all (to 11), 14-all (to 15) or 20-all (to 21) you must win by 2. The game is capped at 15, 21 or 30.") + R("Partners", "", "Season doubles partners come from your own team. No guests in season matches.") + R("Pairs", "", "A team of 2 is one pair. A team of 3 rotates all three pairs. A team of 4 plays as two pairs, chosen by the captain or the app.") + R("Injuries", "", "A teammate can come in for an injured player mid-match. An injured player keeps the attendance point; an absent player doesn\'t get one.") + R("Practice match", "", "Club members only. Scores and head-to-head only: no season points, no day titles.") + R("Open match", "", "At least one guest. No season points. Decides Lone Wolf of the Day.") + R("Courts", "", "Up to 6 courts (A to F), ticked for each day. When only one court is booked, court labels are hidden.") + R("Attendance", "", "The Host marks each player Present, On the way or Absent. On the way players stay in the order, with their matches moved later. When they arrive they become Present. If they don\'t come, they\'re marked Absent and their matches become Not played. Attendance points are only for Present.") + "</ul>");
     h += sec("roles", "★", "Who does what", "Roles in the club", '<ul class="rbl stack">' + R("Club Lead", "", "Runs the club: teams, captains, transfers, Hosts, settings and Start fresh. Can also do everything a Host does.") + R("Host", "", "Runs playing days: scheduling, attendance, the match order, scores and corrections. Also records donations and the season budget. A captain can be a Host too.") + R("Captain", "", "Sets the team line-up (pairs and reserve) before the day starts, or lets the app pick. Checks availability and can nudge players, handles join requests and transfers, posts a team notice, sets breaks, and confirms or flags the team\'s doubles results. Captains don\'t enter scores.") + R("Match corrections", "", "If the wrong match was started, the Host picks the right one and the time already played moves across. Matches can be paused with a reason (paused time isn\'t counted) or their start undone. Every correction is saved in the history.") + "</ul>");
     h += sec("s", "2", "Singles points", "Per match, for the player", '<ul class="rbl">' + R("Win", sc.sw) + R("Loss", 0, "Unless it was a close match: see bonus points", "mu") + "</ul>");
     h += sec("d", "3", "Doubles points", "Per match, for each player and for the pair", '<ul class="rbl">' + R("Win", sc.dw) + R("Loss", 0, "Unless it was a close match: see bonus points", "mu") + "</ul>");
@@ -2525,12 +2593,12 @@ function viewRulebook(embedded) {
       '<div class="wd ups"><b>Upset</b><p>You <u>beat someone ranked above you</u> on the standings at the start of the day.</p><div class="wpts"><span>Singles <b>+' + sc.us + '</b></span><span>Doubles <b>+' + sc.ud + '</b></span><small>for the winner</small></div><ul class="mini"><li><b>Singles:</b> both players need at least 3 season matches first.</li><li><b>Doubles:</b> compares pair rankings, or average player rankings if a side isn\'t a registered pair.</li></ul></div></div>' +
       '<ul class="rbl">' + R("Fastest singles match of the day", "+" + sc.fs, "Winner of the shortest completed singles", "pl") + R("Fastest doubles match of the day", "+" + sc.fd, "Winning pair of the shortest completed doubles", "pl") + R("Attendance", "+" + sc.att, "Each playing day you attend, team players only. A pair gets it when both are present.", "pl") + "</ul>" +
       '<p class="rbp">Example: a dominant singles win is ' + sc.sw + " + " + sc.sd + " = " + (sc.sw + sc.sd) + " points.</p>");
-    h += sec("tm", "T", "Team score", "Singles 40% + team doubles 60%, every playing day", '<ul class="rbl stack">' + R("Singles part", "", "Each team\'s average singles points per player who played singles, as a percentage of the best team\'s average.") + R("Doubles part", "", "Each team\'s team doubles points, as a percentage of the best team\'s.") + R("Day score", "", "0.4 × singles part + 0.6 × doubles part. A team that can\'t play doubles that day scores 0 for doubles. If nobody played doubles, singles counts 100% (and the other way round).") + R("Team of the Day", "+" + sc.tod, "The best day score, if no tie.", "pl") + R("Season total", "", "All day scores added up, plus Team of the Day bonuses. This decides Champion Team.") + '</ul><p class="rbp">Example: the best singles average and second-best doubles (80%) gives 0.4 × 100 + 0.6 × 80 = 88 for the day.</p>');
-    h += sec("where", "★", "Which points count for each title", "", '<ul class="rbl stack">' + R("Player of the Season", "", "Singles + doubles + bonuses + attendance") + R("Singles Champion", "", "Singles points only") + R("Champion Pair", "", "Doubles + attendance, earned together as that pair") + R("Champion Team", "", "Team day scores (singles 40% + team doubles 60%) + Team of the Day") + R("Singles Star and Doubles Duo of the Day", "", "Season matches that day only") + R("Lone Wolf of the Day", "", "Open matches that day, for guests and players without a team") + "</ul>");
+    h += sec("tm", "T", "Team score", "Singles 40% + team doubles 60%, every playing day", '<ul class="rbl stack">' + R("Singles part", "", "Each team\'s average singles points per player who played singles, as a percentage of the best team\'s average.") + R("Doubles part", "", "Each team\'s team doubles points per player who played doubles, as a percentage of the best team\'s. Bigger teams aren\'t helped or hurt by their size.") + R("Day score", "", "0.4 × singles part + 0.6 × doubles part, rounded to a whole number. A team that can\'t play doubles that day scores 0 for doubles. If nobody played doubles, singles counts 100% (and the other way round).") + R("Full squad", "+" + sc.full, "Every member of the team is there (teams of 2 or more; players on a break don\'t count).", "pl") + R("Team of the Day", "+" + sc.tod, "The best day score, if no tie.", "pl") + R("Season total", "", "All day scores added up, plus Team of the Day bonuses. This decides Champion Team.") + '</ul><p class="rbp">Example: the best singles average and 80% of the best doubles gives 0.4 × 100 + 0.6 × 80 = 88. With the whole squad there it\'s 93.</p>');
+    h += sec("where", "★", "Which points count for each title", "", '<ul class="rbl stack">' + R("Player of the Season", "", "Singles + doubles + bonuses + attendance") + R("Singles Champion", "", "Singles points only") + R("Champion Pair", "", "Points per match as that pair (doubles + attendance). A pair needs " + PAIRMIN + " matches to rank.") + R("Champion Team", "", "Team day scores (singles 40% + team doubles 60%) + Team of the Day") + R("Singles Star and Doubles Duo of the Day", "", "Season matches that day only") + R("Lone Wolf of the Day", "", "Open matches that day, for guests and players without a team") + "</ul>");
     h += sec("ties", "=", "Ties", "", '<ul class="rbl stack">' + R("Level on points", "", "Most wins first, then head-to-head, then fewest points conceded.") + "</ul>");
   } else if (tab === 1) {
     var ti = function (k, n, d, r) { return '<div class="ti"><img src="' + timg(k) + '" alt="' + n + '" loading="lazy"><b style="font-size:13px">' + n + "</b><small>" + d + '</small><span class="rep">' + r + "</span></div>"; };
-    h += '<p class="muted small" style="margin:0">Titles can be won again and again. They go in each player\'s trophy cabinet.</p><div class="grp" style="color:var(--sub)">Season titles · each month</div><div class="tgrid">' + ti("player-of-the-season", "Player of the Season", "Most points overall: singles, doubles and attendance.", "Every season") + ti("singles-champion", "Singles Champion", "1st on season singles points.", "Every season") + ti("singles-runner-up", "Singles Runner-up", "2nd on season singles points.", "Every season") + ti("singles-third-place", "Singles Third Place", "3rd on season singles points.", "Every season") + ti("champion-pair", "Champion Pair", "Most pair points (doubles only).", "Every season") + ti("champion-team", "Champion Team", "Highest total of team day scores, plus Team of the Day bonuses.", "Every season") + '</div><div class="grp" style="color:var(--sub)">Day titles · every playing day</div><div class="tgrid">' + ti("singles-star-of-the-day", "Singles Star of the Day", "Most singles points that day.", "Every day") + ti("doubles-duo-of-the-day", "Doubles Duo of the Day", "The pair with the most doubles points that day.", "Every day") + ti("team-of-the-day", "Team of the Day", "Best team day score that day. Earns +" + sc.tod + ".", "Every day") + ti("lone-wolf-of-the-day", "Lone Wolf of the Day", "For guests and players without a team, when 2 or more play open matches that day: most points from open matches.", "Every day") + "</div>";
+    h += '<p class="muted small" style="margin:0">Titles can be won again and again. They go in each player\'s trophy cabinet.</p><div class="grp" style="color:var(--sub)">Season titles · each month</div><div class="tgrid">' + ti("player-of-the-season", "Player of the Season", "Most points overall: singles, doubles and attendance.", "Every season") + ti("singles-champion", "Singles Champion", "1st on season singles points.", "Every season") + ti("singles-runner-up", "Singles Runner-up", "2nd on season singles points.", "Every season") + ti("singles-third-place", "Singles Third Place", "3rd on season singles points.", "Every season") + ti("champion-pair", "Champion Pair", "Most points per match as a pair (at least " + PAIRMIN + " matches).", "Every season") + ti("champion-team", "Champion Team", "Highest total of team day scores, plus Team of the Day bonuses.", "Every season") + '</div><div class="grp" style="color:var(--sub)">Day titles · every playing day</div><div class="tgrid">' + ti("singles-star-of-the-day", "Singles Star of the Day", "Most singles points that day.", "Every day") + ti("doubles-duo-of-the-day", "Doubles Duo of the Day", "The pair with the most doubles points that day.", "Every day") + ti("team-of-the-day", "Team of the Day", "Best team day score that day. Earns +" + sc.tod + ".", "Every day") + ti("lone-wolf-of-the-day", "Lone Wolf of the Day", "For guests and players without a team, when 2 or more play open matches that day: most points from open matches.", "Every day") + "</div>";
   } else {
     var bo = S.me ? badgesOf(S.me) : {};
     h += '<p class="muted small" style="margin:0">' + BADGES.length + ' badges. Each is earned once and kept forever.' + (S.me ? " Ones you haven't earned yet are greyed out." : "") + '</p><div class="tgrid">' + BADGES.map(function (b) { var got = !!bo[b.k]; return '<div class="ti' + (S.me && !got ? " lock" : "") + '"><img src="' + bimg(b.k) + '" alt="" loading="lazy"><b style="font-size:13px">' + b.n + '</b><span class="rep"' + (S.me ? ' style="color:' + (got ? "var(--lime)" : "var(--sub)") + '"' : "") + ">" + b.who + (S.me ? (got ? " · Earned" : " · Locked") : "") + "</span><small>" + b.c + "</small></div>"; }).join("") + "</div>";
@@ -2587,7 +2655,7 @@ function startDay(date) {
   var now = new Date(), nowM = now.getHours() * 60 + now.getMinutes(), end = d.end || cfg().end, t0 = d.time || cfg().time, from = date === todayStr() && nowM > minsOf(t0) && nowM < minsOf(end) - 30 ? tOf(Math.ceil(nowM / 5) * 5) : t0, mid = tOf(Math.round((minsOf(from) + minsOf(end)) / 2 / 5) * 5);
   var c = cfg(), fmt = { s: { on: true, to: c.toS, from: from, until: mid }, d: { on: true, to: c.toD, from: mid, until: end } };
   var att = {}; Object.keys(d.rsvp).forEach(function (k) { if (d.rsvp[k] === "yes" && P[k] && !onBreak(P[k], date)) att[k] = "p"; });
-  dayUp(d, { status: "setup", startedAt: Date.now(), startedBy: S.me, fmt: fmt, att: att }).then(function () { audit("Started " + fmtD(date)); toast("Day started. Take attendance."); });
+  dayUp(d, { status: "setup", startedAt: Date.now(), startedBy: S.me, fmt: fmt, att: att, squads: squadSnap(date) }).then(function () { audit("Started " + fmtD(date)); toast("Day started. Take attendance."); });
 }
 function undoStart(date) {
   var d = DAY[date]; if (!d) return;
@@ -2644,8 +2712,8 @@ function buildOrder(opts) {
 }
 function trim(seg) {
   var d = currentDay(), ms = dayMatches(d.date), f = fitOf(d, seg, ms), r = {}; r[seg] = f.fitRounds;
-  var o = seg === "s" ? "d" : "s", ex = ms.filter(function (m) { return m.type === o && m.cat === "season"; }).length, n = o === "s" ? presentIds(d).length : dayTeamsD(d).length;
-  if (ex && n) r[o] = Math.round(ex * 2 / n);
+  var o = seg === "s" ? "d" : "s", per = {}; ms.filter(function (m) { return m.type === o && m.cat === "season"; }).forEach(function (m) { m.a.concat(m.b).forEach(function (id) { per[id] = (per[id] || 0) + 1; }); });
+  var vals2 = Object.keys(per).map(function (k) { return per[k]; }); if (vals2.length) r[o] = Math.max.apply(null, vals2);
   buildOrder({ rounds: r });
 }
 function setSpare(t, pid) { var d = currentDay(); if (!d) return; var o = {}; o[t] = pid; dayUp(d, { spare: o }).then(function () { return Promise.all(dayMatches(d.date).filter(function (m) { return m.status === "planned" && m.type === "d"; }).map(function (m) { return db.doc("matches/" + m.id).delete(); })); }).then(function () { if (dayMatches(d.date).length) toast("Line-up changed. Tap Rebuild order."); }); }
@@ -2772,7 +2840,7 @@ function completeDay() {
   var ms = dayMatches(d.date), live = ms.filter(function (m) { return m.status === "live"; }), left = ms.filter(function (m) { return m.status === "planned"; });
   if (live.length) { toast("Finish the match in play first."); return; }
   confirmSheet("Complete the day?", (left.length ? plural(left.length, "match") + " not played will be marked \"Not played\". " : "") + "Stars of the day and Team of the Day are decided now.", "Complete the day", function () {
-    return Promise.all(left.map(function (m) { return db.doc("matches/" + m.id).update({ status: "np" }); })).then(function () { return db.doc("days/" + d.date).update({ status: "done", completedAt: Date.now() }); }).then(function () { audit("Completed " + fmtD(d.date)); S.view = "day"; S.vid = d.date; return "Day complete. Well played!"; });
+    return Promise.all(left.map(function (m) { return db.doc("matches/" + m.id).update({ status: "np" }); })).then(function () { return db.doc("days/" + d.date).update({ status: "done", completedAt: Date.now(), squads: Object.keys(d.squads || {}).length ? d.squads : squadSnap(d.date) }); }).then(function () { audit("Completed " + fmtD(d.date)); S.view = "day"; S.vid = d.date; return "Day complete. Well played!"; });
   });
 }
 
@@ -2843,8 +2911,7 @@ function openExpense(id, day, cat0) {
   var body = segf("cat", "What for", Object.keys(FCAT).map(function (k) { return { v: k, l: FCAT[k][0] }; }), e ? e.cat : cat0 && FCAT[cat0] ? cat0 : day ? "court" : "shuttles") +
     '<div id="otherBox">' + fld("text", "other", "What is it?", e ? e.other : "", 'maxlength="40" placeholder="e.g. Court booking deposit"') + "</div>" +
     '<div id="courtBox"><div class="g2">' + fld("number", "hours", "Hours", e && e.hours ? e.hours : "", 'inputmode="decimal" min="0" step="0.5"') + fld("number", "rate", "Rate per hour (LKR)", e && e.rate ? e.rate : "", 'inputmode="numeric" min="0"') + '</div><p class="hint" style="margin-top:-6px">Hours × rate fills in the amount.</p></div>' +
-    '<div id="qtyBox">' + fld("number", "qty", "Shuttlecocks bought (pieces)", e && e.qty ? e.qty : "", 'inputmode="numeric" min="0"') + "</div>" +
-    fld("text", "itemname", "Details · optional", e ? e.item : "", 'maxlength="60" id="f_itemname"') +
+        fld("text", "itemname", "Details · optional", e ? e.item : "", 'maxlength="60" id="f_itemname"') +
     '<div class="g2">' + fld("number", "amount", "Amount (LKR)", e ? e.amount : "", 'inputmode="numeric" min="1"') + fld("date", "date", "Date", d0) + "</div>" + '<p class="hint" id="dayHint" style="margin-top:-6px"></p>' +
     sel("payer", "Paid by", [{ v: "", l: "The club fund paid directly" }].concat(playerOpts()), e ? e.payer : S.me || "") +
     segf("mode", "How is it paid for?", [{ v: "split", l: "Split with the group" }, { v: "me", l: "Fully on me" }, { v: "part", l: "Partly on me" }, { v: "fund", l: "Club fund" }], e ? e.mode : "split") +
@@ -2860,7 +2927,7 @@ function openExpense(id, day, cat0) {
     if (v.mode === "part" && !(+v.mine > 0 && +v.mine < +v.amount)) return "Enter your part. It must be less than the full amount.";
     if ((v.mode === "split" || v.mode === "part") && !among.length) return "Tick who it's split between.";
     var dd = DAY[v.date] && DAY[v.date].status !== "cancelled" ? v.date : "";
-    var doc = { cat: v.cat, other: v.cat === "other" ? v.other : "", item: v.itemname, amount: Math.round(+v.amount), date: v.date, day: dd, season: seasonKey(v.date), qty: v.cat === "shuttles" ? Math.max(0, Math.round(+v.qty || 0)) : 0, hours: v.cat === "court" ? +v.hours || 0 : 0, rate: v.cat === "court" ? +v.rate || 0 : 0, payer: v.payer, mode: v.mode, mine: v.mode === "part" ? Math.round(+v.mine) : 0, among: v.mode === "split" || v.mode === "part" ? among : [], repaid: v.mode === "fund" && !!v.payer && !!v.repaid, ts: raw ? num(raw.ts) || Date.now() : Date.now(), by: S.me };
+    var doc = { cat: v.cat, other: v.cat === "other" ? v.other : "", item: v.itemname, amount: Math.round(+v.amount), date: v.date, day: dd, season: seasonKey(v.date), hours: v.cat === "court" ? +v.hours || 0 : 0, rate: v.cat === "court" ? +v.rate || 0 : 0, payer: v.payer, mode: v.mode, mine: v.mode === "part" ? Math.round(+v.mine) : 0, among: v.mode === "split" || v.mode === "part" ? among : [], repaid: v.mode === "fund" && !!v.payer && !!v.repaid, ts: raw ? num(raw.ts) || Date.now() : Date.now(), by: S.me };
     return (raw ? db.doc("expenses/" + raw.id).set(doc) : db.collection("expenses").add(doc)).then(function () { audit((raw ? "Edited" : "Added") + " cost " + (doc.item || (doc.cat === "other" ? doc.other : FCAT[doc.cat][0])) + " " + money(doc.amount) + " · " + FMODE[doc.mode]); S.finSeason = doc.season; return "Cost saved"; });
   }, { noFocus: true, del: raw ? "Delete" : "", onDel: function () { db.doc("expenses/" + raw.id).delete().then(function () { closeSheet(); audit("Deleted a cost"); toast("Deleted"); }, fail); } });
   var form = $("sheetForm"), touched = !!(e && e.among.length), lastDate = d0;
@@ -2869,7 +2936,7 @@ function openExpense(id, day, cat0) {
     if (!$("courtBox") || !form.elements.amount) { form.removeEventListener("change", sync); form.removeEventListener("input", sync); return; }
     if (ev && ev.target && ev.target.name === "among") touched = true;
     var c = (form.querySelector("input[name=cat]:checked") || {}).value || "court", m = (form.querySelector("input[name=mode]:checked") || {}).value || "split";
-    $("otherBox").hidden = c !== "other"; $("courtBox").hidden = c !== "court"; $("qtyBox").hidden = c !== "shuttles"; $("f_itemname").placeholder = PH[c] || "";
+    $("otherBox").hidden = c !== "other"; $("courtBox").hidden = c !== "court"; $("f_itemname").placeholder = PH[c] || "";
     var hrs = +form.elements.hours.value, rt = +form.elements.rate.value;
     if (c === "court" && hrs > 0 && rt > 0 && ev && ev.target && (ev.target.name === "hours" || ev.target.name === "rate")) form.elements.amount.value = Math.round(hrs * rt);
     var dt = form.elements.date.value, dy = DAY[dt] && DAY[dt].status !== "cancelled";
@@ -3187,6 +3254,8 @@ function openLineup(t) {
   if (d.status !== "upcoming") { toast("The line-up locks when the day starts."); return; }
   var mem = teamMembers(t).filter(function (p) { return !onBreak(p, d.date); }), n = mem.length, L = lineupOf(d, t) || {}, P1 = (L.pairs || [])[0] || [], P2 = (L.pairs || [])[1] || [];
   if (n < MINTEAM) { toast("You need 2 players for a pair."); return; }
+  if (n === 2) { toast("With 2 players, they're your pair. Nothing to set."); return; }
+  if (n === 3) { toast("Teams of 3 rotate all three pairs, so everyone plays the same number of doubles. Nothing to set."); return; }
   var opts = [{ v: "", l: "Choose" }].concat(mem.map(function (p) { return { v: p.id, l: p.display + (d.rsvp[p.id] ? " · " + ({ yes: "attending", maybe: "maybe", no: "can't make it" }[d.rsvp[p.id]]) : " · no reply") }; }));
   var body = '<p class="hint" style="margin:0">For ' + fmtD(d.date, true) + '. If someone in a pair doesn\'t come, the app uses the reserve or picks again.</p><div class="g2">' + sel("a1", "Pair 1", opts, P1[0] || "") + sel("a2", "with", opts, P1[1] || "") + "</div>" + (n >= 4 ? '<div class="g2">' + sel("b1", "Pair 2", opts, P2[0] || "") + sel("b2", "with", opts, P2[1] || "") + "</div>" : "") + (n === 3 ? sel("res", "Reserve", opts, L.reserve || "") : "");
   openSheet(tname(t) + " line-up", body, function (form) {
@@ -3570,7 +3639,7 @@ ACT.logout = function () { S.me = ""; S.noAuto = false; S.guest = false; S.gate 
   });
   subscribe();
 })();
-window.__wts = { compute: function (k) { return compute(k); }, plan: function (d) { return planDay(DAY[d]); }, fair: fairness, guest: resolveGuest, known: knownGuests, state: function () { return { me: S.me, host: isHost(), tab: S.tab, view: S.view, vid: S.vid, live: S.liveTab }; }, net: seasonNet, plan2: function (k) { return settlePlan(seasonNet(k)); }, billShares: function (i) { return billShares(billN(D.bills[i || 0])); }, openExpense: openExpense, wc: winChance, card: function (k, key) { return (k === "season" ? seasonCardCanvas(key) : dayCardCanvas(key)).then(function (cv) { return cv ? cv.toDataURL("image/png") : null; }); } };
+window.__wts = { compute: function (k) { return compute(k); }, plan: function (d) { return planDay(DAY[d]); }, fair: fairness, guest: resolveGuest, known: knownGuests, state: function () { return { me: S.me, host: isHost(), tab: S.tab, view: S.view, vid: S.vid, live: S.liveTab }; }, net: seasonNet, plan2: function (k) { return settlePlan(seasonNet(k)); }, billShares: function (i) { return billShares(billN(D.bills[i || 0])); }, openExpense: openExpense, wc: winChance, st: function (k, kind) { return standings(k, kind).map(function (x) { return { id: x.id, pts: x.pts, ok: x.ok, mp: x.mp }; }); }, titles: seasonTitles, fair: fairness, dayTeams: function (d) { return dayTeamsD(DAY[d]); }, card: function (k, key) { return (k === "season" ? seasonCardCanvas(key) : dayCardCanvas(key)).then(function (cv) { return cv ? cv.toDataURL("image/png") : null; }); } };
 })();
 </script>
 </body>
