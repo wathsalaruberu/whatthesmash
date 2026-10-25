@@ -537,7 +537,7 @@ button.prac small{color:var(--sub)}
 .fseas{display:flex;flex-direction:column;border-radius:18px;background:var(--surface);overflow:hidden}.fseas button,.fseas .all{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;font-weight:800;font-size:14px;text-align:left;border-top:1px solid rgba(255,255,255,.05)}.fseas button:first-child{border-top:0}.fseas button small{color:var(--lime);font-size:11px;margin-left:6px}.fseas button.on{background:rgba(139,92,255,.18);box-shadow:inset 3px 0 0 var(--violet)}.fseas b{font-variant-numeric:tabular-nums}.fseas .all{background:rgba(255,255,255,.04);color:var(--sub)}.fseas .all b{color:var(--text)}
 .fbars{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:18px;background:var(--surface)}.fb{display:grid;grid-template-columns:34px minmax(0,1.3fr) 1fr 64px;align-items:center;gap:8px;font-size:13px;font-weight:800}.fb .trk{height:8px;border-radius:5px;background:var(--surface2);overflow:hidden}.fb .trk i{display:block;height:100%;border-radius:5px;background:var(--grad)}.fb b{text-align:right;font-variant-numeric:tabular-nums}
 .stk{display:flex;height:14px;border-radius:8px;overflow:hidden;gap:2px;background:var(--surface2)}.stk i{display:block;height:100%}
-.pchips{display:flex;flex-wrap:wrap;gap:6px}.pchips label{margin:0;cursor:pointer;position:relative;display:inline-flex;flex-direction:row;text-transform:none;letter-spacing:0;font-size:13px;color:inherit;gap:0}.pchips input{position:absolute;opacity:0;pointer-events:none}.pchips span{display:flex;align-items:center;gap:6px;padding:5px 10px 5px 5px;border-radius:999px;background:var(--surface2);font-weight:800;font-size:13px;color:var(--sub)}.pchips input:checked+span{background:rgba(139,92,255,.3);color:#fff;box-shadow:inset 0 0 0 1.5px var(--violet)}.pchips input:focus-visible+span{outline:2px solid var(--cyan)}
+.pchips{display:flex;flex-wrap:wrap;gap:6px}.pchips label{margin:0;cursor:pointer;position:relative;display:inline-flex;flex-direction:row;text-transform:none;letter-spacing:0;font-size:13px;color:inherit;gap:0}.pchips input{position:absolute;opacity:0;pointer-events:none}.pchips span{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:var(--surface2);font-weight:800;font-size:13px;color:var(--sub)}.pchips input:checked+span{background:rgba(139,92,255,.3);color:#fff;box-shadow:inset 0 0 0 1.5px var(--violet)}.pchips input:focus-visible+span{outline:2px solid var(--cyan)}
 .li.stl{align-items:center}.setd summary{cursor:pointer;font-weight:800;color:var(--sub);font-size:13px;padding:6px 2px}.setd[open] summary{margin-bottom:8px}
 .bitem{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:16px;background:rgba(255,255,255,.04);margin-bottom:8px}.bitem .irm{align-self:flex-start;margin-top:4px}
 a.btn{display:flex;align-items:center;justify-content:center;text-decoration:none}
@@ -783,7 +783,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .tipi{flex:none;width:30px;height:30px;border-radius:10px;background:rgba(182,242,58,.14);color:var(--lime);display:grid;place-items:center}
 .tipb{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .tipb small{display:flex;justify-content:space-between;font-size:10.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--lime)}.tipb small em{font-style:normal;letter-spacing:0;color:#8a8aa8;font-weight:800}
-.tipt{font-size:13.5px;line-height:1.3;font-weight:700;color:#fff;min-height:35px}.tipt b{color:var(--lime);font-weight:900}
+.tipt{font-size:13.5px;line-height:1.3;font-weight:700;color:#fff;min-height:calc(1.3em * 3)}.tipt b{color:var(--lime);font-weight:900}
 .tipt.in{animation:tipin .45s ease-out}@keyframes tipin{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.tipt.in{animation:none}}
 /* pair averages */
@@ -1991,7 +1991,7 @@ function viewHome() {
   if (ks.indexOf(S.season) < 0) S.season = defaultSeason();
   var cmb = homeCombo(S.season);
   var ic = installCard(); h += homeTips() + (ic || pushCard());
-  h += '<div class="sec h-pick">' + seasonPicker() + '<div class="chips"><button type="button" class="chip on">Club</button>' + (me ? '<button type="button" class="chip" data-act="perf" data-id="' + S.me + '">Me</button>' + (myPair() ? '<button type="button" class="chip" data-act="pairpage" data-id="' + myPair() + '">My pair</button>' : "") + (teamOf(S.me) ? '<button type="button" class="chip" data-act="team" data-id="' + me.team + '">My team</button>' : '<button type="button" class="chip" data-act="nav" data-v="teams">Find a team</button>') : "") + "</div></div>" + (cmb ? seasonTrack(S.season).replace('class="sec h-track"', 'class="sec h-track dk"') + cmb : seasonTrack(S.season));
+  h += '<div class="sec h-pick">' + seasonPicker() + '<div class="chips"><button type="button" class="chip on">Overview</button>' + (me ? '<button type="button" class="chip" data-act="perf" data-id="' + S.me + '">Me</button>' + (myPair() ? '<button type="button" class="chip" data-act="pairpage" data-id="' + myPair() + '">My pair</button>' : "") + (teamOf(S.me) ? '<button type="button" class="chip" data-act="team" data-id="' + me.team + '">My team</button>' : '<button type="button" class="chip" data-act="nav" data-v="teams">Find a team</button>') : "") + "</div></div>" + (cmb ? seasonTrack(S.season).replace('class="sec h-track"', 'class="sec h-track dk"') + cmb : seasonTrack(S.season));
   var wrap = function (c, x) { return x ? '<div class="' + c + '">' + x + "</div>" : ""; };
   h += wrap(cmb ? "h-live dk" : "h-live", liveNowCard()) + wrap("h-chance", homeChances()) + '</div><div class="hc2">' + wrap("h-races", homeRaces()) + wrap("h-hl", homeHighlights()) + wrap("h-sess", homeSessions()) + '</div><div class="hc3">' + wrap("h-stars", homeStars()) + "</div>";
   return h;
@@ -3618,10 +3618,11 @@ function defaultAmong(date) {
   if (d && d.status !== "cancelled") { var pr = presentIds(d); if (pr.length) return pr; }
   return activePlayers().filter(function (p) { return p.team; }).map(function (p) { return p.id; });
 }
+function nameOpts() { return activePlayers().slice().sort(function (a, b) { return a.display.localeCompare(b.display); }).map(function (p) { return { v: p.id, l: p.display }; }); }
 function peopleChips(name, cur, pool) {
   pool = pool || activePlayers().map(function (p) { return p.id; });
   pool = uniq(pool.concat(cur.filter(function (id) { return P[id]; })));
-  return '<div class="pchips">' + pool.sort(function (a, b) { return pname(a).localeCompare(pname(b)); }).map(function (id) { return '<label><input type="checkbox" name="' + name + '" value="' + id + '"' + (cur.indexOf(id) >= 0 ? " checked" : "") + "><span>" + av(id, "xs") + esc(pname(id)) + "</span></label>"; }).join("") + "</div>";
+  return '<div class="pchips">' + pool.sort(function (a, b) { return pname(a).localeCompare(pname(b)); }).map(function (id) { return '<label><input type="checkbox" name="' + name + '" value="' + id + '"' + (cur.indexOf(id) >= 0 ? " checked" : "") + "><span>" + esc(pname(id)) + "</span></label>"; }).join("") + "</div>";
 }
 function openExpense(id, day, kind0) {
   if (!guard(staff())) return;
@@ -3641,7 +3642,7 @@ function openExpense(id, day, kind0) {
     '<div id="otherBox">' + fld("text", "other", "What is it?", e ? e.other : "", 'maxlength="40" placeholder="e.g. Court booking deposit"') + "</div>" +
     '<div id="courtBox" class="g2">' + fld("number", "hours", "Hours", e && e.hours ? e.hours : "", 'inputmode="decimal" min="0" step="0.5"') + fld("number", "rate", "Per hour (LKR)", e && e.rate ? e.rate : "", 'inputmode="numeric" min="0"') + "</div>" +
     fld("text", "itemname", "Details · optional", e ? e.item : "", 'maxlength="60" id="f_itemname"') +
-    '<div class="g2">' + fld("number", "amount", "Amount (LKR)", e ? e.amount : "", 'inputmode="numeric" min="1"') + sel("payer", "Paid by", playerOpts(), e ? e.payer : S.me || "") + "</div>" +
+    '<div class="g2">' + fld("number", "amount", "Amount (LKR)", e ? e.amount : "", 'inputmode="numeric" min="1"') + sel("payer", "Paid by", nameOpts(), e ? e.payer : S.me || "") + "</div>" +
     '<div><label style="margin-bottom:5px">Who covers it</label><div class="fmode" id="fmodes"></div></div>' +
     '<div id="mineBox">' + fld("number", "mine", "Payer covers (LKR)", e && e.mine ? e.mine : "", 'inputmode="numeric" min="0"') + "</div>" +
     '<div id="amongBox"><label style="margin-bottom:5px" id="amongLab">Split between</label><div id="amongChips">' + peopleChips("among", among0, pool) + '</div>' +
@@ -3682,7 +3683,7 @@ function openExpense(id, day, kind0) {
     var ids = checked(form, "among"), m = (form.querySelector("input[name=mode]:checked") || {}).value; if (m === "fwd") ids = ids.filter(function (id) { return id !== form.elements.payer.value; });
     var pct = ((form.querySelector("input[name=cuby]:checked") || {}).value) === "pct";
     form.querySelectorAll("#cuRows input").forEach(function (el) { cuVals[el.name.slice(3)] = el.value; });
-    $("cuRows").innerHTML = ids.map(function (id) { return '<label class="cur">' + av(id, "xs") + "<span>" + esc(pname(id)) + '</span><input type="number" name="cu_' + id + '" inputmode="decimal" min="0" value="' + esc(cuVals[id] != null ? cuVals[id] : "") + '" aria-label="' + esc(pname(id)) + (pct ? " %" : " share") + '"><em>' + (pct ? "%" : "LKR") + "</em></label>"; }).join("");
+    $("cuRows").innerHTML = ids.map(function (id) { return '<label class="cur"><span>' + esc(pname(id)) + '</span><input type="number" name="cu_' + id + '" inputmode="decimal" min="0" value="' + esc(cuVals[id] != null ? cuVals[id] : "") + '" aria-label="' + esc(pname(id)) + (pct ? " %" : " share") + '"><em>' + (pct ? "%" : "LKR") + "</em></label>"; }).join("");
   };
   var sync = function (ev) {
     if (!$("fmodes") || !form.elements.amount) { form.removeEventListener("change", sync); form.removeEventListener("input", sync); return; }
@@ -3743,7 +3744,7 @@ function openBill(id, date) {
   var raw = id ? D.bills.filter(function (x) { return x.id === id; })[0] : null, b = raw ? billN(raw) : null;
   if (b && !billCan(b)) { toast("Only the payer or a Host can edit this bill."); return; }
   var d0 = b ? b.date : /^\d{4}-\d{2}-\d{2}$/.test(date || "") ? date : todayStr(), pool = uniq(defaultAmong(d0).concat(S.me ? [S.me] : [])), among0 = b ? b.among : pool, items = b && b.items.length ? b.items : [{ n: "", p: "", who: [] }], NI = items.length;
-  var body = '<div class="g2">' + fld("date", "date", "Date", d0) + sel("payer", "Paid by", playerOpts(), b ? b.payer : S.me) + "</div>" +
+  var body = '<div class="g2">' + fld("date", "date", "Date", d0) + sel("payer", "Paid by", nameOpts(), b ? b.payer : S.me) + "</div>" +
     segf("mode", "How is it split?", Object.keys(BMODE).map(function (k) { return { v: k, l: BMODE[k] }; }), b ? b.mode : "equal") +
     '<div id="totBox">' + fld("number", "total", "Bill total (LKR)", b && b.mode !== "items" ? b.total : "", 'inputmode="numeric" min="1"') + "</div>" +
     '<div id="bmineBox">' + fld("number", "mine", "My part (LKR)", b && b.mine ? b.mine : "", 'inputmode="numeric" min="0"') + "</div>" +
