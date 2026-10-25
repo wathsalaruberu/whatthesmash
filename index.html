@@ -3065,7 +3065,7 @@ function openGal(mode, id) {
     else if (g === "p") { i = (i - 1 + l.length) % l.length; draw(); }
     else if (g === "n") { i = (i + 1) % l.length; draw(); }
     else if (g === "d") { closeLightbox(); setTimeout(function () { galDelete(x); }, 120); }
-    else if (g === "l") { if (!S.myId) return; var lk = Object.assign({}, x.likes || {}); if (lk[S.myId]) delete lk[S.myId]; else lk[S.myId] = 1; x.likes = lk; drawCm(); db.doc("gal_" + x.sk + "/" + x.id).update({ likes: lk }).catch(function () { toast("Couldn't save your like."); }); }
+    else if (g === "l") { if (!S.myId) return; var lk = Object.assign({}, x.likes || {}); var was = !!lk[S.myId], up = {}; if (was) delete lk[S.myId]; else lk[S.myId] = 1; x.likes = lk; drawCm(); up["likes." + S.myId] = was ? fvDel() : 1; db.doc("gal_" + x.sk + "/" + x.id).update(up).catch(function () { toast("Couldn't save your like."); }); }
     else if (g === "c") { var inp = el.querySelector("#gcin"); if (inp) inp.focus(); }
     else if (g === "post") post();
     else if (g === "cx") { var cid = b.getAttribute("data-id"); db.doc("galc_" + x.sk + "/" + cid).delete().catch(function () { toast("Couldn't delete the comment."); }); }
@@ -4111,7 +4111,7 @@ function nudgeTeam(t) {
     return db.collection("notices").add({ title: "Are you coming on " + fmtD(d.date) + "?", body: "Your " + tname(t) + " captain needs to know for the line-up. Reply in Club → Sessions.", to: who, team: t, by: S.me, ts: Date.now() }).then(function () { audit(pname(S.me) + " nudged " + who.map(pname).join(", ")); return "Nudge sent"; });
   });
 }
-function confirmResult(id, t) { var m = D.matches.filter(function (x) { return x.id === id; })[0]; if (!m || !guard(isCapOf(t), "Only the captain confirms results.")) return; var o = {}; o[t] = S.me; db.doc("matches/" + id).update({ conf: o }).then(function () { toast("Result confirmed"); }, fail); }
+function confirmResult(id, t) { var m = D.matches.filter(function (x) { return x.id === id; })[0]; if (!m || !guard(isCapOf(t), "Only the captain confirms results.")) return; var o = {}; o["conf." + t] = S.me; db.doc("matches/" + id).update(o).then(function () { toast("Result confirmed"); }, fail); }
 function flagResult(id, t) {
   var m = D.matches.filter(function (x) { return x.id === id; })[0]; if (!m || !guard(isCapOf(t), "Only the captain flags results.")) return;
   openSheet("Flag this result", '<p class="muted small" style="margin:0">' + names(m.a) + " " + m.sa + "–" + m.sb + " " + names(m.b) + '</p>' + fld("area", "note", "What looks wrong?", "", 'rows="3" maxlength="200" placeholder="e.g. It was 21-19, not 21-17"'), function (form) {
@@ -4133,6 +4133,8 @@ var OWNER_EMAIL = "wathsala.zerogravity@gmail.com";
 var FBAUTH = null, FBUSER = null, AUTHREADY = false, BOOT0 = Date.now();
 function isPlainObj(v) { return v && typeof v === "object" && !Array.isArray(v) && Object.getPrototypeOf(v) === Object.prototype; }
 function flatten(o, pre, out) { out = out || {}; Object.keys(o).forEach(function (k) { var v = o[k], key = pre ? pre + "." + k : k; if (isPlainObj(v) && Object.keys(v).length) flatten(v, key, out); else out[key] = v; }); return out; }
+/* removes one key from a map field (likes); the test database just stores null, which reads as "not there" */
+function fvDel() { try { return firebase.firestore.FieldValue.delete(); } catch (e) { return null; } }
 function wrapSnap(d) { return { id: d.id, exists: d.exists, data: function () { return d.data(); } }; }
 function makeDb(fs) {
   function doc(path) { var ref = fs.doc(path); return {
