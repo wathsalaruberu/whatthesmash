@@ -946,6 +946,11 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .prest{margin:8px 2px 0;font-size:12.5px;color:var(--sub);font-weight:700;text-align:center}
 @media (max-width:360px){.pring{padding:10px 2px 8px}.pp{font-size:17px}.pn{font-size:13px}}
 @media (min-width:900px){.pr{width:96px}}
+/* photo viewer: the photo fits the space left, the like/comment/save row is always on screen */
+.lbox.gbox .gimg{flex:1 1 0!important;min-height:120px!important;overflow:hidden}
+.lbox.gbox .gimg img{position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%}
+.lbox.gbox .gpanel{flex:none}
+.btn.tellc{display:flex;align-items:center;justify-content:center;gap:6px;background:#1f9d55;color:#fff;font-weight:900}
 /* install card */
 .inst{display:flex;align-items:center;gap:10px;padding:10px 10px 10px 12px;border-radius:18px;background:var(--surface)}
 .inst img{width:36px;height:36px;object-fit:contain;flex:none}.inst>span{flex:1;min-width:0;display:flex;flex-direction:column}.inst b{font-weight:900;font-size:15px}.inst small{color:var(--sub);font-size:12px;line-height:1.3}
@@ -2897,10 +2902,8 @@ function duesAll() {
 }
 function myDues() { var A = duesAll(); return { pay: A.pairs.filter(function (p) { return p.from === S.me; }), get: A.pairs.filter(function (p) { return p.to === S.me; }), hist: A.sets.filter(function (s) { return s.status === "ok" && (s.from === S.me || s.to === S.me); }).sort(function (a, b) { return (b.okTs || b.ts) - (a.okTs || a.ts); }) }; }
 function oweCount() { return S.me ? myDues().pay.filter(function (p) { return !p.claims.length; }).length : 0; }
-function remindText(p) {
-  var bk = bankOf(p.to);
-  return "Hi " + pname(p.from) + " 🏸 a friendly reminder from What the Smash: " + money(p.amt) + " to " + pname(p.to) + (p.why.length ? " (" + p.why.join(", ") + ")" : "") + "." + (bk.no ? "\nAcc " + bk.no + (bk.bank ? " · " + bk.bank : "") : "") + "\nSee My dues in the app: " + SITE;
-}
+function remindText(p) { return "Hey " + pname(p.from) + " 🏸 quick reminder to check My dues 👉 " + SITE + "/#dues"; }
+function clubDayText(d) { return "🏸 Rackets down, wallets out! Day " + dayNo(d) + " costs are in. See what's yours in My dues 👉 " + SITE + "/#dues"; }
 
 /* ---------- Finances views ---------- */
 var FTABS = [["budget", "Budget"], ["after", "After play"], ["dues", "My dues"]];
@@ -2926,7 +2929,7 @@ function seasonBudget() {
     var list = mine.filter(function (x) { return x.kind === "day" && x.day === d.date; }), t = sum(list.map(function (x) { return x.amount; })), n = presentIds(d).length, open = S.finDay === d.date;
     var sub = d.status === "done" ? (n ? plural(n, "player") + (t ? " · " + money(t / n) + " each" : "") : "Played") : d.status === "live" || d.status === "setup" ? "Playing now" + (n ? " · " + plural(n, "player") : "") : "Upcoming";
     h += '<div class="fday' + (open ? " open" : "") + '"><button type="button" class="fdh" data-act="finday" data-v="' + d.date + '" aria-expanded="' + open + '"><span class="t"><b>Day ' + dayNo(d) + " · " + fmtD(d.date) + "</b><small>" + sub + '</small></span><b class="fda">' + (list.length ? money(t) : "–") + '</b><span class="ch" aria-hidden="true">' + (open ? "▴" : "▾") + "</span></button>";
-    if (open) h += '<div class="fdb">' + (list.length ? list.map(finRow).join("") : '<p class="muted small" style="margin:0">No costs for this day yet.</p>') + (staff() ? '<button type="button" class="add" data-act="expnew" data-v="' + d.date + '" data-id="day">+ Add a cost for this day</button>' : "") + "</div>";
+    if (open) h += '<div class="fdb">' + (list.length ? list.map(finRow).join("") : '<p class="muted small" style="margin:0">No costs for this day yet.</p>') + (staff() ? '<button type="button" class="add" data-act="expnew" data-v="' + d.date + '" data-id="day">+ Add a cost for this day</button>' : "") + (isSA() && (list.length || D.bills.some(function (b) { return b.date === d.date; })) ? '<a class="btn wa tellc" href="https://wa.me/?text=' + encodeURIComponent(clubDayText(d)) + '" target="_blank" rel="noopener">📣 Tell the club on WhatsApp</a><p class="muted tiny" style="margin:-2px 0 0;text-align:center">One message for the day\'s costs and after play. Send it once both are in.</p>' : "") + "</div>";
     h += "</div>";
   });
   h += "</div></div>";
@@ -2978,7 +2981,7 @@ function galLeft(day) { var d = DAY[day], n = 0; if (!d) return GALMAX; if (type
 function galDayNo(date) { var d = DAY[date]; return d ? "Day " + dayNo(d) + " · " + fmtD(date) : fmtD(date); }
 function cmN(x) { return (GALC[x.sk] || []).filter(function (c) { return c.photo === x.id; }).length; }
 function galCounts(x) { var n = likeN(x), c = cmN(x); return n || c ? '<span class="gcnt">' + (n ? HEART + n : "") + (n && c ? " · " : "") + (c ? plural(c, "comment") : "") + "</span>" : ""; }
-function galThumb(x, mode) { return '<button type="button" class="gth" data-act="galopen" data-v="' + (mode || x.day) + '" data-id="' + esc(x.id) + '" aria-label="Open photo by ' + esc(pname(x.by)) + '"><img src="' + x.thumb + '" alt="" loading="lazy">' + galCounts(x) + "</button>"; }
+function galThumb(x, mode) { if (typeof mode !== "string") mode = ""; /* also used straight in list.map(), which passes a number */ return '<button type="button" class="gth" data-act="galopen" data-v="' + (mode || x.day) + '" data-id="' + esc(x.id) + '" aria-label="Open photo by ' + esc(pname(x.by)) + '"><img src="' + x.thumb + '" alt="" loading="lazy">' + galCounts(x) + "</button>"; }
 function favList(sk) { return (GAL[sk] || []).slice().sort(function (a, b) { return likeN(b) - likeN(a) || b.ts - a.ts; }); }
 function galMore(x, n) { return '<button type="button" class="gth more" data-act="galopen" data-v="' + x.day + '" data-id="' + esc(x.id) + '" aria-label="' + n + ' more photos"><img src="' + x.thumb + '" alt="" loading="lazy"><b>+' + n + "</b></button>"; }
 function clubGallery() {
@@ -3113,8 +3116,6 @@ function viewBill(id) {
   var bk = bankOf(b.payer);
   if (S.me && bk.no) h += '<div class="set"><div class="r"><span>Pay to ' + esc(bk.name || pname(b.payer)) + "<small>" + esc([bk.bank, bk.branch].filter(Boolean).join(" · ")) + "</small></span><b>" + esc(bk.no) + "</b></div></div>";
   else if (b.payer === S.me) h += '<p class="hint" style="margin:0">Add your bank details in Edit my profile so they show up in the message.</p>';
-  h += '<a class="btn big" href="https://wa.me/?text=' + encodeURIComponent(billText(b)) + '" target="_blank" rel="noopener">Send message on WhatsApp</a>';
-  h += '<button type="button" class="btn ghost" data-act="billcopy" data-id="' + b.id + '">Copy the message</button>';
   if (billCan(b)) h += '<button type="button" class="btn ghost" data-act="billedit" data-id="' + b.id + '">Edit bill</button>';
   return h;
 }
@@ -4234,7 +4235,7 @@ function render() {
    The link is remembered through sign-in, then opened once. */
 var DAYSIN = false, DEEPT = Date.now(), DEEP = readDeep();
 function readDeep() {
-  var re = /^(home|live|rsvp|day)(?:=(\d{4}-\d{2}-\d{2}))?$/, h = "", m = null;
+  var re = /^(home|live|rsvp|day|dues)(?:=(\d{4}-\d{2}-\d{2}))?$/, h = "", m = null;
   try { h = decodeURIComponent(String(location.hash || "").slice(1)); } catch (e) {}
   m = re.exec(h);
   if (m) { try { sessionStorage.setItem("wts-deep", h); } catch (e) {} try { history.replaceState(history.state, "", location.pathname + location.search); } catch (e) {} }
@@ -4250,6 +4251,7 @@ function applyDeep() {
   if (x.k === "live" || (x.k === "day" && d && d.status === "live")) { S.tab = "play"; S.liveTab = "live"; }
   else if (x.k === "day" && d && d.status === "done") { S.tab = "play"; S.view = "day"; S.vid = x.d; STACK = [{ view: null, vid: null }]; pushH(); }
   else if (x.k === "rsvp" || x.k === "day") { S.tab = "club"; S.clubTab = "sessions"; if (d) S.deepScroll = "rsvp-" + x.d; }
+  else if (x.k === "dues") { S.tab = "club"; S.clubTab = "budget"; S.finTab = "dues"; }
   else S.tab = "home";
   window.scrollTo(0, 0);
 }
