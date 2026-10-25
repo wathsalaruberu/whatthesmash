@@ -2350,6 +2350,7 @@ function viewPlay() {
 function viewSetup(d) {
   var h = '<div class="priv">🔒 Only you can see setup. Players see "Getting ready" until you publish the order.</div>';
   if (d.startedAt && Date.now() - d.startedAt < 10 * 60000) h += '<div style="text-align:center"><button type="button" class="lnk" data-act="dayundo" data-v="' + d.date + '">Started by mistake? Undo</button></div>';
+  else h += (isSA() ? '<div style="text-align:center"><button type="button" class="lnk" style="color:#ff8aa6" data-act="dayreset" data-v="' + d.date + '">Test run? Reset this day</button></div>' : "");
   // attendance, grouped by team
   h += '<div class="step"><i>1</i>Attendance</div>';
   var list = activePlayers();
@@ -2443,6 +2444,7 @@ function viewLive(d) {
   if (sa) h += '<div class="row" style="gap:8px"><button type="button" class="btn ghost" style="flex:1" data-act="addmatch" data-v="season">+ Season match</button></div>';
   if (st) h += extraBox("Time left? Play extra games");
   if (sa) h += '<button type="button" class="btn big ghost" data-act="daycomplete">✓ Complete the day</button><p class="muted small" style="text-align:center;margin:-6px 0 0">Day titles and points are finalised when you complete the day.</p>';
+  h += (isSA() ? '<div style="text-align:center"><button type="button" class="lnk" style="color:#ff8aa6" data-act="dayreset" data-v="' + d.date + '">Test run? Reset this day</button></div>' : "");
   return h;
 }
 function liveCard(d, m, i, st) {
@@ -2481,6 +2483,7 @@ function viewDayDone(d) {
     h += Object.keys(by).map(function (k) { var x = by[k]; return '<div class="repcon"><b>Replacement contribution</b><span>' + av(k, "sm") + " " + esc(pname(k)) + (isGuest(k) ? " (not a club player)" : " (club player)") + " played " + plural(x.n, "doubles match", "") + " for " + esc(pname(x.for)) + ". Won " + x.w + " of " + x.n + '.</span><small class="muted">These results count for ' + pairName(x.pair) + " and the team, marked \"with replacement\"." + (isGuest(k) ? " A non-member earns no points of their own." : " As a club player, " + esc(pname(k)) + " also earns their own points.") + "</small></div>"; }).join("");
   }
   h += '<div class="sh"><h3>All matches</h3></div><div class="sec">' + ms.map(function (m, i) { return liveCard(d, m, i, staff() && d.status !== "done" ? true : staff()); }).join("") + "</div>";
+  h += (isSA() ? '<div style="text-align:center"><button type="button" class="lnk" style="color:#ff8aa6" data-act="dayreset" data-v="' + d.date + '">Test run? Reset this day</button></div>' : "");
   return h;
 }
 /* ---------- extras: previous days, practice & open ---------- */
@@ -3355,6 +3358,20 @@ function startDay(date) {
   var c = cfg(), fmt = { s: { on: true, to: c.toS, from: from, until: mid }, d: { on: true, to: c.toD, from: mid, until: end } };
   var att = {}; Object.keys(d.rsvp).forEach(function (k) { if (d.rsvp[k] === "yes" && P[k] && !onBreak(P[k], date)) att[k] = "p"; });
   dayUp(d, { status: "setup", startedAt: Date.now(), startedBy: S.me, fmt: fmt, att: att, squads: squadSnap(date) }).then(function () { audit("Started " + fmtD(date)); toast("Day started. Take attendance."); });
+}
+/* Club Lead: wipe a test run. The day goes back to Upcoming (RSVPs kept); its matches, attendance, order,
+   and the costs and after play bills for that date are deleted */
+function resetDay(date) {
+  var d = DAY[date]; if (!d || !guard(isSA(), "Only Club Leads can reset a day.")) return;
+  var ms = dayMatches(date), ex = D.expenses.filter(function (x) { var e = exN(x); return e.kind === "day" && e.day === date; }), bl = D.bills.filter(function (b) { return b.date === date; });
+  confirmSheet("Reset " + fmtD(date) + "?", "For test runs. This deletes " + plural(ms.length, "match") + (ex.length ? ", " + plural(ex.length, "day cost") : "") + (bl.length ? ", " + plural(bl.length, "after play bill") : "") + ", attendance and the order, and puts the day back to Upcoming. RSVPs are kept. This can't be undone.", "Reset the day", function () {
+    return Promise.all(ms.map(function (m) { return db.doc("matches/" + m.id).delete(); }).concat(ex.map(function (x) { return db.doc("expenses/" + x.id).delete(); }), bl.map(function (b) { return db.doc("bills/" + b.id).delete(); }))).then(function () {
+      var drop = { id: 1, status: 1, att: 1, reps: 1, fmt: 1, squads: 1, lineup: 1, spare: 1, published: 1, publishedAt: 1, startedAt: 1, startedBy: 1, completedAt: 1, shuttles: 1, rounds: 1 }, x = {};
+      Object.keys(d).forEach(function (k) { if (!drop[k] && d[k] !== undefined) x[k] = d[k]; });
+      x.status = "upcoming"; x.att = {}; x.reps = {}; x.fmt = {};
+      return db.doc("days/" + date).set(x);
+    }).then(function () { audit("Reset " + fmtD(date) + " after a test run"); S.view = null; STACK = []; return "Day reset. Ready for the real thing."; });
+  });
 }
 function undoStart(date) {
   var d = DAY[date]; if (!d) return;
@@ -4455,6 +4472,7 @@ var ACT = {
   dayedit: function (v) { openDayEdit(v); },
   daystart: function (v) { startDay(v); },
   dayundo: function (v) { undoStart(v); },
+  dayreset: function (v) { resetDay(v); },
   att: function (v, id) { setAtt(id, v); },
   rep: function (v, id) { setRep(id, v); },
   repnew: function (v, id) { repNew(id); },
