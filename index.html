@@ -794,6 +794,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .hlh{display:flex;justify-content:space-between;align-items:center}.hlh>b{font-style:italic;font-weight:900;font-size:20px}
 .hlg2{display:grid;grid-template-columns:1.5fr 1fr 1fr;grid-template-rows:96px 96px;gap:6px}
 .hlg2 .gth{border-radius:14px}.hlg2 .gth.feat{grid-row:1/3;border-radius:18px}
+.hlg2 .gth{aspect-ratio:auto;width:100%;height:100%;min-height:0}
 .gbadge{position:absolute;left:8px;bottom:8px;display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;background:rgba(10,10,20,.72);font-size:11.5px;font-weight:900;color:#fff}
 .hlg2 .gth.add{border-color:#ff9a7a;color:#ffb08f}
 @media (min-width:900px){.hlg2{grid-template-rows:120px 120px}}
@@ -815,6 +816,136 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .form10 .fc b{font-size:14px;font-weight:900;line-height:1.1;color:#8a8aa8}.form10 .fc.w b{color:var(--lime)}
 .dkr{display:flex;align-items:center;gap:6px}.dked{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:10px;border:1px solid var(--edge);background:var(--surface2);font-size:12.5px;font-weight:800;min-height:32px}
 .hint.warn{color:#ffb35e;font-weight:700}
+/* title chances bars */
+.cbars{display:flex;flex-direction:column;gap:12px}
+.cbr{display:flex;flex-direction:column;gap:6px;width:100%;text-align:left;padding:0;background:none;color:inherit}
+.cbt{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+.cbt>b{flex:none;font-size:17px;font-weight:900;font-variant-numeric:tabular-nums}
+.cbn{display:flex;align-items:center;gap:8px;min-width:0;font-weight:900;font-size:15px}
+.cbn img{width:24px;height:24px;object-fit:contain;flex:none}
+.cbp{display:flex;flex-direction:column;min-width:0}.cbp b{font-size:15px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cbp small{font-size:11.5px;color:var(--sub);font-weight:700}
+.cbb{display:block;height:9px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.cbb i{display:block;height:100%;border-radius:99px}
+.cbr.rest .cbn{color:var(--sub);font-size:13.5px;font-weight:800}.cbr.rest .cbt>b{font-size:14px;color:var(--sub)}
+/* pair rows: names wrap inside their column, never under the score */
+.rrow .nm{overflow-wrap:break-word}
+#app.v-home .h-races .rrow .nm{overflow:hidden}
+.rrow .p{justify-self:end;text-align:right}
+.pmc{font-style:normal;margin-left:4px;color:var(--sub);font-weight:700}
+/* head-to-head W/L, season rows */
+.wl b{font-weight:800;color:var(--sub)}.wl b.w{color:var(--lime)}
+.wl.big{font-size:16px;white-space:nowrap}.wl.big b{font-weight:900;color:#fff}.wl.big b.w{color:var(--lime)}
+.sbs .fr button{color:var(--cyan)}
+/* team honours */
+.tch{display:flex;align-items:center;gap:14px;padding:14px;border-radius:22px;background:var(--surface)}
+.tch.won{background:radial-gradient(90% 120% at 0% 50%,rgba(244,197,66,.2),transparent 65%),var(--surface);box-shadow:inset 0 0 0 1px rgba(244,197,66,.3)}
+.tch img{width:76px;height:76px;object-fit:contain;flex:none}
+.tch:not(.won) img{opacity:.45;filter:grayscale(.6)}
+.tch>span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tch small{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--sub)}
+.tch b{font-size:24px;font-weight:900;font-style:italic}.tch.won b{color:var(--gold,#f4c542)}
+.tch em{font-style:normal;font-size:13px;font-weight:700;color:var(--sub);line-height:1.35}
+/* calmer gallery */
+.galadd{justify-content:flex-start!important;gap:12px!important;padding:12px 14px!important;background:rgba(255,77,125,.06)!important;border:1.5px dashed rgba(255,77,125,.45)!important;color:#fff!important}
+.galadd .gai{flex:none;width:44px;height:44px;border-radius:14px;background:rgba(255,77,125,.14);color:#ff8aa6;display:grid;place-items:center}
+.galadd .gat{flex:1;display:flex;flex-direction:column;min-width:0}.galadd .gat b{font-size:16px;font-weight:900}.galadd .gat small{font-size:12.5px;color:var(--sub);font-weight:600;text-align:left;opacity:1}
+.galadd .gap{flex:none;font-size:24px;font-weight:800;color:#ff8aa6}
+.seg2.lite button{display:flex;align-items:center;justify-content:center;gap:7px}
+.seg2.lite button.on{background:#fff!important;color:#0a0a14!important;box-shadow:none}
+/* finances v2 */
+.seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:16px;background:var(--surface);max-width:760px}
+.seg3 button{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 4px;border-radius:12px;font-weight:800;font-size:14px;color:var(--sub)}
+.seg3.lite button.on{background:#fff;color:#0a0a14;font-weight:900}
+.dueDot{width:7px;height:7px;border-radius:50%;background:#ff4d7d;flex:none}
+.seg2.lite label{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:12px;font-weight:800;font-size:14px;color:var(--sub);cursor:pointer;text-transform:none;letter-spacing:0;margin:0}
+.seg2.lite label input{position:absolute;opacity:0;width:1px;height:1px}
+.seg2.lite label.on,.seg2.lite label:has(input:checked){background:#fff;color:#0a0a14;font-weight:900}
+.seg2.lite label.one:has(input:checked){background:#ffb35e}
+.seg2.lite label:has(input:disabled){opacity:.4}
+.ftot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 16px;border-radius:20px;background:radial-gradient(120% 140% at 0% 0%,rgba(255,23,79,.32),transparent 60%),radial-gradient(90% 120% at 100% 100%,rgba(192,44,255,.28),transparent 60%),var(--surface);box-shadow:inset 0 0 0 1px rgba(255,77,125,.3);color:#ff8aa6;max-width:760px}
+.ftot>span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ftot small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#ffb3c6}
+.ftot b{font-size:24px;font-weight:900;font-style:italic;color:#fff}
+.fhint{margin:-4px 2px 0!important}
+.frow{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:14px;background:var(--surface2);text-align:left;color:inherit}
+.frow:disabled{opacity:1;cursor:default}
+.frow .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.frow .t b{font-size:14px;font-weight:800;overflow-wrap:break-word}
+.frow .t small{font-size:12px;color:var(--sub);font-weight:600;line-height:1.35}
+.frow .fa,.dli .fa{flex:none;font-weight:900;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.frow.one{background:rgba(255,162,94,.08);box-shadow:inset 0 0 0 1px rgba(255,162,94,.28)}
+.fi2{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.06);color:#c9c9e0}
+.fi2.court{background:rgba(34,211,238,.14);color:#67e8f9}.fi2.refresh{background:rgba(196,181,253,.14);color:#c4b5fd}
+.fi2.shuttles,.fi2.acc,.fi2.gift{background:rgba(255,162,94,.16);color:#ffb35e}
+.fone{display:flex;flex-direction:column;gap:6px;padding:10px;border-radius:18px;background:rgba(255,162,94,.06);box-shadow:inset 0 0 0 1px rgba(255,162,94,.22)}
+.add.one{border-color:rgba(255,162,94,.5);color:#ffb35e}
+.fdb .add,.fone .add{font-size:14px;color:var(--cyan)}.fone .add.one{color:#ffb35e}
+.dtot{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:760px}
+.dtot>div{display:flex;flex-direction:column;gap:2px;padding:14px;border-radius:20px;min-width:0}
+.dtot .o{background:rgba(255,77,125,.1)}.dtot .g{background:rgba(182,242,58,.08)}
+.dtot small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.dtot .o small{color:#ff8aa6}.dtot .g small{color:var(--lime)}
+.dtot b{font-size:23px;font-weight:900;white-space:nowrap}
+.dtot span{font-size:12px;color:var(--sub);font-weight:700}
+.dcard{display:flex;flex-direction:column;gap:10px;padding:12px 14px;border-radius:20px;background:var(--surface)}
+.dh{display:flex;align-items:center;gap:10px}
+.dh .t{flex:1;min-width:0;display:flex;flex-direction:column}.dh .t b{font-size:15.5px;font-weight:900}.dh .t small{font-size:12px;color:var(--sub);font-weight:600}
+.damt{flex:none;font-size:19px;font-weight:900;color:#ff8aa6;font-variant-numeric:tabular-nums}
+.dbank{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;border-radius:12px;background:var(--surface2)}
+.dbank>span{display:flex;flex-direction:column;min-width:0}.dbank small{font-size:11.5px;color:var(--sub);font-weight:700;overflow-wrap:break-word}.dbank b{font-size:15px;font-weight:800;letter-spacing:.04em}
+.dbank .btn{flex:none}
+.dnob{margin:0;padding:9px 12px;border-radius:12px;background:var(--surface2);font-size:13px;color:#c9c9e0;font-weight:600}
+.dwait{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:12px;background:rgba(244,197,66,.1);color:#f4c542;font-weight:800;font-size:13.5px}
+.dlist{display:flex;flex-direction:column;border-radius:20px;background:var(--surface);overflow:hidden}
+.dli{display:flex;align-items:center;gap:10px;padding:12px 14px}.dli+.dli{border-top:1px solid #22223a}
+.dli .t{flex:1;min-width:0;display:flex;flex-direction:column}.dli .t b{font-size:14.5px;font-weight:800}.dli .t small{font-size:12px;color:var(--sub);font-weight:600}
+.dli .t small.wait{color:#f4c542;font-weight:700}
+.dli em.g{font-style:normal;color:var(--lime)}
+.dbt{flex:none;display:flex;gap:6px}
+@media (max-width:380px){.dli{flex-wrap:wrap}.dli .dbt{width:100%;justify-content:flex-end}}
+.btn.got{background:rgba(182,242,58,.14);color:var(--lime)}
+.dhist summary{cursor:pointer;color:var(--cyan);font-weight:800;font-size:14px;padding:6px 2px;list-style:none;text-align:center}
+.dhist summary::-webkit-details-marker{display:none}
+.dhist[open] summary{margin-bottom:8px}
+.fmode{display:flex;flex-direction:column;gap:2px;padding:4px;border-radius:16px;background:var(--surface)}
+.fmode label{display:flex;flex-direction:row!important;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:12px;cursor:pointer;margin:0;text-transform:none;letter-spacing:0;color:#fff}
+.fmode label.on{background:var(--surface2);box-shadow:inset 0 0 0 1.5px #ff4d7d}
+.fmode input{margin-top:3px;width:18px;height:18px;accent-color:#ff4d7d;flex:none}
+.fmode span{display:flex;flex-direction:column;min-width:0}.fmode b{font-size:14px;font-weight:800}.fmode small{font-size:12px;color:var(--sub);font-weight:600}
+#amongBox{display:flex;flex-direction:column;gap:8px}
+.curows{display:flex;flex-direction:column;border-radius:14px;background:var(--surface);overflow:hidden}
+.cur{display:flex;flex-direction:row!important;align-items:center;gap:10px;padding:8px 12px;margin:0;text-transform:none;letter-spacing:0;color:#fff;font-size:14.5px;font-weight:800}.cur+.cur{border-top:1px solid #22223a}
+.cur>span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cur input{width:96px;flex:none;text-align:right;padding:9px 10px}
+.cur em{font-style:normal;font-size:11.5px;color:var(--sub);width:28px;flex:none}
+.cusum{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-radius:14px;background:var(--surface);font-size:13.5px;font-weight:700;color:#c9c9e0}
+.cusum b{color:#fff}.cusum.ok{background:rgba(182,242,58,.08)}.cusum.ok b{color:var(--lime)}
+#cuBox{display:flex;flex-direction:column;gap:8px}
+.bankf{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:18px;background:var(--surface)}
+.bankf>b{font-size:16px;font-weight:900}
+/* doubles sides: photos on top, names get the full width and wrap instead of being cut */
+.side.d{flex-direction:column;align-items:flex-start;gap:5px}
+.side.d.r{align-items:flex-end}
+.side.d.r>.avs,.side.d.r>span:last-child{order:-1}
+.side.d>b{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:break-word;max-width:100%}
+/* board team table: on small phones drop the crest so the name has room */
+.tr .nmrow b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:400px){.tbl.tmt .tr .who .avs{display:none}}
+/* home pair race: the team line wraps under the name instead of running into the score */
+#app.v-home .h-races .rrow .nm .tmn{white-space:normal;flex-wrap:wrap;row-gap:1px}
+.tc2 .pv small{margin-top:4px}
+/* Player of the Season rings: photo in the middle, ring fills to the chance */
+.prings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pring{display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 4px 10px;border-radius:18px;background:rgba(10,10,20,.45);color:inherit;min-width:0}
+.pring.lead{background:radial-gradient(90% 70% at 50% 30%,rgba(255,255,255,.07),transparent 70%),rgba(10,10,20,.45)}
+.pr{--v:50;--c:#fff;position:relative;width:min(84px,100%);aspect-ratio:1;border-radius:50%;background:conic-gradient(var(--c) calc(var(--v)*1%),rgba(255,255,255,.08) 0);display:grid;place-items:center;margin-bottom:4px}
+.pr .av{width:calc(100% - 16px)!important;height:auto!important;aspect-ratio:1;font-size:20px!important;box-shadow:0 0 0 4px #12121f;border:0!important}
+.pp{font-size:20px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1}
+.pn{font-size:14px;font-weight:900;font-style:italic;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pring small{font-size:11px;color:var(--sub);font-weight:700;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prest{margin:8px 2px 0;font-size:12.5px;color:var(--sub);font-weight:700;text-align:center}
+@media (max-width:360px){.pring{padding:10px 2px 8px}.pp{font-size:17px}.pn{font-size:13px}}
+@media (min-width:900px){.pr{width:96px}}
 /* install card */
 .inst{display:flex;align-items:center;gap:10px;padding:10px 10px 10px 12px;border-radius:18px;background:var(--surface)}
 .inst img{width:36px;height:36px;object-fit:contain;flex:none}.inst>span{flex:1;min-width:0;display:flex;flex-direction:column}.inst b{font-weight:900;font-size:15px}.inst small{color:var(--sub);font-size:12px;line-height:1.3}
@@ -868,7 +999,7 @@ function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function
 function clean(s, n) { return String(s == null ? "" : s).replace(/[<>"'`\\\u0000-\u001f]/g, "").trim().slice(0, n || 60); }
 function safeUrl(u) { u = String(u || "").trim(); return /^https:\/\/[^\s"'<>]+$/i.test(u) ? u : ""; }
 var BANK = {}, MYPRIV = {}, PHOTOFULL = {}, GAL = {}, GALC = {}, GALMAX = 30;
-var MEMBERCOLS = ["donations", "expenses", "settles", "bills", "audit"];
+var MEMBERCOLS = ["expenses", "settles", "bills"];
 function bankOf(pid) { return BANK[pid] || {}; }
 function num(v) { var n = Number(v); return isFinite(n) ? n : 0; }
 function pad(n) { return (n < 10 ? "0" : "") + n; }
@@ -888,7 +1019,7 @@ function seasonLabel(k) { return seasonShort(k) + " Season"; }
 function seasonShort(k) { var p = k.split("-"); return MONL[(+p[1] || 1) - 1] + " " + p[0]; }
 function money(n) { return "LKR " + Math.round(n).toLocaleString("en-US"); }
 function uid() { return Math.random().toString(36).slice(2, 10); }
-function plural(n, w) { return n + " " + w + (n === 1 ? "" : /(ch|sh|s|x)$/.test(w) ? "es" : "s"); }
+function plural(n, w, pl) { return n + " " + (n === 1 ? w : pl || w + (/(ch|sh|s|x)$/.test(w) ? "es" : "s")); }
 function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 function sum(a) { return a.reduce(function (x, y) { return x + y; }, 0); }
@@ -1583,7 +1714,11 @@ function chanceRun(sk, drop) {
   var nd2 = left + (live ? 1 : 0), lead = Math.max.apply(null, teams.map(function (t) { return tb[t]; })), lab = {};
   teams.forEach(function (t) { var can = tb[t] + (105 + sc.tod) * nd2 > lead || tb[t] === lead; lab[t] = season[t] === 0 && can ? "1" : season[t] === 100 && teams.some(function (u) { return u !== t && tb[u] + (105 + sc.tod) * nd2 > tb[t]; }) ? "99" : String(season[t]); });
   pots.forEach(function (x) { x.lab = x.p >= 100 && pots.length > 1 ? "99" : String(x.p); });
-  return { lab: lab, teams: teams.slice().sort(function (a, b) { return season[b] - season[a] || tb[b] - tb[a]; }), season: season, mv: {}, pots: pots, early: hist.length < 2, live: !!live, done: hist.length, total: days.length };
+  /* shown numbers always add up to 100: a "1" or "99" label takes the difference from the biggest share */
+  var lsum = sum(teams.map(function (t) { return +lab[t]; }));
+  if (lsum !== 100) { var top = teams.slice().sort(function (a, b) { return +lab[b] - +lab[a] || tw[b] - tw[a]; })[0]; lab[top] = String(Math.max(0, +lab[top] + 100 - lsum)); }
+  var rest = Math.max(0, 100 - sum(pots.map(function (x) { return +x.lab; })));
+  return { lab: lab, teams: teams.slice().sort(function (a, b) { return season[b] - season[a] || tb[b] - tb[a]; }), season: season, mv: {}, pots: pots, rest: rest, early: hist.length < 2, live: !!live, done: hist.length, total: days.length };
 }
 /* ---- end core ---- */
 
@@ -1768,8 +1903,13 @@ function openPlayerForm(pid) {
     segf("arm", "Playing arm", [{ v: "right", l: "Right" }, { v: "left", l: "Left" }], p ? p.arm : "") +
     (mine ? '<div><label style="margin-bottom:5px">Date of birth</label><div class="g3">' + sel("dd", "Day", days, dob[2]) + sel("dm", "Month", mons, dob[1]) + sel("dy", "Year", yrs, dob[0]) + '</div><p class="hint" style="margin-top:4px">Private. Only you and the Club Lead can see it.</p></div>' : "") +
     '<div><label style="margin-bottom:2px">Your racket</label><p class="hint" style="margin:0 0 8px">Optional. Skip it if you like.</p><div class="g2" style="grid-template-columns:1fr 1.3fr;align-items:end">' + sel("brand", "Brand", [{ v: "", l: "None" }].concat(BRANDS.map(function (b) { return { v: b, l: b }; })), rb.brand || "") + fld("text", "model", "Model", rb.model || "", 'maxlength="40" placeholder="e.g. Astrox 99"') + "</div></div>";
+  var bk = p && self ? bankOf(p.id) : null;
+  if (bk) body += '<div class="bankf"><b>Bank details</b><p class="hint" style="margin:0 0 8px">So others can pay you back. Only signed-in club members see them.</p><div class="g2">' + fld("text", "bk_bank", "Bank", bk.bank || "", 'maxlength="40" placeholder="e.g. BOC"') + fld("text", "bk_branch", "Branch", bk.branch || "", 'maxlength="40"') + "</div>" + fld("text", "bk_name", "Account name", bk.name || "", 'maxlength="60"') + fld("text", "bk_no", "Account number", bk.no || "", 'maxlength="30" inputmode="numeric"') + "</div>";
   openSheet(p ? (self ? "Edit my profile" : "Edit " + p.display) : "Create your profile", body, function (form) {
     var v = vals(form, ["first", "last", "display", "ini", "gender", "arm", "dd", "dm", "dy", "brand", "model"]);
+    var bv = bk ? vals(form, ["bk_bank", "bk_branch", "bk_name", "bk_no"]) : null;
+    if (bv) { if (bv.bk_no && !/^[0-9 -]{4,30}$/.test(bv.bk_no)) return "The account number can only have digits, spaces and dashes."; if (bv.bk_no && !bv.bk_bank) return "Enter the bank name too."; }
+    var saveBank = function () { if (!bv || (bv.bk_bank === (bk.bank || "") && bv.bk_branch === (bk.branch || "") && bv.bk_name === (bk.name || "") && bv.bk_no === (bk.no || ""))) return Promise.resolve(); return db.doc("banks/" + p.id).set({ bank: clean(bv.bk_bank, 40), branch: clean(bv.bk_branch, 40), name: clean(bv.bk_name, 60), no: clean(bv.bk_no, 30), uid: S.myId || "", ts: Date.now() }); };
     if (!v.first || !v.last) return "Enter a first and second name.";
     if (v.display.length < 2) return "The display name needs at least 2 letters.";
     v.ini = v.ini.toUpperCase(); if (!/^[A-Z]{2}$/.test(v.ini)) return "Initials must be exactly 2 letters.";
@@ -1785,7 +1925,7 @@ function openPlayerForm(pid) {
     var saveFull = function (pid) { if (!full) return Promise.resolve(); if (doc.photo) PHOTOFULL[pid + "|" + doc.photo.slice(-32)] = full; return db.doc("photos/" + pid).set({ img: full, uid: S.myId || "", ts: Date.now() }).catch(function (e) { console.warn("full photo", e && e.code); }); };
     var go = function (photo) {
       if (photo) doc.photo = photo;
-      if (p) return db.doc("players/" + p.id).update(doc).then(function () { return savePriv(p.id); }).then(function () { return saveFull(p.id); }).then(function () { return "Profile saved"; });
+      if (p) return db.doc("players/" + p.id).update(doc).then(function () { return savePriv(p.id); }).then(function () { return saveFull(p.id); }).then(saveBank).then(function () { return "Profile saved"; });
       doc.team = ""; var id = uid(); doc.uids = S.myId ? [S.myId] : []; doc.ts = Date.now(); doc.breaks = [];
       return db.doc("players/" + id).set(doc).then(function () { return savePriv(id); }).then(function () { return saveFull(id); }).then(function () {
         S.me = id; S.pendingMe = id; store("wts-me", id); S.gate = ""; S.reveal = "join";
@@ -1877,7 +2017,8 @@ function tipList() {
   (Array.isArray(c.tips) ? c.tips : []).forEach(function (t) { t = clean(t, 120); if (t) out.push([t, "", ""]); });
   return out;
 }
-function tipHtml(t) { return esc(t[0]) + (t[1] ? '<b>' + esc(t[1]) + "</b>" : "") + esc(t[2]); }
+function tipHl(x) { return esc(x).replace(/(\+\d+(?:\.\d+)?|\b\d+%)/g, "<b>$1</b>"); }
+function tipHtml(t) { return tipHl(t[0]) + (t[1] ? "<b>" + esc(t[1]) + "</b>" : "") + tipHl(t[2]); }
 var TIPI = Math.floor(Math.random() * 7);
 /* Installable app: Android uses the browser's own install prompt, iPhone gets a short guide */
 var INSTEV = null;
@@ -1932,7 +2073,7 @@ function homeRaces() {
       h += '<button type="button" class="race" style="--tint:linear-gradient(90deg,' + TINT[r.k] + ',transparent 80%);text-align:left" data-act="' + (kind === "pl" ? "perf" : kind === "pr" ? "pairpage" : "team") + '" data-id="' + st[0].id + '"><div class="award"><img class="t" src="' + timg(r.logo) + '" alt="' + r.t + '"><div><small>' + seasonLabel(S.season) + " · " + r.t + "</small><div>" + w.ph.replace('class="tlogo"', 'class="tlogo" style="width:56px;height:56px"') + '</div><span class="nm">' + w.nm + '</span><span class="pts" style="font-weight:900">' + (kind === "pr" ? "<small>AVG</small> " + fmtPts(st[0].pts) + " <small>PTS A MATCH</small>" : fmtPts(st[0].pts) + " <small>PTS</small>") + "</span></div></div>" + (rn ? '<div class="runners">' + rn + "</div>" : "") + "</button>";
       return;
     }
-    var rows = st.map(function (x, i) { var e = ent(kind, x.id), tl = kind !== "tm" ? '<span class="tmn" style="color:' + (e.t && TEAM[e.t] ? tdef(e.t).light : "var(--dim)") + '">' + (e.t && TEAM[e.t] ? '<img src="' + tlogo(e.t) + '" alt="">' + esc(tname(e.t)) : "No team") + "</span>" : i === 0 ? "<small>Leading</small>" : ""; return '<div class="rrow' + (i === 0 ? " first" : "") + '"><span class="pos">' + (i + 1) + '</span><span class="avs">' + e.ph + '</span><span class="nm">' + e.nm + tl + '</span><span class="p">' + pv(kind, x) + "</span></div>"; }).join("");
+    var rows = st.map(function (x, i) { var e = ent(kind, x.id), tl = kind !== "tm" ? '<span class="tmn" style="color:' + (e.t && TEAM[e.t] ? tdef(e.t).light : "var(--dim)") + '">' + (e.t && TEAM[e.t] ? '<img src="' + tlogo(e.t) + '" alt="">' + esc(tname(e.t)) : "No team") + (kind === "pr" ? '<em class="pmc">· ' + plural(x.mp || 0, "match") + "</em>" : "") + "</span>" : i === 0 ? "<small>Leading</small>" : ""; return '<div class="rrow' + (i === 0 ? " first" : "") + '"><span class="pos">' + (i + 1) + '</span><span class="avs">' + e.ph + '</span><span class="nm">' + e.nm + tl + '</span><span class="p">' + pv(kind, x) + "</span></div>"; }).join("");
     h += '<div class="race live" style="--tint:linear-gradient(90deg,' + TINT[r.k] + ',transparent 80%)"><div class="rh"><img src="' + timg(r.logo) + '" alt=""><div><small>Race for</small><b>' + r.t + '</b><span class="pill">Still in play · decided after the last day of the season</span></div></div><div class="rrows">' + rows + "</div></div>";
   });
   return h + "</div></div>";
@@ -1957,9 +2098,14 @@ function dayTeamPts(pd, t) { var x = pd && pd.tm[t] || {}; return (x.pts || 0) +
 function stackBar(vals, h) { var t = sum(vals.map(function (v) { return v[1]; })) || 1; return '<span class="sp"' + (h ? ' style="height:' + h + 'px"' : "") + ">" + vals.map(function (v) { return '<i style="width:' + (v[1] / t * 100) + "%;background:" + tdef(v[0]).color + '"></i>'; }).join("") + "</span>"; }
 function homeChances() {
   var wc = winChance(S.season); if (!wc) return "";
-    var h = '<div class="sec"><div class="sh"><h2>Title chances</h2><span class="r">After ' + wc.done + " of " + wc.total + ' days</span></div><div class="prog"><div class="chance"><div class="h">Champion Team' + (wc.live ? "<span>Updates live</span>" : "") + '</div><div class="rings">';
-  h += wc.teams.map(function (t) { var c = tdef(t).color; return '<button type="button" class="rt" data-act="team" data-id="' + t + '"><span class="ttl" style="color:' + c + '"><img src="' + tlogo(t) + '" alt="">' + esc(tname(t)) + '</span><div class="ring" style="--v:' + wc.season[t] + ";--c:" + c + '"><span>' + esc(wc.lab[t] || wc.season[t]) + "%</span></div></button>"; }).join("") + "</div></div>";
-  if (wc.pots.length) h += '<div class="chance"><div class="h">Player of the Season<span>Top 3 chances</span></div><div class="list">' + wc.pots.map(function (x, i) { return '<button type="button" class="lr" data-act="perf" data-id="' + x.id + '"><span class="pos">' + (i + 1) + "</span>" + av(x.id) + '<span class="t"><b>' + nm(x.id) + "</b><small>" + esc(tname(teamOf(x.id)) || "No team") + '</small></span><b class="tot">' + esc(x.lab || x.p) + "%</b></button>"; }).join("") + "</div></div>";
+  var row = function (act, id, head, val, col) { return '<button type="button" class="cbr" data-act="' + act + '" data-id="' + id + '"><span class="cbt">' + head + '<b>' + esc(val) + '%</b></span><span class="cbb"><i style="width:' + Math.max(+val || 0, 1.5) + "%;background:" + col + '"></i></span></button>'; };
+  var h = '<div class="sec"><div class="sh"><h2>Title chances</h2><span class="r">After ' + wc.done + " of " + wc.total + ' days</span></div><div class="prog"><div class="chance"><div class="h">Champion Team' + (wc.live ? "<span>Updates live</span>" : "") + '</div><div class="cbars">';
+  h += wc.teams.map(function (t) { var c = tdef(t).color; return row("team", t, '<span class="cbn" style="color:' + c + '"><img src="' + tlogo(t) + '" alt="">' + esc(tname(t)) + "</span>", wc.lab[t], c); }).join("") + "</div></div>";
+  if (wc.pots.length) {
+    h += '<div class="chance"><div class="h">Player of the Season<span>Top ' + wc.pots.length + '</span></div><div class="prings">' + wc.pots.map(function (x, i) { var t = teamOf(x.id), c = t ? tdef(t).color : "#a9a9c8"; return '<button type="button" class="pring' + (i === 0 ? " lead" : "") + '" data-act="perf" data-id="' + x.id + '" aria-label="' + esc(pname(x.id)) + " " + esc(x.lab) + '%"><span class="pr" style="--v:' + Math.max(+x.lab || 0, 1) + ";--c:" + c + '">' + av(x.id) + '</span><b class="pp">' + esc(x.lab) + '%</b><b class="pn" style="color:' + c + '">' + esc(pname(x.id)) + "</b><small>" + esc(tname(t) || "No team") + "</small></button>"; }).join("") + "</div>";
+    if (wc.rest > 0) h += '<p class="prest">Everyone else · ' + wc.rest + "%</p>";
+    h += "</div>";
+  }
   return h + "</div></div>";
 }
 function liveSeg(d) { var ms = dayMatches(d.date).filter(function (m) { return m.status === "live" || m.status === "planned"; }); return ms.length ? ms[0].type : "s"; }
@@ -2003,7 +2149,7 @@ h += seasonPicker() + '<div class="tabs" style="grid-template-columns:1.35fr 1fr
   return h + "</div>" + (kind === "tm" ? '<p class="muted tiny" style="margin:0 4px">Days: playing days the team took part in. Singles pts: all singles points won by the team\'s players. Doubles pts: points from team doubles. Pts: the team score.</p>' : '<div class="row muted tiny" style="gap:12px;padding:0 4px"><span class="row" style="gap:5px"><i style="width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block"></i>Win</span><span class="row" style="gap:5px"><i style="width:7px;height:7px;border-radius:50%;background:#5a5a78;display:inline-block"></i>Loss</span><span>Last 5 matches, newest on the right</span></div>') + (bt.k === "pr" && st.some(function (x) { return x.ok === false; }) ? '<p class="muted tiny" style="margin:0 4px">Pairs are ranked by points per match (Avg). A pair needs ' + PAIRMIN + " matches to rank; greyed pairs aren't there yet.</p>" : "") + rbLink();
 }
 function wl(w, l) { return '<span class="wlc"><b>' + w + "</b>–<i>" + l + "</i></span>"; }
-function pv(kind, x) { return kind === "pr" ? '<small class="pav">AVG</small>' + fmtPts(x.pts) + '<small>PTS</small><em class="pmm">per match · ' + plural(x.mp || 0, "match") + "</em>" : fmtPts(x.pts) + "<small>PTS</small>"; }
+function pv(kind, x) { return kind === "pr" ? '<small class="pav">AVG</small>' + fmtPts(x.pts) + '<small>PTS</small><em class="pmm">per match</em>' : fmtPts(x.pts) + "<small>PTS</small>"; }
 function rbLink() { return '<button type="button" class="li" data-act="rulebook" style="background:linear-gradient(90deg,rgba(139,92,255,.18),var(--surface));border:1px solid rgba(139,92,255,.4)"><span class="iconbtn" style="background:var(--grad)">' + icon("book") + '</span><span class="t"><b>How points work</b><small>Scoring, titles and badges in the Playbook</small></span><span class="ch">›</span></button>'; }
 
 /* Doubles Duo of the Day card: duo is a key "id+id" (may include guests) */
@@ -2108,7 +2254,7 @@ function openRaceAt(date) {
   var R = raceAt(date); if (!R) return;
   var body = '<p class="muted small" style="margin:0">' + seasonLabel(R.sk) + " · standings after Day " + R.n + " of " + R.total + " · " + fmtD(date, true) + "</p>";
   R.races.forEach(function (z) {
-    body += '<div class="rat"><div class="rh"><img src="' + timg(z.r.logo) + '" alt=""><b>' + z.r.t + "</b></div>" + (z.st.length ? z.st.map(function (x, i) { var e = ent(z.r.kind, x.id); return '<div class="rrow' + (i === 0 ? " first" : "") + '"><span class="pos">' + (i + 1) + '</span><span class="avs">' + e.ph + '</span><span class="nm">' + e.nm + '</span><span class="p">' + pv(z.r.kind, x) + "</span></div>"; }).join("") : '<p class="muted small" style="margin:0">No results yet</p>') + "</div>";
+    body += '<div class="rat"><div class="rh"><img src="' + timg(z.r.logo) + '" alt=""><b>' + z.r.t + "</b></div>" + (z.st.length ? z.st.map(function (x, i) { var e = ent(z.r.kind, x.id); return '<div class="rrow' + (i === 0 ? " first" : "") + '"><span class="pos">' + (i + 1) + '</span><span class="avs">' + e.ph + '</span><span class="nm">' + e.nm + (z.r.kind === "pr" ? "<small>" + plural(x.mp || 0, "match") + "</small>" : "") + '</span><span class="p">' + pv(z.r.kind, x) + "</span></div>"; }).join("") : '<p class="muted small" style="margin:0">No results yet</p>') + "</div>";
   });
   body += '<button type="button" class="btn big" data-act="share" data-v="race" data-id="' + date + '">⇪ Make a share image</button>';
   openSheet("Title race after Day " + R.n, body, null);
@@ -2241,7 +2387,7 @@ function sideHtml(m, side, right) {
   if (sea) {
     var ph = avs(ids, ids.length > 1 ? "sm" : "");
     n = '<b style="color:' + (t ? tdef(t).color : pcol(ids[0])) + '">' + names(ids) + (t && m.type === "d" ? '<small style="display:block;font-size:11px;font-weight:700;color:var(--sub)">' + esc(tname(t)) + "</small>" : "") + "</b>";
-    return '<div class="side' + (right ? " r" : "") + '">' + (right ? n + ph : ph + n) + "</div>";
+    return '<div class="side' + (right ? " r" : "") + (ids.length > 1 ? " d" : "") + '">' + (right ? n + ph : ph + n) + "</div>";
   }
   // practice / open: each player with their own photo and team, never one team label for the side
   return '<div class="side pl' + (right ? " r" : "") + '">' + ids.map(function (id) { var tt = isGuest(id) ? "Guest" : teamOf(id) ? tname(teamOf(id)) : "No team"; return '<span class="pp1">' + av(id, "sm") + "<span><b>" + esc(pname(id)) + "</b><small>" + esc(tt) + "</small></span></span>"; }).join("") + "</div>";
@@ -2575,9 +2721,11 @@ function viewTeam(t) {
     var ck = Object.keys(contrib).filter(function (k) { return contrib[k] > 0; }).sort(function (a, b) { return contrib[b] - contrib[a]; });
     if (ck.length) { var mx2 = contrib[ck[0]]; h += '<div class="sec"><div class="sh"><h3>Who played for the team</h3><span class="r">Points in team doubles</span></div><div class="bd">' + ck.map(function (k) { return '<div class="br"><span>' + (isGuest(k) ? esc(pname(k)) + ' <span class="muted tiny">(sub)</span>' : nm(k)) + '</span><span class="trk"><i style="width:' + contrib[k] / mx2 * 100 + "%;background:" + (isGuest(k) ? "#8a8aa8" : tdef(t).color) + '"></i></span><b>' + contrib[k] + "</b></div>"; }).join("") + "</div></div>"; }
   }
-  var hon = { team: 0, tod: 0 }; seasonsAll().forEach(function (k) { var TT = seasonTitles(k); if (TT && TT.team === t) hon.team++; var Cx = compute(k); Object.keys(Cx.perDay).forEach(function (d) { if (Cx.perDay[d].tod === t) hon.tod++; }); });
+  var hon = { team: 0, tod: 0, won: [] }; seasonsAll().forEach(function (k) { var TT = seasonTitles(k); if (TT && TT.team === t) { hon.team++; hon.won.push(k); } var Cx = compute(k); Object.keys(Cx.perDay).forEach(function (d) { if (Cx.perDay[d].tod === t) hon.tod++; }); });
   var tb = badgesAll(), tbad = BADGES.filter(function (b) { return b.who === "Team" && tb[b.k] && tb[b.k][t]; });
-  if (hon.team || hon.tod || tbad.length) h += '<div class="sec"><div class="sh"><h3>Honours</h3></div><div class="cab">' + (hon.team ? '<span><img src="' + timg("champion-team") + '" alt="">Champion Team ×' + hon.team + "</span>" : "") + (hon.tod ? '<span><img src="' + timg("team-of-the-day") + '" alt="">Team of the Day ×' + hon.tod + "</span>" : "") + tbad.map(function (b) { return '<span><img src="' + bimg(b.k) + '" alt="">' + b.n + "</span>"; }).join("") + "</div></div>";
+  h += '<div class="sec"><div class="sh"><h3>Honours</h3><span class="r">All time</span></div><div class="tch' + (hon.team ? " won" : "") + '"><img src="' + timg("champion-team") + '" alt=""><span><small>Champion Team</small><b>' + (hon.team ? "×" + hon.team + (hon.team === 1 ? " title" : " titles") : "Not won yet") + "</b><em>" + (hon.team ? hon.won.sort().map(seasonLabel).join(" · ") : "The first title is up for grabs.") + "</em></span></div>";
+  var tiles = (hon.tod ? ['<div class="ct"><img src="' + timg("team-of-the-day") + '" alt=""><b>Team of the Day</b><span>×' + hon.tod + "</span></div>"] : []).concat(tbad.map(function (b) { return '<div class="ct"><img src="' + bimg(b.k) + '" alt=""><b>' + esc(b.n) + "</b><span>Badge</span></div>"; }));
+  h += (tiles.length ? '<div class="cab2">' + tiles.join("") + "</div>" : '<p class="muted small" style="margin:0">No Team of the Day wins yet. Every playing day is a new chance.</p>') + "</div>";
   h += '<div class="sec"><div class="sh"><h3>Squad</h3><span class="r">' + n + " of " + MAXTEAM + '</span></div><div class="list">' + (n ? mem.sort(function (a, b) { return a.display.localeCompare(b.display); }).map(playerRow).join("") : '<div class="empty">No players yet.</div>') + "</div></div>";
   var reqs = pendingFor(t);
   if (manage && !past && reqs.length) h += '<div class="card"><div class="sh"><h3>Join requests</h3></div>' + reqs.map(joinRow).join("") + "</div>";
@@ -2628,13 +2776,12 @@ function captainCorner(t) {
 /* attendance guess for the line-up: everyone in the team who hasn't said no and isn't on break */
 function lineupAtt(d, t) { var a = {}; teamMembers(t).forEach(function (p) { if (d.rsvp[p.id] !== "no" && !onBreak(p, d.date)) a[p.id] = "p"; }); return a; }
 /* ================= CLUB ================= */
-var CTABS = [["sessions", "Sessions"], ["notices", "Notices"], ["gallery", "Gallery"], ["rules", "Playbook"], ["budget", "Finances"], ["donations", "Donations"], ["settings", "Settings"]];
+var CTABS = [["sessions", "Sessions"], ["notices", "Notices"], ["gallery", "Gallery"], ["rules", "Playbook"], ["budget", "Finances"], ["settings", "Settings"]];
 function viewClub() {
-  var tabs = CTABS.filter(function (x) { return (x[0] !== "settings" || P[S.me] || isSA()) && (x[0] !== "gallery" || galCan()) && (S.me || (x[0] !== "donations" && x[0] !== "budget")); }), tab = S.clubTab;
+  var tabs = CTABS.filter(function (x) { return (x[0] !== "settings" || P[S.me] || isSA()) && (x[0] !== "gallery" || galCan()) && (S.me || x[0] !== "budget"); }), tab = S.clubTab;
   if (!tabs.some(function (x) { return x[0] === tab; })) tab = S.clubTab = "sessions";
   var h = hdr("Club") + '<div class="tabs" style="grid-template-columns:repeat(' + (tabs.length > 6 ? 4 : 3) + ',1fr)">' + tabs.map(function (x) { return '<button type="button" class="' + (tab === x[0] ? "on" : "") + '" data-act="ctab" data-v="' + x[0] + '">' + x[1] + "</button>"; }).join("") + "</div>";
   if (tab === "sessions") h += clubSessions();
-  else if (tab === "donations") h += clubDonations();
   else if (tab === "budget") h += clubBudget();
   else if (tab === "notices") h += clubNotices();
   else if (tab === "gallery") h += clubGallery();
@@ -2678,76 +2825,149 @@ function mySettings() {
   return h;
 }
 function monthKeyOf(s) { return String(s || "").slice(0, 7); }
-function clubDonations() {
-  var h = "", list = D.donations.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }), mk = monthKeyOf(todayStr());
-  var tot = sum(D.donations.map(function (d) { return num(d.amount); })), mon = sum(D.donations.filter(function (d) { return monthKeyOf(d.date) === mk; }).map(function (d) { return num(d.amount); }));
-  h += '<div class="fund v"><small>Donations</small><span class="bigv">' + money(tot) + '</span><div class="ln"><span>This month</span><b>' + money(mon) + '</b></div><div class="ln"><span>Donors</span><b>' + uniq(D.donations.map(function (d) { return d.pid; })).length + "</b></div></div>";
-  if (staff()) h += '<button type="button" class="add" data-act="donnew">+ Record a donation</button>';
-  if (!list.length) return h + '<div class="empty"><b>No donations yet</b>Donations keep the club running: court fees, shuttles and gear.</div>';
-  var byM = {}; list.forEach(function (d) { (byM[monthKeyOf(d.date)] = byM[monthKeyOf(d.date)] || []).push(d); });
-  Object.keys(byM).sort().reverse().forEach(function (k) {
-    h += '<div class="grp" style="color:var(--sub)">' + seasonLabel(k) + " · " + money(sum(byM[k].map(function (d) { return num(d.amount); }))) + '</div><div class="list">';
-    byM[k].forEach(function (d) { h += '<button type="button" class="li"' + (staff() ? ' data-act="donedit" data-id="' + d.id + '"' : "") + ">" + (d.pid && !isGuest(d.pid) ? av(d.pid, "sm") : '<span class="av g sm">♥</span>') + '<span class="t"><b>' + esc(d.pid ? pname(d.pid) : d.name || "Well-wisher") + "</b><small>" + fmtD(d.date) + (d.note ? " · " + esc(d.note) : "") + '</small></span><span class="amt in">' + money(num(d.amount)) + "</span></button>"; });
-    h += "</div>";
-  });
-  return h;
-}
-/* ---------- season budget (badminton costs only) ---------- */
-var FCAT = { court: ["Court fees", "▦"], shuttles: ["Shuttlecocks", "🏸"], refresh: ["In-court refreshments", "🧃"], acc: ["Accessories", "🎒"], gift: ["Gifts & prizes", "🏆"], other: ["Other", "✦"] };
-var FMODE = { split: "Split with the group", me: "Fully on me", part: "Partly on me", fund: "From the club fund / donations" };
+/* ---------- finances: Budget (day spends + one-time costs), After play, My dues ---------- */
+var FCAT = { court: ["Court fees", "court"], refresh: ["Refreshments", "refresh"], shuttles: ["Shuttlecocks", "shuttles"], acc: ["Equipment", "acc"], gift: ["Gifts & prizes", "gift"], other: ["Other", "other"] };
+var FKIND = { day: ["court", "refresh", "other"], one: ["shuttles", "acc", "other"] };
+var FMODE = { split: "Split with the group", part: "Partly on the payer", fwd: "Payer just paid", me: "Fully on the payer", fund: "Club fund" };
+var FICON = {
+  court: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/>',
+  refresh: '<path d="M6 8h12l-1.5 12h-9z"/><path d="M9 8V5h6v3"/>',
+  shuttles: '<path d="M8 20l-3-9h14l-3 9z"/><path d="M5 11l2-7M19 11l-2-7M12 11V4"/>',
+  acc: '<path d="M5 19l9-9"/><circle cx="16.5" cy="7.5" r="3.5"/>',
+  gift: '<path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M12 14v4M8 20h8"/>',
+  other: '<circle cx="12" cy="12" r="7"/><path d="M12 9v3l2 2"/>'
+};
+function fIcon(cat) { return '<span class="fi2 ' + cat + '"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (FICON[cat] || FICON.other) + "</svg></span>"; }
 function exN(e) {
   var cat = e.cat;
   if (!e.mode) cat = cat === "court" || cat === "refresh" || cat === "shuttles" ? cat : e.sub === "shuttles" ? "shuttles" : "acc";
   else if (!FCAT[cat]) cat = "other";
   var payer = e.payer != null ? e.payer : e.paidBy && e.paidBy !== "fund" ? e.paidBy : "";
-  var date = e.date || e.day || todayStr();
-  return { id: e.id, cat: cat, other: e.other || "", item: e.item || "", amount: num(e.amount), date: date, day: e.day || (DAY[date] && DAY[date].status !== "cancelled" ? date : ""), qty: num(e.qty), hours: num(e.hours), rate: num(e.rate), mode: FMODE[e.mode] ? e.mode : "fund", mine: num(e.mine), among: Array.isArray(e.among) ? e.among : [], payer: payer && P[payer] ? payer : "", repaid: !!e.repaid, season: seasonKey(date) };
+  var date = e.date || e.day || todayStr(), dd = e.day || (DAY[date] && DAY[date].status !== "cancelled" ? date : "");
+  var kind = e.kind === "day" || e.kind === "one" ? e.kind : (cat === "court" || cat === "refresh" || (cat === "other" && dd)) ? "day" : "one";
+  if (kind === "day" && !(dd && DAY[dd])) kind = "one";
+  var custom = {}; if (e.custom && typeof e.custom === "object") Object.keys(e.custom).forEach(function (k) { var v = num(e.custom[k]); if (v > 0 && P[k]) custom[k] = v; });
+  return { id: e.id, kind: kind, cat: cat, other: e.other || "", item: e.item || "", amount: num(e.amount), date: date, day: kind === "day" ? dd : "", season: /^\d{4}-\d{2}$/.test(e.season || "") ? e.season : seasonKey(kind === "day" ? dd : date), hours: num(e.hours), rate: num(e.rate), mode: FMODE[e.mode] ? e.mode : "fund", mine: num(e.mine), among: Array.isArray(e.among) ? e.among : [], custom: custom, payer: payer && P[payer] ? payer : "", repaid: !!e.repaid, ts: num(e.ts), by: e.by || "" };
 }
 function exAll() { return D.expenses.map(exN); }
 function exLabel(x) { return x.cat === "other" ? x.other || "Other" : FCAT[x.cat][0]; }
+/* how much of a cost each person carries (the payer's own part included) */
 function exShares(x) {
-  var o = {}; if (x.mode === "fund") return o;
-  if (x.mode === "me" || !x.payer) { if (x.payer) o[x.payer] = x.amount; return o; }
-  var among = x.among.filter(function (id) { return P[id]; }), rest = x.amount;
+  var o = {}; if (x.mode === "fund" || !x.payer) return o;
+  if (x.mode === "me") { o[x.payer] = x.amount; return o; }
+  var rest = x.amount;
   if (x.mode === "part") { var m = Math.min(x.mine, x.amount); o[x.payer] = m; rest -= m; }
+  var among = x.among.filter(function (id) { return P[id] && !(x.mode === "fwd" && id === x.payer); });
+  var cu = Object.keys(x.custom), ct = sum(cu.map(function (k) { return x.custom[k]; }));
+  if (cu.length && ct > 0) { cu.forEach(function (id) { o[id] = (o[id] || 0) + rest * x.custom[id] / ct; }); return o; }
   if (!among.length) { o[x.payer] = (o[x.payer] || 0) + rest; return o; }
   among.forEach(function (id) { o[id] = (o[id] || 0) + rest / among.length; });
   return o;
 }
 function exHow(x) {
+  var who = esc(pname(x.payer)), cu = Object.keys(x.custom).length, n = x.among.filter(function (id) { return P[id] && !(x.mode === "fwd" && id === x.payer); }).length, sp = cu ? "custom split" : "split equally by " + n;
   if (x.mode === "fund") return "From the club fund";
-  if (x.mode === "me") return "Fully on " + esc(pname(x.payer));
-  var n = x.among.filter(function (id) { return P[id]; }).length;
-  if (x.mode === "part") return "Partly on " + esc(pname(x.payer)) + " (" + money(Math.min(x.mine, x.amount)).replace("LKR ", "") + ") · rest split" + (n ? " by " + n : "");
-  return "Split with the group · " + plural(n, "player");
+  if (x.mode === "me") return "Fully on " + who + " · nobody owes";
+  if (x.mode === "part") return who + " covers " + money(Math.min(x.mine, x.amount)).replace("LKR ", "") + " · rest " + (cu ? "custom split" : "split by " + n);
+  if (x.mode === "fwd") return who + " paid · " + sp;
+  return "Paid by " + who + " · " + sp;
 }
-/* net balance per player for a season: + means they are owed, - means they owe */
-function seasonNet(sk) {
-  var net = {}, add = function (id, v) { if (!id || !P[id]) return; net[id] = (net[id] || 0) + v; };
-  exAll().filter(function (x) { return x.season === sk && x.mode !== "fund" && x.payer; }).forEach(function (x) { add(x.payer, x.amount); var sh = exShares(x); Object.keys(sh).forEach(function (id) { add(id, -sh[id]); }); });
-  D.settles.filter(function (s) { return s.season === sk; }).forEach(function (s) { add(s.from, num(s.amount)); add(s.to, -num(s.amount)); });
-  Object.keys(net).forEach(function (id) { net[id] = Math.round(net[id]); if (!net[id]) delete net[id]; });
-  return net;
+/* everyone who turned up on at least one day of the season: the default for one-time costs */
+function seasonPlayers(sk) { var o = {}; seasonDays(sk).forEach(function (d) { presentIds(d).forEach(function (id) { o[id] = 1; }); }); var l = Object.keys(o); return l.length ? l : activePlayers().filter(function (p) { return p.team; }).map(function (p) { return p.id; }); }
+
+/* ---------- My dues: who owes whom, straight to the person who paid ---------- */
+function setN(s) { return { id: s.id, from: s.from, to: s.to, amount: num(s.amount), ts: num(s.ts), okTs: num(s.okTs), status: s.status === "claimed" ? "claimed" : "ok", by: s.by || "", uid: s.uid || "" }; }
+function duesAll() {
+  return memo("dues", function () {
+    var owe = {}, why = {}, add = function (a, b, v, w) { if (!P[a] || !P[b] || a === b || !(v > 0)) return; var k = a + "|" + b; owe[k] = (owe[k] || 0) + v; if (w) { why[k] = why[k] || []; if (why[k].indexOf(w) < 0) why[k].push(w); } };
+    exAll().forEach(function (x) { if (!x.payer || x.mode === "fund") return; var sh = exShares(x), w = x.kind === "day" ? "Badminton " + (DAY[x.day] ? "Day " + dayNo(DAY[x.day]) : fmtD(x.day)) : "One-time · " + exLabel(x); Object.keys(sh).forEach(function (id) { add(id, x.payer, sh[id], w); }); });
+    D.bills.map(billN).forEach(function (b) { var sh = billShares(b), w = "After play " + (DAY[b.date] ? "Day " + dayNo(DAY[b.date]) : fmtD(b.date)); Object.keys(sh).forEach(function (id) { if (!b.paid[id]) add(id, b.payer, sh[id], w); }); });
+    var sets = D.settles.map(setN), paid = {};
+    sets.forEach(function (s) { if (s.status === "ok" && P[s.from] && P[s.to]) { var k = s.from + "|" + s.to; paid[k] = (paid[k] || 0) + s.amount; } });
+    var seen = {}, pairs = [];
+    Object.keys(owe).concat(Object.keys(paid)).forEach(function (k) {
+      var p = k.split("|"), a = p[0], b = p[1], key = a < b ? a + "|" + b : b + "|" + a; if (seen[key]) return; seen[key] = 1;
+      var net = (owe[a + "|" + b] || 0) - (owe[b + "|" + a] || 0) - (paid[a + "|" + b] || 0) + (paid[b + "|" + a] || 0);
+      net = Math.round(net); if (Math.abs(net) < 1) return;
+      var from = net > 0 ? a : b, to = net > 0 ? b : a;
+      pairs.push({ from: from, to: to, amt: Math.abs(net), why: (why[from + "|" + to] || []).slice(0, 4), claims: sets.filter(function (s) { return s.status === "claimed" && s.from === from && s.to === to; }) });
+    });
+    return { pairs: pairs, sets: sets };
+  });
 }
-function settlePlan(net) {
-  var cr = [], dr = [], out = [];
-  Object.keys(net).forEach(function (id) { if (net[id] > 0) cr.push([id, net[id]]); else if (net[id] < 0) dr.push([id, -net[id]]); });
-  cr.sort(function (a, b) { return b[1] - a[1]; }); dr.sort(function (a, b) { return b[1] - a[1]; });
-  var i = 0, j = 0;
-  while (i < dr.length && j < cr.length) { var v = Math.min(dr[i][1], cr[j][1]); if (v >= 1) out.push({ from: dr[i][0], to: cr[j][0], amt: Math.round(v) }); dr[i][1] -= v; cr[j][1] -= v; if (dr[i][1] < 1) i++; if (cr[j][1] < 1) j++; }
-  return out;
+function myDues() { var A = duesAll(); return { pay: A.pairs.filter(function (p) { return p.from === S.me; }), get: A.pairs.filter(function (p) { return p.to === S.me; }), hist: A.sets.filter(function (s) { return s.status === "ok" && (s.from === S.me || s.to === S.me); }).sort(function (a, b) { return (b.okTs || b.ts) - (a.okTs || a.ts); }) }; }
+function oweCount() { return S.me ? myDues().pay.filter(function (p) { return !p.claims.length; }).length : 0; }
+function remindText(p) {
+  var bk = bankOf(p.to);
+  return "Hi " + pname(p.from) + " 🏸 a friendly reminder from What the Smash: " + money(p.amt) + " to " + pname(p.to) + (p.why.length ? " (" + p.why.join(", ") + ")" : "") + "." + (bk.no ? "\nAcc " + bk.no + (bk.bank ? " · " + bk.bank : "") : "") + "\nSee My dues in the app: " + SITE;
 }
-function fundState() {
-  var X = exAll(), don = sum(D.donations.map(function (d) { return num(d.amount); }));
-  var fundX = X.filter(function (x) { return x.mode === "fund"; }), used = sum(fundX.map(function (x) { return x.amount; }));
-  var owed = fundX.filter(function (x) { return x.payer && !x.repaid; });
-  var bought = sum(X.filter(function (x) { return x.cat === "shuttles"; }).map(function (x) { return x.qty; })), usedS = sum(D.days.map(function (d) { return num(d.shuttles); }));
-  return { don: don, used: used, fund: don - used, owed: owed, stock: bought - usedS, bought: bought };
-}
-function finSeasons() { var ks = uniq(seasonsAll().concat(exAll().map(function (x) { return x.season; }))).sort().reverse(); return ks.length ? ks : [seasonKey(todayStr())]; }
+
+/* ---------- Finances views ---------- */
+var FTABS = [["budget", "Budget"], ["after", "After play"], ["dues", "My dues"]];
 function clubBudget() {
-  var h = '<div class="seg2" style="margin-bottom:2px"><button type="button" class="' + (S.finTab !== "after" ? "on" : "") + '" data-act="fintab" data-v="season">Season budget</button><button type="button" class="' + (S.finTab === "after" ? "on" : "") + '" data-act="fintab" data-v="after">After play bills</button></div>';
-  return h + myBankCard() + (S.finTab === "after" ? afterPlayList() : seasonBudget());
+  var tab = FTABS.some(function (x) { return x[0] === S.finTab; }) ? S.finTab : "budget", dot = oweCount();
+  var h = '<div class="seg3 lite">' + FTABS.map(function (x) { return '<button type="button" class="' + (tab === x[0] ? "on" : "") + '" data-act="fintab" data-v="' + x[0] + '">' + x[1] + (x[0] === "dues" && dot ? '<i class="dueDot" aria-label="You have dues"></i>' : "") + "</button>"; }).join("") + "</div>";
+  return h + (tab === "after" ? afterPlayList() : tab === "dues" ? duesView() : seasonBudget());
+}
+function finRow(x) {
+  var t = x.item || exLabel(x);
+  if (x.cat === "court" && x.hours && x.rate && !x.item) t = "Court fees · " + x.hours + " h × " + money(x.rate).replace("LKR ", "");
+  var sub = (x.kind === "one" ? fmtD(x.date) + " · " : "") + (x.item && x.cat !== "other" ? esc(exLabel(x)) + " · " : "") + exHow(x);
+  return '<button type="button" class="frow' + (x.kind === "one" ? " one" : "") + '"' + (staff() ? ' data-act="expedit" data-id="' + x.id + '"' : " disabled") + ">" + fIcon(x.cat) + '<span class="t"><b>' + esc(t) + "</b><small>" + sub + '</small></span><b class="fa">' + money(x.amount).replace("LKR ", "") + "</b></button>";
+}
+function seasonBudget() {
+  var sk = S.season || defaultSeason(), mine = exAll().filter(function (x) { return x.season === sk; }), tot = sum(mine.map(function (x) { return x.amount; }));
+  var h = seasonPicker() + '<div class="ftot"><span><small>This season\'s total spend</small><b>' + money(tot) + '</b></span><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M16 12.5h2M3 10h18"/></svg></div>';
+  if (staff()) h += '<p class="muted small fhint">Add costs anytime by tapping a day.</p>';
+  var days = seasonDays(sk).filter(function (d) { return d.status !== "cancelled"; });
+  h += '<div class="sec"><div class="sh"><h3>Playing days</h3></div><div class="fdays">';
+  if (!days.length) h += '<p class="muted small" style="margin:0">No playing days in this season yet.</p>';
+  days.forEach(function (d) {
+    var list = mine.filter(function (x) { return x.kind === "day" && x.day === d.date; }), t = sum(list.map(function (x) { return x.amount; })), n = presentIds(d).length, open = S.finDay === d.date;
+    var sub = d.status === "done" ? (n ? plural(n, "player") + (t ? " · " + money(t / n) + " each" : "") : "Played") : d.status === "live" || d.status === "setup" ? "Playing now" + (n ? " · " + plural(n, "player") : "") : "Upcoming";
+    h += '<div class="fday' + (open ? " open" : "") + '"><button type="button" class="fdh" data-act="finday" data-v="' + d.date + '" aria-expanded="' + open + '"><span class="t"><b>Day ' + dayNo(d) + " · " + fmtD(d.date) + "</b><small>" + sub + '</small></span><b class="fda">' + (list.length ? money(t) : "–") + '</b><span class="ch" aria-hidden="true">' + (open ? "▴" : "▾") + "</span></button>";
+    if (open) h += '<div class="fdb">' + (list.length ? list.map(finRow).join("") : '<p class="muted small" style="margin:0">No costs for this day yet.</p>') + (staff() ? '<button type="button" class="add" data-act="expnew" data-v="' + d.date + '" data-id="day">+ Add a cost for this day</button>' : "") + "</div>";
+    h += "</div>";
+  });
+  h += "</div></div>";
+  var one = mine.filter(function (x) { return x.kind === "one"; }).sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : b.ts - a.ts; });
+  h += '<div class="sec"><div class="sh"><h3>One-time costs</h3>' + (one.length ? '<span class="r" style="color:#ffb35e">' + money(sum(one.map(function (x) { return x.amount; }))) + "</span>" : "") + '</div><div class="fone">' + (one.length ? one.map(finRow).join("") : '<p class="muted small" style="margin:0">Shuttlecocks, equipment and other one-off buys go here.</p>') + (staff() ? '<button type="button" class="add one" data-act="expnew" data-v="" data-id="one">+ Add a one-time cost</button>' : "") + "</div></div>";
+  return h;
+}
+function afterPlayList() {
+  var sk = S.season || defaultSeason(), bills = D.bills.map(billN).filter(function (b) { return seasonKey(b.date) === sk; });
+  var h = seasonPicker() + '<p class="muted small fhint">Food and drinks after the game. Whoever pays adds the bill, and everyone\'s share goes to My dues.</p>';
+  var dates = seasonDays(sk).filter(function (d) { return d.status !== "cancelled" && (d.status !== "upcoming" || bills.some(function (b) { return b.date === d.date; })); }).map(function (d) { return d.date; });
+  bills.forEach(function (b) { if (dates.indexOf(b.date) < 0) dates.push(b.date); });
+  dates.sort().reverse();
+  if (!dates.length) h += '<div class="empty"><b>No after play yet</b>Bills show up here by day once someone adds one.</div>';
+  h += '<div class="fdays">' + dates.map(function (dt) {
+    var l = bills.filter(function (b) { return b.date === dt; }).sort(function (a, b) { return num(a.ts) - num(b.ts); }), d = DAY[dt], open = S.finDay === "a" + dt, t = sum(l.map(function (b) { return b.total; }));
+    var r = '<div class="fday' + (open ? " open" : "") + '"><button type="button" class="fdh" data-act="finday" data-v="a' + dt + '" aria-expanded="' + open + '"><span class="t"><b>' + (d ? "Day " + dayNo(d) + " · " : "") + fmtD(dt) + "</b><small>" + (l.length ? plural(l.length, "bill") : "No after play") + '</small></span><b class="fda">' + (l.length ? money(t) : "–") + '</b><span class="ch" aria-hidden="true">' + (open ? "▴" : "▾") + "</span></button>";
+    if (open) r += '<div class="fdb">' + l.map(function (b) { var sh = billShares(b), mineS = S.me && b.payer !== S.me ? sh[S.me] || 0 : 0; return '<button type="button" class="frow" data-act="bill" data-id="' + b.id + '">' + av(b.payer, "sm") + '<span class="t"><b>' + esc(b.title || "After play") + " · paid by " + esc(pname(b.payer)) + "</b><small>" + BMODE[b.mode] + (mineS >= 1 ? " · your share " + money(mineS) + (b.paid[S.me] ? " · paid" : "") : "") + '</small></span><b class="fa">' + money(b.total).replace("LKR ", "") + " ›</b></button>"; }).join("") + (S.me ? '<button type="button" class="add" data-act="billnew" data-v="' + dt + '">+ Add an after play bill</button>' : "") + "</div>";
+    return r + "</div>";
+  }).join("") + "</div>";
+  if (S.me) h += '<button type="button" class="add" data-act="billnew">+ After play on another day</button>';
+  return h;
+}
+function duesView() {
+  if (!S.me) return '<div class="empty"><b>Sign in to see your dues</b></div>';
+  var M = myDues(), owe = sum(M.pay.map(function (p) { return p.amt; })), get = sum(M.get.map(function (p) { return p.amt; }));
+  var h = '<div class="dtot"><div class="o"><small>You owe</small><b>' + money(owe) + "</b><span>" + (M.pay.length ? "to " + plural(M.pay.length, "person", "people") : "All clear") + '</span></div><div class="g"><small>Owed to you</small><b>' + money(get) + "</b><span>" + (M.get.length ? "from " + plural(M.get.length, "person", "people") : "Nothing waiting") + "</span></div></div>";
+  if (!M.pay.length && !M.get.length) h += '<div class="empty"><b>All square</b>Nobody owes anybody right now.</div>';
+  if (M.pay.length) h += '<div class="sec"><div class="sh"><h3>Pay these</h3></div>' + M.pay.map(function (p) {
+    var bk = bankOf(p.to), cl = sum(p.claims.map(function (c) { return c.amount; })), waiting = cl >= p.amt - 1;
+    var r = '<div class="dcard"><div class="dh">' + av(p.to) + '<span class="t"><b>Pay ' + esc(pname(p.to)) + "</b><small>" + esc(p.why.join(", ")) + '</small></span><b class="damt">' + money(p.amt).replace("LKR ", "") + "</b></div>";
+    r += bk.no ? '<div class="dbank"><span><small>' + esc([bk.bank, bk.branch, bk.name].filter(Boolean).join(" · ")) + "</small><b>" + esc(bk.no) + '</b></span><button type="button" class="btn sm ghost" data-act="copyacc" data-id="' + p.to + '">Copy acc. no.</button></div>' : '<p class="dnob">' + esc(pname(p.to)) + " hasn't added bank details yet. Ask them, or pay in cash.</p>";
+    r += waiting ? '<div class="dwait"><span>Waiting for ' + esc(pname(p.to)) + ' to confirm</span><button type="button" class="lnk" data-act="dueundo" data-id="' + p.claims[p.claims.length - 1].id + '">Undo</button></div>' : '<button type="button" class="btn" data-act="duepaid" data-id="' + p.to + '" data-v="' + p.amt + '">I\'ve paid ' + esc(pname(p.to)) + "</button>";
+    return r + "</div>";
+  }).join("") + "</div>";
+  if (M.get.length) h += '<div class="sec"><div class="sh"><h3>Owed to you</h3></div><div class="dlist">' + M.get.map(function (p) {
+    var cl = p.claims.length;
+    return '<div class="dli">' + av(p.from, "sm") + '<span class="t"><b>' + esc(pname(p.from)) + ' · <em class="g">' + money(p.amt).replace("LKR ", "") + "</em></b><small" + (cl ? ' class="wait">Says they\'ve paid · check and confirm' : ">" + esc(p.why.join(", "))) + '</small></span><span class="dbt">' + (cl ? "" : '<a class="btn sm ghost" href="https://wa.me/?text=' + encodeURIComponent(remindText(p)) + '" target="_blank" rel="noopener">Remind</a>') + '<button type="button" class="btn sm got" data-act="duegot" data-id="' + p.from + '" data-v="' + p.amt + '">Got it</button></span></div>';
+  }).join("") + "</div></div>";
+  if (M.hist.length) h += '<details class="sec dhist"><summary>Paid and settled · ' + M.hist.length + '</summary><div class="dlist">' + M.hist.slice(0, 30).map(function (s) { var me = s.from === S.me; return '<div class="dli">' + av(me ? s.to : s.from, "sm") + '<span class="t"><b>' + (me ? "You paid " + esc(pname(s.to)) : esc(pname(s.from)) + " paid you") + "</b><small>" + fmtD(dateOf(s.okTs || s.ts)) + '</small></span><b class="fa">' + money(s.amount).replace("LKR ", "") + "</b></div>"; }).join("") + "</div></details>";
+  return h;
 }
 /* ---------- photo gallery ---------- */
 function galCan() { return !!(S.me && P[S.me]); }
@@ -2764,11 +2984,11 @@ function galMore(x, n) { return '<button type="button" class="gth more" data-act
 function clubGallery() {
   var sk = S.season || defaultSeason(); if (typeof ensureGal === "function") ensureGal(sk);
   var list = galList(sk), loaded = GAL[sk] !== undefined;
-  var h = seasonPicker() + '<button type="button" class="galadd" data-act="galadd"><b>+ Add photos</b><small>The day\'s best moments</small></button>';
+  var h = seasonPicker() + '<button type="button" class="galadd" data-act="galadd"><span class="gai"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="gat"><b>Add photos</b><small>The day\'s best moments</small></span><span class="gap">+</span></button>';
   if (!loaded) return h + '<div class="empty" style="padding:22px">Loading photos…</div>';
   if (!list.length) return h + '<div class="empty"><b>No photos yet</b>Add the first memories from ' + seasonLabel(sk) + ".</div>";
   var fav = S.galSort === "fav";
-  h += '<div class="seg2"><button type="button" class="' + (fav ? "" : "on") + '" data-act="galsort" data-v="day">By day</button><button type="button" class="' + (fav ? "on" : "") + '" data-act="galsort" data-v="fav">Season favourites</button></div>';
+  h += '<div class="seg2 lite"><button type="button" class="' + (fav ? "" : "on") + '" data-act="galsort" data-v="day"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M4 10h16M9 3v4M15 3v4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>By day</button><button type="button" class="' + (fav ? "on" : "") + '" data-act="galsort" data-v="fav"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 20s-7-4.3-8.8-8.6C1.8 8 4 5 7.2 5c1.9 0 3.1 1 4.8 2.6C13.7 6 14.9 5 16.8 5 20 5 22.2 8 20.8 11.4 19 15.7 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>Season favourites</button></div>';
   if (fav) return h + '<div class="ggrid">' + favList(sk).map(function (x) { return galThumb(x, "fav:" + sk); }).join("") + '</div><p class="muted small" style="margin:0;text-align:center">Most liked first. Tap a photo to like, comment or save it.</p>';
   var by = {}, order = []; list.forEach(function (x) { if (!by[x.day]) { by[x.day] = []; order.push(x.day); } by[x.day].push(x); });
   order.forEach(function (day) { var l = by[day]; h += '<div class="sec"><div class="sh"><h3>' + galDayNo(day) + '</h3><span class="r">' + plural(l.length, "photo") + '</span></div><div class="ggrid">' + l.map(galThumb).join("") + "</div></div>"; });
@@ -2781,8 +3001,8 @@ function homeHighlights() {
   var all = (GAL[sk] || []).slice(); if (!all.length) return "";
   var byNew = all.slice().sort(function (a, b) { return b.ts - a.ts; });
   var top = all.slice().sort(function (a, b) { return likeN(b) - likeN(a) || b.ts - a.ts; })[0];
-  var rest = byNew.filter(function (x) { return x.id !== top.id; }), left = galLeft();
-  var played = seasonDays(sk).filter(function (d) { return d.status === "done" || d.status === "live"; }), latest = played.length ? played[played.length - 1].date : "";
+  var rest = byNew.filter(function (x) { return x.id !== top.id; });
+  var played = seasonDays(sk).filter(function (d) { return d.status === "done" || d.status === "live"; }), latest = played.length ? played[played.length - 1].date : "", left = latest ? galLeft(latest) : 0;
   var n = likeN(top), tiles = rest.slice(0, 2).map(galThumb).join("");
   tiles += rest.length > 3 ? galMore(rest[2], rest.length - 2) : rest[2] ? galThumb(rest[2]) : "";
   if (left && latest) tiles += '<button type="button" class="gth add" data-act="galadd" data-v="' + latest + '" aria-label="Add photos">+</button>';
@@ -2861,84 +3081,7 @@ function galDelete(x) {
     return db.doc("gal_" + x.sk + "/" + x.id).delete().then(function () { delete GFULL[x.id]; return db.doc("galfull/" + x.id).delete().catch(function () {}); }).then(function () { return "Photo deleted"; });
   });
 }
-function myBankCard() {
-  if (!S.me || !P[S.me]) return "";
-  var bk = bankOf(S.me);
-  return '<button type="button" class="set bankc" data-act="bankedit"><span class="r"><span>Your bank details<small>' + (bk.no ? esc([bk.name, bk.bank, bk.branch].filter(Boolean).join(" · ")) + " · Acc " + esc(bk.no) : "Add them so others can pay you back") + "</small></span><b>" + (bk.no ? "Edit" : "Add") + " ›</b></span></button>";
-}
-function budgetText(sk) {
-  var X = exAll().filter(function (x) { return x.season === sk; }), tot = sum(X.map(function (x) { return x.amount; }));
-  var t = "🏸 What the Smash · " + seasonLabel(sk) + " costs\nTotal: " + money(tot) + "\n";
-  seasonDays(sk).forEach(function (d, i) {
-    var l = X.filter(function (x) { return x.day === d.date; }); if (!l.length) return; var s = sum(l.map(function (x) { return x.amount; })), n = presentIds(d).length;
-    t += "\nDay " + (i + 1) + " · " + fmtD(d.date) + ": " + money(s) + (n ? " · " + n + " players · " + money(s / n) + " each" : "");
-  });
-  var oth = X.filter(function (x) { return !x.day; }); if (oth.length) t += "\nOther costs: " + money(sum(oth.map(function (x) { return x.amount; }))) + " (" + oth.map(function (x) { return x.item || exLabel(x); }).join(", ") + ")";
-  var plan = settlePlan(seasonNet(sk));
-  if (plan.length) {
-    t += "\n\nTo settle up:\n" + plan.map(function (p) { return "• " + pname(p.from) + " → " + pname(p.to) + ": " + money(p.amt); }).join("\n");
-    var to = uniq(plan.map(function (p) { return p.to; })).filter(function (id) { return bankOf(id).no; });
-    if (to.length) t += "\n\nPay to:\n" + to.map(function (id) { var b = bankOf(id); return (b.name || pname(id)) + " · " + [b.bank, b.branch].filter(Boolean).join(" · ") + " · Acc " + b.no; }).join("\n");
-  } else if (X.length) t += "\n\nAll settled ✅";
-  return t + "\n\nDetails: " + SITE;
-}
-function seasonBudget() {
-  var ks = finSeasons(), sk = ks.indexOf(S.finSeason) >= 0 ? S.finSeason : ks.indexOf(S.season) >= 0 ? S.season : ks[0], X = exAll(), mine = X.filter(function (x) { return x.season === sk; }).sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
-  var tot = sum(mine.map(function (x) { return x.amount; })), pdays = uniq(mine.filter(function (x) { return x.day; }).map(function (x) { return x.day; })).length, off = mine.filter(function (x) { return !x.day; }).length;
-  var h = '<div class="sec"><div class="sh"><h3>Choose a season</h3></div><div class="fseas">' + ks.map(function (k) { var t = sum(X.filter(function (x) { return x.season === k; }).map(function (x) { return x.amount; })), st = seasonInfo(k).status; return '<button type="button" class="' + (k === sk ? "on" : "") + '" data-act="finseason" data-v="' + k + '"><span>' + seasonLabel(k) + (st === "run" ? ' <small>running</small>' : "") + "</span><b>" + money(t) + "</b></button>"; }).join("") + '<div class="all"><span>All time</span><b>' + money(sum(X.map(function (x) { return x.amount; }))) + "</b></div></div></div>";
-  h += '<div class="fund v"><small>Season spend · ' + seasonLabel(sk) + '</small><span class="bigv">' + money(tot) + '</span><div class="ln"><span>' + plural(pdays, "playing day") + " with costs · " + plural(off, "other cost") + "</span></div></div>";
-  h += finDays(sk, mine);
-  if (mine.length) {
-    var bc = {}; mine.forEach(function (x) { var k = x.cat === "other" ? "other" : x.cat; bc[k] = (bc[k] || 0) + x.amount; });
-    var mx = Math.max.apply(null, [1].concat(Object.keys(bc).map(function (k) { return bc[k]; })));
-    h += '<div class="sec"><div class="sh"><h3>By category</h3></div><div class="fbars">' + Object.keys(FCAT).filter(function (k) { return bc[k]; }).sort(function (a, b) { return bc[b] - bc[a]; }).map(function (k) { return '<div class="fb"><span class="fi sm ' + k + '">' + FCAT[k][1] + "</span><span>" + FCAT[k][0] + '</span><span class="trk"><i style="width:' + bc[k] / mx * 100 + '%"></i></span><b>' + money(bc[k]).replace("LKR ", "") + "</b></div>"; }).join("") + "</div></div>";
-    var hw = { split: 0, ind: 0, fund: 0 }; mine.forEach(function (x) { if (x.mode === "fund") hw.fund += x.amount; else if (x.mode === "me") hw.ind += x.amount; else if (x.mode === "part") { var m = Math.min(x.mine, x.amount); hw.ind += m; hw.split += x.amount - m; } else hw.split += x.amount; });
-    h += '<div class="sec"><div class="sh"><h3>How it was paid for</h3></div><div class="stk">' + [["split", "#8b5cff"], ["ind", "#ff174f"], ["fund", "#b6f23a"]].map(function (z) { return hw[z[0]] ? '<i style="flex:' + hw[z[0]] + ";background:" + z[1] + '"></i>' : ""; }).join("") + '</div><div class="legend" style="flex-wrap:wrap;gap:6px 14px;margin-top:8px"><span><i style="background:#8b5cff"></i>Split by players ' + money(hw.split).replace("LKR ", "") + '</span><span><i style="background:#ff174f"></i>On individuals ' + money(hw.ind).replace("LKR ", "") + '</span><span><i style="background:#b6f23a"></i>Club fund ' + money(hw.fund).replace("LKR ", "") + "</span></div></div>";
-  }
-  var net = seasonNet(sk), ids = Object.keys(net).sort(function (a, b) { return net[b] - net[a]; });
-  if (ids.length) {
-    h += '<div class="sec"><div class="sh"><h3>Who owes what</h3><span class="r">' + seasonLabel(sk) + '</span></div><div class="list">' + ids.map(function (id) { var v = net[id]; return '<div class="li">' + av(id, "sm") + '<span class="t"><b>' + nm(id) + '</b></span><span class="amt ' + (v > 0 ? "in" : "out") + '">' + (v > 0 ? "is owed " : "owes ") + money(Math.abs(v)).replace("LKR ", "") + "</span></div>"; }).join("") + "</div></div>";
-    var plan = settlePlan(net);
-    if (plan.length) h += '<div class="sec"><div class="sh"><h3>Settle up</h3><span class="r">Fewest payments</span></div><div class="list">' + plan.map(function (p) { var can = staff() || p.from === S.me || p.to === S.me; return '<div class="li stl"><span class="t"><b>' + nm(p.from) + " pays " + nm(p.to) + "</b><small>" + money(p.amt) + (bankOf(p.to).no && S.me ? " · " + esc(bankOf(p.to).bank || "Bank") + " " + esc(bankOf(p.to).no) : "") + "</small></span>" + (can ? '<button type="button" class="btn sm ghost" data-act="settle" data-v="' + sk + '" data-id="' + p.from + "|" + p.to + "|" + p.amt + '">Mark settled</button>' : "") + "</div>"; }).join("") + "</div></div>";
-  }
-  var done = D.settles.filter(function (s) { return s.season === sk; }).sort(function (a, b) { return num(b.ts) - num(a.ts); });
-  if (done.length) h += '<details class="sec setd"><summary>Settled payments · ' + done.length + '</summary><div class="list">' + done.map(function (s) { return '<div class="li"><span class="t"><b>' + nm(s.from) + " paid " + nm(s.to) + "</b><small>" + money(num(s.amount)) + " · " + fmtD(dateOf(s.ts)) + "</small></span>" + (staff() ? '<button type="button" class="btn sm ghost" data-act="unsettle" data-id="' + s.id + '">Undo</button>' : "") + "</div>"; }).join("") + "</div></details>";
-  if (mine.length && S.me) h += '<div class="sec"><div class="sh"><h3>Share the split</h3><span class="r">For the club WhatsApp group</span></div><a class="btn big wa" href="https://wa.me/?text=' + encodeURIComponent(budgetText(sk)) + '" target="_blank" rel="noopener">Send on WhatsApp</a><button type="button" class="btn ghost" data-act="budcopy" data-v="' + sk + '">Copy the message</button></div>';
-  var f = fundState();
-  h += '<div class="fund"><small>Club fund · all time</small><span class="bigv">' + money(f.fund) + ' left</span><div class="ln"><span>Donations in</span><b>' + money(f.don) + '</b></div><div class="ln"><span>Used</span><b>' + money(f.used) + "</b></div>" + (f.owed.length ? '<div class="ln"><span>Still to pay back</span><b>' + money(sum(f.owed.map(function (x) { return x.amount; }))) + "</b></div>" : "") + "</div>";
-  if (f.owed.length) { var by = {}; f.owed.forEach(function (x) { by[x.payer] = (by[x.payer] || 0) + x.amount; }); h += Object.keys(by).map(function (k) { return '<div class="owe"><span>Club fund owes ' + esc(pname(k)) + " " + money(by[k]) + "</span>" + (staff() ? '<button type="button" class="btn sm ghost" data-act="repay" data-id="' + k + '">Mark as repaid</button>' : "") + "</div>"; }).join(""); }
-  return h;
-}
-function finDays(sk, mine) {
-  var days = seasonDays(sk), h = '<div class="sec"><div class="sh"><h3>Playing days</h3><span class="r">Tap a day for its costs</span></div><div class="fdays">';
-  var row = function (key, title, sub, list, date) {
-    var t = sum(list.map(function (x) { return x.amount; })), open = S.finDay === key;
-    var r = '<div class="fday' + (open ? " open" : "") + '"><button type="button" class="fdh" data-act="finday" data-v="' + key + '" aria-expanded="' + open + '"><span class="t"><b>' + title + "</b><small>" + sub + "</small></span><b class=\"fda\">" + (list.length ? money(t) : "–") + '</b><span class="ch">' + (open ? "▴" : "▾") + "</span></button>";
-    if (open) r += '<div class="fdb">' + (list.length ? '<div class="list">' + list.map(expRow).join("") + "</div>" : '<p class="muted small" style="margin:0">No costs recorded yet.</p>') + (staff() ? '<button type="button" class="add" data-act="expnew" data-v="' + (date || "") + '">+ Add a cost' + (date ? " for this day" : "") + "</button>" : "") + "</div>";
-    return r + "</div>";
-  };
-  days.forEach(function (d, i) {
-    var list = mine.filter(function (x) { return x.day === d.date; }), n = presentIds(d).length, t = sum(list.map(function (x) { return x.amount; }));
-    var sub = d.status === "done" ? (n ? plural(n, "player") + (t ? " · " + money(t / n) + " a head" : "") : "Played") : d.status === "upcoming" ? "Upcoming" : "In progress";
-    h += row(d.date, "Day " + (i + 1) + " · " + fmtD(d.date), sub, list, d.date);
-  });
-  var other = mine.filter(function (x) { return !x.day; });
-  h += row("other", "Other costs", "Not tied to a playing day · gear, prizes, deposits", other, "");
-  return h + "</div></div>";
-}
 function dateOf(ts) { var d = new Date(num(ts) || Date.now()); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
-function expRow(e) {
-  var x = e.cat && e.season ? e : exN(e), title = x.item || exLabel(x);
-  if (x.cat === "court" && x.hours && x.rate && !x.item) title = "Court fees · " + x.hours + " h × " + money(x.rate).replace("LKR ", "");
-  return '<button type="button" class="li"' + (staff() ? ' data-act="expedit" data-id="' + x.id + '"' : "") + '><span class="fi sm ' + x.cat + '">' + FCAT[x.cat][1] + '</span><span class="t"><b>' + esc(title) + "</b><small>" + (x.item ? esc(exLabel(x)) + " · " : "") + fmtD(x.date) + (x.day ? "" : " · off day") + (x.payer ? " · paid by " + esc(pname(x.payer)) : "") + "</small><small>" + exHow(x) + (x.mode === "fund" && x.payer ? (x.repaid ? " · repaid" : " · to repay") : "") + '</small></span><span class="amt out">' + money(x.amount).replace("LKR ", "") + "</span></button>";
-}
-function budgetDay(d) {
-  var ex = exAll().filter(function (x) { return x.day === d.date; }), t = sum(ex.map(function (x) { return x.amount; })), n = presentIds(d).length;
-  if (!S.me || (!ex.length && !staff())) return "";
-  var h = '<div class="sec"><div class="sh"><h3>Day costs</h3><span class="r">' + money(t) + (n ? " · " + money(t / n) + " a head" : "") + '</span></div><div class="list">' + ex.map(expRow).join("") + "</div>";
-  if (staff()) h += '<button type="button" class="add" data-act="expnew" data-v="' + d.date + '">+ Add a cost for this day</button>';
-  return h + "</div>";
-}
 /* ---------- after play bills (personal, never in the club books) ---------- */
 var BMODE = { equal: "Split equally", items: "By what each bought", me: "Fully on me", part: "Partly on me" };
 function billN(b) { var x = Object.assign({}, b); x.items = Array.isArray(b.items) ? b.items.map(function (it) { return { n: String(it.n || ""), p: num(it.p), who: Array.isArray(it.who) ? it.who : [] }; }) : []; x.among = Array.isArray(b.among) ? b.among : []; x.paid = b.paid || {}; x.mode = BMODE[b.mode] ? b.mode : "equal"; x.total = x.mode === "items" ? sum(x.items.map(function (it) { return it.p; })) : num(b.total); x.mine = num(b.mine); return x; }
@@ -2953,13 +3096,6 @@ function billShares(b) {
   return o;
 }
 function billCan(b) { return !!S.me && (staff() || b.payer === S.me || b.by === S.me); }
-function afterPlayList() {
-  var list = D.bills.map(billN).sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : num(b.ts) - num(a.ts); });
-  var h = '<p class="muted small" style="margin:0">After play food and drinks are personal bills. The app only helps you split them and send the message. They never touch the club books.</p>';
-  if (S.me) h += '<button type="button" class="add" data-act="billnew">+ New after play bill</button>';
-  if (!list.length) return h + '<div class="empty"><b>No after play bills yet</b>Whoever pays adds the bill, then sends everyone their share.</div>';
-  return h + '<div class="list">' + list.map(function (b) { var sh = billShares(b), ow = Object.keys(sh).filter(function (id) { return id !== b.payer && sh[id] >= 1; }), pd = ow.filter(function (id) { return b.paid[id]; }).length; return '<button type="button" class="li" data-act="bill" data-id="' + b.id + '">' + av(b.payer, "sm") + '<span class="t"><b>After play · ' + fmtD(b.date, true) + "</b><small>" + esc(pname(b.payer)) + " paid · " + BMODE[b.mode] + (ow.length ? " · " + pd + " of " + ow.length + " paid back" : "") + '</small></span><span class="amt ' + (pd === ow.length ? "in" : "out") + '">' + money(b.total).replace("LKR ", "") + "</span></button>"; }).join("") + "</div>";
-}
 function billText(b) {
   var sh = billShares(b), ids = Object.keys(sh).filter(function (id) { return id !== b.payer && sh[id] >= 1; }), bk = bankOf(b.payer);
   var t = "🏸 After play · " + fmtD(b.date, true) + "\n" + pname(b.payer) + " paid " + money(b.total) + "\n\n";
@@ -2976,7 +3112,7 @@ function viewBill(id) {
   h += '<div class="sec"><div class="sh"><h3>Who owes what</h3></div><div class="list">' + ids.map(function (k) { var me = k === b.payer, pd = !!b.paid[k], can = !me && S.me && (billCan(b) || k === S.me); return '<div class="li">' + av(k, "sm") + '<span class="t"><b>' + nm(k) + "</b><small>" + (me ? "Payer · own share" : pd ? "Paid back" : "Owes " + esc(pname(b.payer))) + '</small></span><span class="amt ' + (me || pd ? "in" : "out") + '">' + money(sh[k] || 0).replace("LKR ", "") + "</span>" + (can ? '<button type="button" class="btn sm ' + (pd ? "ghost" : "lime") + '" data-act="billpaid" data-v="' + (pd ? "0" : "1") + '" data-id="' + b.id + "|" + k + '">' + (pd ? "Undo" : "Mark paid") + "</button>" : "") + "</div>"; }).join("") + "</div></div>";
   var bk = bankOf(b.payer);
   if (S.me && bk.no) h += '<div class="set"><div class="r"><span>Pay to ' + esc(bk.name || pname(b.payer)) + "<small>" + esc([bk.bank, bk.branch].filter(Boolean).join(" · ")) + "</small></span><b>" + esc(bk.no) + "</b></div></div>";
-  else if (b.payer === S.me) h += '<p class="hint" style="margin:0">Add your bank details at the top of Finances so they show up in the message.</p>';
+  else if (b.payer === S.me) h += '<p class="hint" style="margin:0">Add your bank details in Edit my profile so they show up in the message.</p>';
   h += '<a class="btn big" href="https://wa.me/?text=' + encodeURIComponent(billText(b)) + '" target="_blank" rel="noopener">Send message on WhatsApp</a>';
   h += '<button type="button" class="btn ghost" data-act="billcopy" data-id="' + b.id + '">Copy the message</button>';
   if (billCan(b)) h += '<button type="button" class="btn ghost" data-act="billedit" data-id="' + b.id + '">Edit bill</button>';
@@ -3040,8 +3176,9 @@ function seasonRows(pid) {
     return '<div class="fr' + (k === S.season ? " on" : "") + '"><button type="button" data-act="season" data-v="' + k + '">' + MON[+k.slice(5, 7) - 1] + " " + k.slice(0, 4) + (si.status !== "done" ? ' <span class="dotl">●</span>' : "") + "</button><span>" + (i >= 0 ? ordinal(i + 1) : "–") + "</span><span>" + fmtPts(x.pts) + "</span><span>" + x.w + "–" + x.l + '</span><span class="tti">' + got.map(function (z) { return '<img src="' + timg(z[1]) + '" alt="' + z[2] + '" title="' + z[2] + '">'; }).join("") + "</span></div>";
   }).filter(Boolean);
   if (!rows.length) return "";
-  return '<div class="sh"><h3>Season by season</h3><span class="r">Tap a season to open it</span></div><div class="sbs"><div class="fh"><span>Season</span><span>Pos</span><span>Pts</span><span>W–L</span><span>Titles</span></div>' + rows.join("") + "</div>";
+  return '<div class="sh"><h3>Season by season</h3><span class="r">Your record each month</span></div><div class="sbs"><div class="fh"><span>Season</span><span>Pos</span><span>Pts</span><span>W–L</span><span>Titles</span></div>' + rows.join("") + "</div>";
 }
+function wl(w, l, big) { return '<span class="wl' + (big ? " big" : "") + '"><b class="' + (w ? "w" : "") + '">' + w + "W</b>" + (big ? " · " : " ") + "<b>" + l + "L</b></span>"; }
 function bdRows(x, extra) {
   var rows = [["Singles wins", x.swin, "#ff174f"], ["Doubles wins", x.dwin, "#8b5cff"], ["Dominant bonus", x.dom, "#22d3ee"], ["Close losses", x.close, "#a9a9c8"], ["Upsets", x.ups, "#b6f23a"], ["Fastest match", x.fast, "#f4c542"]].concat(extra || []);
   var mx = Math.max.apply(null, [1].concat(rows.map(function (r) { return r[1] || 0; })));
@@ -3075,7 +3212,7 @@ function viewPerf(pid) {
   // head to head
   var hh = {}; ms.forEach(function (m) { var s = sideOf(m, "pl", pid), won = sideWon(m) === s, opp = m[s === "a" ? "b" : "a"]; opp.forEach(function (o) { if (isGuest(o)) return; hh[o] = hh[o] || { sw: 0, sl: 0, dw: 0, dl: 0 }; hh[o][(m.type === "s" ? "s" : "d") + (won ? "w" : "l")]++; }); });
   var hk = Object.keys(hh).sort(function (a, b) { var A = hh[a], B = hh[b]; return (B.sw + B.sl + B.dw + B.dl) - (A.sw + A.sl + A.dw + A.dl); });
-  if (hk.length) h += '<div class="sh"><h3>Head-to-head</h3><span class="r">Season matches</span></div><div class="list">' + hk.map(function (o) { var z = hh[o]; return '<button type="button" class="li" data-act="perf" data-id="' + o + '">' + av(o, "sm") + '<span class="t"><b>' + nm(o) + "</b><small>Singles " + z.sw + "–" + z.sl + " · Doubles " + z.dw + "–" + z.dl + '</small></span><span class="r">' + (z.sw + z.dw) + "–" + (z.sl + z.dl) + "</span></button>"; }).join("") + "</div>";
+  if (hk.length) h += '<div class="sh"><h3>Head-to-head</h3><span class="r">Your wins and losses</span></div><div class="list">' + hk.map(function (o) { var z = hh[o]; return '<button type="button" class="li" data-act="perf" data-id="' + o + '">' + av(o, "sm") + '<span class="t"><b>' + nm(o) + "</b><small>Singles " + wl(z.sw, z.sl) + " · Doubles " + wl(z.dw, z.dl) + '</small></span><span class="r h2r">' + wl(z.sw + z.dw, z.sl + z.dl, true) + "</span></button>"; }).join("") + "</div>";
   h += seasonRows(pid);
   // cabinet
   var cb = cabinet(pid), CT = [["pots", "player-of-the-season", "Player of the Season"], ["s1", "singles-champion", "Singles Champion"], ["s2", "singles-runner-up", "Singles Runner-up"], ["s3", "singles-third-place", "Singles Third Place"], ["pair", "champion-pair", "Champion Pair"], ["team", "champion-team", "Champion Team"], ["star", "singles-star-of-the-day", "Singles Star"], ["duo", "doubles-duo-of-the-day", "Doubles Duo"], ["tod", "team-of-the-day", "Team of the Day"], ["wild", "lone-wolf-of-the-day", "Lone Wolf of the Day"]].filter(function (c) { return cb[c[0]]; });
@@ -3127,7 +3264,7 @@ function viewRulebook(embedded) {
     var J = [["basics", "Basics"], ["roles", "Who does what"], ["s", "Singles"], ["d", "Doubles"], ["bon", "Bonus points"], ["tm", "Team score"], ["where", "Titles"], ["ties", "Ties"]];
     h += '<div class="rbjump">' + J.map(function (j) { return '<button type="button" data-act="rbjump" data-v="' + j[0] + '">' + j[1] + "</button>"; }).join("") + "</div>";
     h += sec("basics", "1", "The basics", "How the club plays", '<ul class="rbl stack">' + R("Seasons", "", "Each calendar month is a season. It needs at least " + c.minDays + " completed playing days to award titles.") + R("Who plays the season", "", "Only players in a team. Players without a team and guests play practice and open matches.") + R("Each playing day", "", "Singles first, then team doubles. Everyone present plays the same number of singles and the same number of doubles (doubles at most one apart), up to 4 of each: as many as fit the court time. Nobody plays twice in a row if it can be avoided.") + R("Games", "", "Played to 11, 15 or 21, set for the day.") + R("Deuce", "", "At 10-all (to 11), 14-all (to 15) or 20-all (to 21) you must win by 2. The game is capped at 15, 21 or 30.") + R("Partners", "", "Season doubles partners come from your own team. No guests in season matches.") + R("Pairs", "", "A team of 2 is one pair. A team of 3 rotates all three pairs. A team of 4 plays as two pairs, chosen by the captain or the app.") + R("Injuries", "", "A teammate can come in for an injured player mid-match. An injured player keeps the attendance point; an absent player doesn\'t get one.") + R("Practice match", "", "Club members only. Scores and head-to-head only: no season points, no day titles.") + R("Open match", "", "At least one guest. No season points. Decides Lone Wolf of the Day.") + R("Courts", "", "Up to 6 courts (A to F), ticked for each day. When only one court is booked, court labels are hidden.") + R("Attendance", "", "The Host marks each player Present, On the way or Absent. On the way players stay in the order, with their matches moved later. When they arrive they become Present. If they don\'t come, they\'re marked Absent and their matches become Not played. Attendance points are only for Present.") + "</ul>");
-    h += sec("roles", "★", "Who does what", "Roles in the club", '<ul class="rbl stack">' + R("Club Lead", "", "Runs the club: teams, captains, transfers, Hosts, settings and Start fresh. Can also do everything a Host does.") + R("Host", "", "Runs playing days: scheduling, attendance, the match order, scores and corrections. Also records donations and the season budget. A captain can be a Host too.") + R("Captain", "", "Sets the team line-up (pairs and reserve) before the day starts, or lets the app pick. Checks availability and can nudge players, handles join requests and transfers, posts a team notice, sets breaks, and confirms or flags the team\'s doubles results. Captains don\'t enter scores.") + R("Match corrections", "", "If the wrong match was started, the Host picks the right one and the time already played moves across. Matches can be paused with a reason (paused time isn\'t counted) or their start undone. Every correction is saved in the history.") + "</ul>");
+    h += sec("roles", "★", "Who does what", "Roles in the club", '<ul class="rbl stack">' + R("Club Lead", "", "Runs the club: teams, captains, transfers, Hosts, settings and Start fresh. Can also do everything a Host does.") + R("Host", "", "Runs playing days: scheduling, attendance, the match order, scores and corrections. Also adds the day spends and one-time costs in Finances. A captain can be a Host too.") + R("Captain", "", "Sets the team line-up (pairs and reserve) before the day starts, or lets the app pick. Checks availability and can nudge players, handles join requests and transfers, posts a team notice, sets breaks, and confirms or flags the team\'s doubles results. Captains don\'t enter scores.") + R("Match corrections", "", "If the wrong match was started, the Host picks the right one and the time already played moves across. Matches can be paused with a reason (paused time isn\'t counted) or their start undone. Every correction is saved in the history.") + "</ul>");
     h += sec("s", "2", "Singles points", "Per match, for the player", '<ul class="rbl">' + R("Win", sc.sw) + R("Loss", 0, "Unless it was a close match: see bonus points", "mu") + "</ul>");
     h += sec("d", "3", "Doubles points", "Per match, for each player and for the pair", '<ul class="rbl">' + R("Win", sc.dw) + R("Loss", 0, "Unless it was a close match: see bonus points", "mu") + "</ul>");
     h += sec("bon", "+", "Bonus points", "Extra points on top of the match result", '<div class="wdef">' +
@@ -3158,7 +3295,13 @@ function openBadge(k, pid) {
 /* ================= ACTIONS & FORMS ================= */
 function fail(e) { console.error(e); toast(errText(e)); }
 function dayUp(d, patch) { return db.doc("days/" + d.date).update(patch).catch(fail); }
-function mUp(m, patch) { return db.doc("matches/" + m.id).update(patch).catch(fail); }
+function mUp(m, patch) { if (patch.status === "live" || patch.status === "done") arrived(m); return db.doc("matches/" + m.id).update(patch).catch(fail); }
+/* a player marked "on the way" who starts or finishes a match has clearly arrived: mark them present */
+function arrived(m) {
+  var d = DAY[m.day]; if (!d || !d.att || !db) return;
+  var o = {}, n = 0; m.a.concat(m.b).forEach(function (id) { if (d.att[id] === "o" && P[id]) { o["att." + id] = "p"; n++; } });
+  if (n) db.doc("days/" + d.date).update(o).catch(function () {});
+}
 function playerOpts(filter, blank) { return (blank ? [{ v: "", l: blank }] : []).concat(activePlayers().filter(filter || function () { return true; }).sort(function (a, b) { return a.team < b.team ? -1 : a.team > b.team ? 1 : a.display.localeCompare(b.display); }).map(function (p) { return { v: p.id, l: p.display + " · " + tname(p.team) }; })); }
 function toOpts() { return [{ v: 11, l: "11" }, { v: 15, l: "15" }, { v: 21, l: "21" }]; }
 function confirmSheet(title, text, label, fn) { openSheet(title, '<p class="muted" style="margin:0">' + text + "</p>", function () { return fn(); }, { save: label, noFocus: true }); }
@@ -3376,7 +3519,7 @@ function scoreSheet(id, finishing) {
   openSheet(finishing ? "Final score" : m.status === "done" ? "Edit score" : "Enter score", body, function (form) {
     var v = vals(form, ["sa", "sb"]); if (v.sa === "" || v.sb === "") return "Enter both scores.";
     var a = +v.sa, b = +v.sb, e = validScore(a, b, m.to); if (e) return e;
-    var p = { sa: a, sb: b, status: "done" }; if (en) p.en = en; if (!m.st && finishing) p.st = 0; if (finishing && m.paused) { p.st = m.st + (Date.now() - m.paused); p.paused = 0; }
+    var p = { sa: a, sb: b, status: "done" }; if (en) p.en = en; arrived(m); if (!m.st && finishing) p.st = 0; if (finishing && m.paused) { p.st = m.st + (Date.now() - m.paused); p.paused = 0; }
     return db.doc("matches/" + m.id).update(p).then(function () { audit((m.status === "done" ? "Edited score: " : "Score: ") + pname(m.a[0]) + " " + a + "–" + b + " " + pname(m.b[0])); return "Score saved"; });
   }, { save: "Save score" });
 }
@@ -3385,7 +3528,8 @@ function completeDay() {
   var ms = dayMatches(d.date), live = ms.filter(function (m) { return m.status === "live"; }), left = ms.filter(function (m) { return m.status === "planned"; });
   if (live.length) { toast("Finish the match in play first."); return; }
   confirmSheet("Complete the day?", (left.length ? plural(left.length, "match") + " not played will be marked \"Not played\". " : "") + "Stars of the day and Team of the Day are decided now.", "Complete the day", function () {
-    return Promise.all(left.map(function (m) { return db.doc("matches/" + m.id).update({ status: "np" }); })).then(function () { return db.doc("days/" + d.date).update({ status: "done", completedAt: Date.now(), squads: Object.keys(d.squads || {}).length ? d.squads : squadSnap(d.date) }); }).then(function () { audit("Completed " + fmtD(d.date)); S.view = "day"; S.vid = d.date; return "Day complete. Well played!"; });
+    var att = {}; ms.forEach(function (m) { if (m.status === "done") m.a.concat(m.b).forEach(function (id) { if ((d.att || {})[id] === "o" && P[id]) att["att." + id] = "p"; }); });
+    return Promise.all(left.map(function (m) { return db.doc("matches/" + m.id).update({ status: "np" }); })).then(function () { return db.doc("days/" + d.date).update(Object.assign(att, { status: "done", completedAt: Date.now(), squads: Object.keys(d.squads || {}).length ? d.squads : squadSnap(d.date) })); }).then(function () { audit("Completed " + fmtD(d.date)); S.view = "day"; S.vid = d.date; return "Day complete. Well played!"; });
   });
 }
 
@@ -3439,16 +3583,8 @@ function removePlayer(t) {
 }
 /* ---------- club ---------- */
 function setRsvp(date, v) { if (!S.me) return; var o = {}; o[S.me] = v; db.doc("days/" + date).update({ rsvp: o }).then(function () { toast(v === "yes" ? "See you on court!" : v === "no" ? "Thanks for letting us know" : "Noted"); }, fail); }
-function openDonation(id) {
-  if (!guard(staff())) return; var d = id ? D.donations.filter(function (x) { return x.id === id; })[0] : null;
-  var body = sel("pid", "Donor", playerOpts(null, "Someone else").concat([]), d ? d.pid : "") + fld("text", "name", "Name if not a player", d ? d.name : "", 'maxlength="30"') + '<div class="g2">' + fld("number", "amount", "Amount (LKR)", d ? d.amount : "", 'inputmode="numeric" min="1"') + fld("date", "date", "Date", d ? d.date : todayStr()) + "</div>" + fld("text", "note", "Note · optional", d ? d.note : "", 'maxlength="60"');
-  openSheet(d ? "Edit donation" : "Record a donation", body, function (form) {
-    var v = vals(form, ["pid", "name", "amount", "date", "note"]); if (!(+v.amount > 0)) return "Enter an amount."; if (!v.pid && v.name.length < 2) return "Choose a player or enter a name.";
-    var doc = { pid: v.pid, name: v.pid ? "" : v.name, amount: +v.amount, date: v.date || todayStr(), note: v.note, ts: d ? d.ts : Date.now(), by: S.me };
-    return (d ? db.doc("donations/" + d.id).set(doc) : db.collection("donations").add(doc)).then(function () { audit((d ? "Edited" : "Recorded") + " donation " + money(doc.amount) + " from " + (v.pid ? pname(v.pid) : v.name)); return "Donation saved"; });
-  }, { del: d ? "Delete" : "", onDel: function () { db.doc("donations/" + d.id).delete().then(function () { closeSheet(); audit("Deleted a donation"); toast("Deleted"); }, fail); } });
-}
 /* ---------- costs and bills forms ---------- */
+/* ---------- costs form: day spends and one-time costs ---------- */
 function defaultAmong(date) {
   var d = DAY[date];
   if (d && d.status !== "cancelled") { var pr = presentIds(d); if (pr.length) return pr; }
@@ -3459,65 +3595,126 @@ function peopleChips(name, cur, pool) {
   pool = uniq(pool.concat(cur.filter(function (id) { return P[id]; })));
   return '<div class="pchips">' + pool.sort(function (a, b) { return pname(a).localeCompare(pname(b)); }).map(function (id) { return '<label><input type="checkbox" name="' + name + '" value="' + id + '"' + (cur.indexOf(id) >= 0 ? " checked" : "") + "><span>" + av(id, "xs") + esc(pname(id)) + "</span></label>"; }).join("") + "</div>";
 }
-function openExpense(id, day, cat0) {
+function openExpense(id, day, kind0) {
   if (!guard(staff())) return;
-  var raw = id ? D.expenses.filter(function (x) { return x.id === id; })[0] : null, e = raw ? exN(raw) : null, d0 = e ? e.date : day || todayStr();
-  var among0 = e && e.among.length ? e.among : defaultAmong(d0);
-  var body = segf("cat", "What for", Object.keys(FCAT).map(function (k) { return { v: k, l: FCAT[k][0] }; }), e ? e.cat : cat0 && FCAT[cat0] ? cat0 : "court") +
+  var raw = id ? D.expenses.filter(function (x) { return x.id === id; })[0] : null, e = raw ? exN(raw) : null;
+  var sk = e ? e.season : S.season || defaultSeason(), kind = e ? e.kind : kind0 === "one" || (!day && kind0 !== "day") ? "one" : "day";
+  var days = seasonDays(sk).filter(function (d) { return d.status !== "cancelled"; });
+  if (kind === "day" && !days.length) kind = "one";
+  var day0 = e && e.day ? e.day : day && DAY[day] ? day : days.length ? (days.filter(function (d) { return d.date <= todayStr(); }).pop() || days[0]).date : "";
+  var pool = activePlayers().map(function (p) { return p.id; });
+  var amongFor = function (k, dt) { return k === "day" ? defaultAmong(dt) : seasonPlayers(sk); };
+  var among0 = e && e.among.length ? e.among : e && Object.keys(e.custom).length ? Object.keys(e.custom) : amongFor(kind, day0);
+  var catOpts = function (k) { return FKIND[k].map(function (c) { return { v: c, l: FCAT[c][0] }; }); };
+  var body = '<div class="seg2 lite fk" role="radiogroup" aria-label="Kind of cost"><label class="' + (kind === "day" ? "on" : "") + '"><input type="radio" name="kind" value="day"' + (kind === "day" ? " checked" : "") + (days.length ? "" : " disabled") + '>Day spend</label><label class="one' + (kind === "one" ? " on" : "") + '"><input type="radio" name="kind" value="one"' + (kind === "one" ? " checked" : "") + ">One-time cost</label></div>" +
+    '<div id="dayBox">' + sel("day", "Playing day", days.map(function (d) { return { v: d.date, l: "Day " + dayNo(d) + " · " + fmtD(d.date) }; }), day0) + "</div>" +
+    '<div id="dateBox">' + fld("date", "date", "Date bought", e && e.kind === "one" ? e.date : todayStr()) + '<p class="hint" style="margin:4px 0 0">Counts towards ' + seasonLabel(sk) + ".</p></div>" +
+    '<div id="catBox">' + segf("cat", "What for", catOpts(kind), e ? e.cat : kind === "day" ? "court" : "shuttles") + "</div>" +
     '<div id="otherBox">' + fld("text", "other", "What is it?", e ? e.other : "", 'maxlength="40" placeholder="e.g. Court booking deposit"') + "</div>" +
-    '<div id="courtBox" style="display:flex;flex-direction:column;gap:6px"><div class="g2">' + fld("number", "hours", "Hours", e && e.hours ? e.hours : "", 'inputmode="decimal" min="0" step="0.5"') + fld("number", "rate", "Rate per hour (LKR)", e && e.rate ? e.rate : "", 'inputmode="numeric" min="0"') + '</div><p class="hint" style="margin:0">Hours × rate fills in the amount.</p></div>' +
-        fld("text", "itemname", "Details · optional", e ? e.item : "", 'maxlength="60" id="f_itemname"') +
-    '<div class="g2">' + fld("number", "amount", "Amount (LKR)", e ? e.amount : "", 'inputmode="numeric" min="1"') + fld("date", "date", "Date", d0) + "</div>" + '<p class="hint" id="dayHint" style="margin-top:-6px"></p>' +
-    sel("payer", "Paid by", [{ v: "", l: "The club fund paid directly" }].concat(playerOpts()), e ? e.payer : S.me || "") +
-    segf("mode", "How is it paid for?", [{ v: "split", l: "Split with the group" }, { v: "me", l: "Fully on me" }, { v: "part", l: "Partly on me" }, { v: "fund", l: "Club fund" }], e ? e.mode : "split") +
-    '<div id="mineBox">' + fld("number", "mine", "My part (LKR)", e && e.mine ? e.mine : "", 'inputmode="numeric" min="0"') + "</div>" +
-    '<div id="amongBox"><label style="margin-bottom:5px">Split between · equal shares</label><div id="amongChips">' + peopleChips("among", among0) + '</div></div><p class="hint" id="splitPrev"></p>' +
-    '<div id="repBox" class="checks"><label><input type="checkbox" name="repaid"' + (e && e.repaid ? " checked" : "") + "> The club fund has paid them back</label></div>";
-  openSheet(e ? "Edit cost" : "Add a cost", body, function (form) {
-    var v = vals(form, ["cat", "other", "hours", "rate", "qty", "itemname", "amount", "date", "payer", "mode", "mine", "repaid"]), among = checked(form, "among");
-    if (!FCAT[v.cat]) return "Choose what it's for."; if (v.cat === "other" && v.other.length < 2) return "Type what the cost is for.";
-    if (!(+v.amount > 0)) return "Enter an amount."; if (!v.date) return "Choose a date.";
-    if (!FMODE[v.mode]) return "Choose how it's paid for.";
-    if (v.mode !== "fund" && !v.payer) return "Choose who paid.";
-    if (v.mode === "part" && !(+v.mine > 0 && +v.mine < +v.amount)) return "Enter your part. It must be less than the full amount.";
-    if ((v.mode === "split" || v.mode === "part") && !among.length) return "Tick who it's split between.";
-    var dd = DAY[v.date] && DAY[v.date].status !== "cancelled" ? v.date : "";
-    var doc = { cat: v.cat, other: v.cat === "other" ? v.other : "", item: v.itemname, amount: Math.round(+v.amount), date: v.date, day: dd, season: seasonKey(v.date), hours: v.cat === "court" ? +v.hours || 0 : 0, rate: v.cat === "court" ? +v.rate || 0 : 0, payer: v.payer, mode: v.mode, mine: v.mode === "part" ? Math.round(+v.mine) : 0, among: v.mode === "split" || v.mode === "part" ? among : [], repaid: v.mode === "fund" && !!v.payer && !!v.repaid, ts: raw ? num(raw.ts) || Date.now() : Date.now(), by: S.me };
-    return (raw ? db.doc("expenses/" + raw.id).set(doc) : db.collection("expenses").add(doc)).then(function () { audit((raw ? "Edited" : "Added") + " cost " + (doc.item || (doc.cat === "other" ? doc.other : FCAT[doc.cat][0])) + " " + money(doc.amount) + " · " + FMODE[doc.mode]); S.finSeason = doc.season; return "Cost saved"; });
-  }, { noFocus: true, del: raw ? "Delete" : "", onDel: function () { db.doc("expenses/" + raw.id).delete().then(function () { closeSheet(); audit("Deleted a cost"); toast("Deleted"); }, fail); } });
-  var form = $("sheetForm"), touched = !!(e && e.among.length), lastDate = d0;
-  var PH = { court: "e.g. Courts A and B", shuttles: "e.g. Yonex AS-30, 2 tubes", refresh: "e.g. Water bottles", acc: "e.g. Grips, first aid tape", gift: "e.g. Medals for October winners", other: "" };
-  var sync = function (ev) {
-    if (!$("courtBox") || !form.elements.amount) { form.removeEventListener("change", sync); form.removeEventListener("input", sync); return; }
-    if (ev && ev.target && ev.target.name === "among") touched = true;
-    var c = (form.querySelector("input[name=cat]:checked") || {}).value || "court", m = (form.querySelector("input[name=mode]:checked") || {}).value || "split";
-    $("otherBox").hidden = c !== "other"; $("courtBox").hidden = c !== "court"; $("f_itemname").placeholder = PH[c] || "";
-    var hrs = +form.elements.hours.value, rt = +form.elements.rate.value;
-    if (c === "court" && hrs > 0 && rt > 0 && ev && ev.target && (ev.target.name === "hours" || ev.target.name === "rate")) form.elements.amount.value = Math.round(hrs * rt);
-    var dt = form.elements.date.value, dy = DAY[dt] && DAY[dt].status !== "cancelled";
-    $("dayHint").textContent = dt ? (dy ? "Playing day · split defaults to the players who were there." : "Not a playing day · split defaults to all team players.") : "";
-    if (dt !== lastDate) { lastDate = dt; if (!touched) $("amongChips").innerHTML = peopleChips("among", defaultAmong(dt)); }
-    $("mineBox").hidden = m !== "part"; $("amongBox").hidden = m !== "split" && m !== "part"; $("repBox").hidden = !(m === "fund" && form.elements.payer.value);
-    var amt = +form.elements.amount.value || 0, n = checked(form, "among").length, mine = Math.min(+form.elements.mine.value || 0, amt), who = form.elements.payer.value ? pname(form.elements.payer.value) : "The payer";
-    $("splitPrev").textContent = !amt ? "" : m === "fund" ? (form.elements.payer.value ? "The club fund pays " + who + " back " + money(amt) + "." : "Comes straight out of the club fund.") : m === "me" ? who + " covers all " + money(amt) + ". Nobody owes anything." : !n ? "Tick who it's split between." : m === "part" ? who + " covers " + money(mine) + ". The other " + money(amt - mine) + " is split by " + n + ": " + money((amt - mine) / n) + " each." : money(amt) + " split by " + n + ": " + money(amt / n) + " each.";
+    '<div id="courtBox" class="g2">' + fld("number", "hours", "Hours", e && e.hours ? e.hours : "", 'inputmode="decimal" min="0" step="0.5"') + fld("number", "rate", "Per hour (LKR)", e && e.rate ? e.rate : "", 'inputmode="numeric" min="0"') + "</div>" +
+    fld("text", "itemname", "Details · optional", e ? e.item : "", 'maxlength="60" id="f_itemname"') +
+    '<div class="g2">' + fld("number", "amount", "Amount (LKR)", e ? e.amount : "", 'inputmode="numeric" min="1"') + sel("payer", "Paid by", playerOpts(), e ? e.payer : S.me || "") + "</div>" +
+    '<div><label style="margin-bottom:5px">Who covers it</label><div class="fmode" id="fmodes"></div></div>' +
+    '<div id="mineBox">' + fld("number", "mine", "Payer covers (LKR)", e && e.mine ? e.mine : "", 'inputmode="numeric" min="0"') + "</div>" +
+    '<div id="amongBox"><label style="margin-bottom:5px" id="amongLab">Split between</label><div id="amongChips">' + peopleChips("among", among0, pool) + '</div>' +
+    '<div class="seg2 lite fs" role="radiogroup" aria-label="How to split"><label><input type="radio" name="split" value="eq"' + (e && Object.keys(e.custom).length ? "" : " checked") + '>Equal</label><label><input type="radio" name="split" value="cu"' + (e && Object.keys(e.custom).length ? " checked" : "") + ">Custom</label></div>" +
+    '<div id="cuBox"><div class="seg2 lite fs" role="radiogroup" aria-label="Custom split by"><label><input type="radio" name="cuby" value="amt" checked>By amount</label><label><input type="radio" name="cuby" value="pct">By %</label></div><div id="cuRows" class="curows"></div><div id="cuSum" class="cusum"></div><button type="button" class="lnk" id="cuEq">Make it equal again</button></div></div>' +
+    '<p class="hint" id="splitPrev"></p>';
+  openSheet(e ? "Edit cost" : kind === "one" ? "Add a one-time cost" : "Add a cost", body, function (form) {
+    var v = vals(form, ["kind", "day", "date", "cat", "other", "hours", "rate", "itemname", "amount", "payer", "mode", "mine", "split", "cuby"]), among = checked(form, "among");
+    var k = v.kind === "day" ? "day" : "one";
+    if (k === "day" && !DAY[v.day]) return "Choose the playing day."; if (k === "one" && !v.date) return "Choose the date it was bought.";
+    if (FKIND[k].indexOf(v.cat) < 0) return "Choose what it's for."; if (v.cat === "other" && v.other.length < 2) return "Type what the cost is for.";
+    var amt = Math.round(+v.amount); if (!(amt > 0)) return "Enter an amount."; if (!P[v.payer]) return "Choose who paid.";
+    if (!FMODE[v.mode] || v.mode === "fund") return "Choose who covers it.";
+    var mine = 0; if (v.mode === "part") { mine = Math.round(+v.mine); if (!(mine > 0 && mine < amt)) return "Enter what the payer covers. It must be less than the full amount."; }
+    var rest = amt - mine, custom = null;
+    if (v.mode !== "me") {
+      if (v.mode === "fwd") among = among.filter(function (id) { return id !== v.payer; });
+      if (!among.length) return "Tick who it's split between.";
+      if (v.split === "cu") {
+        custom = {}; var tot = 0;
+        among.forEach(function (id) { var el = form.elements["cu_" + id], x = el ? +el.value || 0 : 0; if (x > 0) { custom[id] = v.cuby === "pct" ? Math.round(rest * x / 100) : Math.round(x); tot += x; } });
+        if (!Object.keys(custom).length) return "Enter each person's share.";
+        if (v.cuby === "pct" ? Math.abs(tot - 100) > 0.5 : Math.abs(tot - rest) > 1) return v.cuby === "pct" ? "The percentages must add up to 100." : "The shares must add up to " + money(rest) + ".";
+      }
+    }
+    var date = k === "day" ? v.day : v.date;
+    var doc = { kind: k, cat: v.cat, other: v.cat === "other" ? v.other : "", item: v.itemname, amount: amt, date: date, day: k === "day" ? v.day : "", season: k === "day" ? DAY[v.day].season : sk, hours: v.cat === "court" ? +v.hours || 0 : 0, rate: v.cat === "court" ? +v.rate || 0 : 0, payer: v.payer, mode: v.mode, mine: mine, among: v.mode === "me" ? [] : among, custom: custom, ts: raw ? num(raw.ts) || Date.now() : Date.now(), by: S.me };
+    return (raw ? db.doc("expenses/" + raw.id).set(doc) : db.collection("expenses").add(doc)).then(function () { audit((raw ? "Edited" : "Added") + " cost " + (doc.item || (doc.cat === "other" ? doc.other : FCAT[doc.cat][0])) + " " + money(doc.amount)); if (k === "day") S.finDay = doc.day; return "Cost saved"; });
+  }, { noFocus: true, save: raw ? "Save" : "Add cost", del: raw ? "Delete" : "", onDel: function () { db.doc("expenses/" + raw.id).delete().then(function () { closeSheet(); audit("Deleted a cost"); toast("Deleted"); }, fail); } });
+  var form = $("sheetForm"), touched = !!e, lastKey = kind + "|" + day0, cuVals = {};
+  if (e) Object.keys(e.custom).forEach(function (id) { cuVals[id] = e.custom[id]; });
+  var drawModes = function () {
+    var who = pname(form.elements.payer.value) || "The payer", m = (form.querySelector("input[name=mode]:checked") || {}).value || (e && e.mode !== "fund" ? e.mode : "split");
+    var L = [["split", "Split with the group", who + " pays a share like everyone else"], ["part", "Partly on " + who, who + " covers part · the rest is split"], ["fwd", who + " just paid", who + " pays no share · others split it all"], ["me", "Fully on " + who, "A treat · nobody owes anything"]];
+    $("fmodes").innerHTML = L.map(function (o) { return '<label class="' + (m === o[0] ? "on" : "") + '"><input type="radio" name="mode" value="' + o[0] + '"' + (m === o[0] ? " checked" : "") + '><span><b>' + esc(o[1]) + "</b><small>" + esc(o[2]) + "</small></span></label>"; }).join("");
   };
-  form.addEventListener("change", sync); form.addEventListener("input", sync); sync();
+  var drawCu = function () {
+    var ids = checked(form, "among"), m = (form.querySelector("input[name=mode]:checked") || {}).value; if (m === "fwd") ids = ids.filter(function (id) { return id !== form.elements.payer.value; });
+    var pct = ((form.querySelector("input[name=cuby]:checked") || {}).value) === "pct";
+    form.querySelectorAll("#cuRows input").forEach(function (el) { cuVals[el.name.slice(3)] = el.value; });
+    $("cuRows").innerHTML = ids.map(function (id) { return '<label class="cur">' + av(id, "xs") + "<span>" + esc(pname(id)) + '</span><input type="number" name="cu_' + id + '" inputmode="decimal" min="0" value="' + esc(cuVals[id] != null ? cuVals[id] : "") + '" aria-label="' + esc(pname(id)) + (pct ? " %" : " share") + '"><em>' + (pct ? "%" : "LKR") + "</em></label>"; }).join("");
+  };
+  var sync = function (ev) {
+    if (!$("fmodes") || !form.elements.amount) { form.removeEventListener("change", sync); form.removeEventListener("input", sync); return; }
+    var tg = ev && ev.target ? ev.target.name : "";
+    if (tg === "among") touched = true;
+    var k = (form.querySelector("input[name=kind]:checked") || {}).value || "day";
+    form.querySelectorAll(".fk label").forEach(function (l) { l.classList.toggle("on", l.querySelector("input").checked); });
+    $("dayBox").hidden = k !== "day"; $("dateBox").hidden = k !== "one";
+    if (tg === "kind") { $("catBox").innerHTML = segf("cat", "What for", catOpts(k), k === "day" ? "court" : "shuttles"); $("sheetForm").querySelector("h2").textContent = e ? "Edit cost" : k === "one" ? "Add a one-time cost" : "Add a cost"; }
+    if (tg === "payer" || !$("fmodes").children.length) drawModes();
+    form.querySelectorAll(".fmode label").forEach(function (l) { l.classList.toggle("on", l.querySelector("input").checked); });
+    var c = (form.querySelector("input[name=cat]:checked") || {}).value || "", m = (form.querySelector("input[name=mode]:checked") || {}).value || "split";
+    $("otherBox").hidden = c !== "other"; $("courtBox").hidden = c !== "court";
+    var hrs = +form.elements.hours.value, rt = +form.elements.rate.value;
+    if (c === "court" && hrs > 0 && rt > 0 && (tg === "hours" || tg === "rate")) form.elements.amount.value = Math.round(hrs * rt);
+    var key = k + "|" + (k === "day" ? form.elements.day.value : "one");
+    if (key !== lastKey) { lastKey = key; if (!touched) $("amongChips").innerHTML = peopleChips("among", amongFor(k, form.elements.day.value), pool); }
+    var cu = ((form.querySelector("input[name=split]:checked") || {}).value) === "cu";
+    $("mineBox").hidden = m !== "part"; $("amongBox").hidden = m === "me"; $("cuBox").hidden = !cu;
+    form.querySelectorAll(".fs label").forEach(function (l) { l.classList.toggle("on", l.querySelector("input").checked); });
+    $("amongLab").textContent = m === "fwd" ? "Shared by (the payer is left out)" : m === "part" ? "The rest is split between" : "Split between";
+    if (cu && (tg === "among" || tg === "split" || tg === "cuby" || tg === "mode" || tg === "payer" || !$("cuRows").children.length)) drawCu();
+    var amt = +form.elements.amount.value || 0, mine = m === "part" ? Math.min(+form.elements.mine.value || 0, amt) : 0, rest = amt - mine, who = pname(form.elements.payer.value) || "The payer";
+    var ids = checked(form, "among"); if (m === "fwd") ids = ids.filter(function (id) { return id !== form.elements.payer.value; }); var n = ids.length;
+    if (cu) {
+      var pct = ((form.querySelector("input[name=cuby]:checked") || {}).value) === "pct", t = 0; form.querySelectorAll("#cuRows input").forEach(function (el) { t += +el.value || 0; });
+      var goal = pct ? 100 : rest, ok = goal > 0 && Math.abs(t - goal) <= (pct ? 0.5 : 1);
+      $("cuSum").className = "cusum" + (ok ? " ok" : ""); $("cuSum").innerHTML = "<span>Shared out</span><b>" + (pct ? Math.round(t * 10) / 10 + "% of 100%" : money(t).replace("LKR ", "") + " of " + money(rest).replace("LKR ", "")) + (ok ? " ✓" : "") + "</b>";
+    }
+    $("splitPrev").textContent = !amt ? "" : m === "me" ? who + " covers all " + money(amt) + ". Nobody owes anything." : !n ? "Tick who it's split between." : cu ? "Custom split of " + money(rest) + (mine ? " after " + who + "'s " + money(mine) : "") + "." : (m === "part" ? who + " covers " + money(mine) + ". The other " + money(rest) + " is split by " + n : money(amt) + " split by " + n) + ": " + money(rest / n) + " each.";
+  };
+  $("cuEq").addEventListener("click", function () { var ids = form.querySelectorAll("#cuRows input"), pct = ((form.querySelector("input[name=cuby]:checked") || {}).value) === "pct", amt = +form.elements.amount.value || 0, m = (form.querySelector("input[name=mode]:checked") || {}).value, rest = amt - (m === "part" ? Math.min(+form.elements.mine.value || 0, amt) : 0); ids.forEach(function (el) { el.value = ids.length ? Math.round((pct ? 100 : rest) / ids.length * 100) / 100 : ""; }); sync(); });
+  form.addEventListener("change", sync); form.addEventListener("input", sync); drawModes(); sync();
 }
-function repay(pid) { if (!guard(staff())) return; var list = exAll().filter(function (x) { return x.mode === "fund" && x.payer === pid && !x.repaid; }), t = sum(list.map(function (x) { return x.amount; })); confirmSheet("Pay " + pname(pid) + " back?", "Marks " + plural(list.length, "cost") + " (" + money(t) + ") as paid back from the club fund.", "Mark as repaid", function () { return seq(list, function (x) { return db.doc("expenses/" + x.id).update({ repaid: true }); }).then(function () { audit("Club fund repaid " + pname(pid) + " " + money(t)); return "Marked as repaid"; }); }); }
-function settleUp(sk, key) {
-  var k = String(key || "").split("|"), from = k[0], to = k[1], amt = +k[2];
-  if (!P[from] || !P[to] || !(amt > 0)) return;
-  if (!guard(staff() || from === S.me || to === S.me, "Only the two people involved or a Host can mark this.")) return;
-  confirmSheet("Mark as settled?", esc(pname(from)) + " paid " + esc(pname(to)) + " " + money(amt) + " for " + seasonLabel(sk) + ".", "Mark settled", function () { return db.collection("settles").add({ season: sk, from: from, to: to, amount: amt, ts: Date.now(), by: S.me }).then(function () { audit("Settled: " + pname(from) + " paid " + pname(to) + " " + money(amt)); return "Settled"; }); });
+/* ---------- My dues actions ---------- */
+function duePaid(to, amt) {
+  if (!S.me || !P[to]) return; amt = Math.round(+amt); if (!(amt > 0)) return;
+  confirmSheet("Paid " + esc(pname(to)) + "?", "Tell " + esc(pname(to)) + " you've paid " + money(amt) + ". It clears once they tap Got it.", "I've paid", function () {
+    return db.collection("settles").add({ from: S.me, to: to, amount: amt, status: "claimed", ts: Date.now(), by: S.me, uid: S.myId || "", v: 2 }).then(function () { audit(pname(S.me) + " says they paid " + pname(to) + " " + money(amt)); return "Sent to " + pname(to); });
+  });
 }
-function unsettle(id) { if (!guard(staff())) return; var s = D.settles.filter(function (x) { return x.id === id; })[0]; if (!s) return; confirmSheet("Undo this payment?", esc(pname(s.from)) + " paid " + esc(pname(s.to)) + " " + money(num(s.amount)) + ". It goes back into Who owes what.", "Undo", function () { return db.doc("settles/" + id).delete().then(function () { audit("Undid a settled payment"); return "Undone"; }); }); }
+function dueGot(from, amt) {
+  if (!S.me || !P[from]) return; amt = Math.round(+amt); if (!(amt > 0)) return;
+  var cl = D.settles.map(setN).filter(function (s) { return s.status === "claimed" && s.from === from && s.to === S.me; });
+  confirmSheet("Got " + money(amt) + "?", esc(pname(from)) + " paid you " + money(amt) + ". This clears it for both of you.", "Got it", function () {
+    var now = Date.now(), left = amt - sum(cl.map(function (s) { return s.amount; }));
+    return seq(cl, function (s) { return db.doc("settles/" + s.id).update({ status: "ok", okTs: now }); }).then(function () {
+      if (left >= 1) return db.collection("settles").add({ from: from, to: S.me, amount: Math.round(left), status: "ok", ts: now, okTs: now, by: S.me, uid: S.myId || "", v: 2 });
+    }).then(function () { audit(pname(S.me) + " got " + money(amt) + " from " + pname(from)); return "Cleared"; });
+  });
+}
+function dueUndo(id) { var s = D.settles.filter(function (x) { return x.id === id; })[0]; if (!s || s.from !== S.me || s.status !== "claimed") return; db.doc("settles/" + id).delete().then(function () { toast("Undone"); }, fail); }
+function copyAcc(pid) { var no = String(bankOf(pid).no || "").replace(/\s+/g, ""); if (!no) return; var ok = function () { toast("Account number copied"); }; if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(no).then(ok, function () { toast("Couldn't copy. The number is " + no); }); else toast("The number is " + no); }
 /* after play bill */
 function itemRow(i, it, pool) { return '<div class="bitem" data-i="' + i + '"><div class="g2" style="grid-template-columns:1fr 110px">' + fld("text", "in_" + i, "Item", it.n || "", 'maxlength="40" placeholder="e.g. Chicken kottu"') + fld("number", "ip_" + i, "Price (LKR)", it.p || "", 'inputmode="numeric" min="0"') + '</div><label style="margin:2px 0 5px">Who had it</label>' + peopleChips("iw_" + i, it.who || [], pool) + '<button type="button" class="btn sm ghost irm" data-i="' + i + '">Remove item</button></div>'; }
-function openBill(id) {
+function openBill(id, date) {
   if (!S.me) { toast("Sign in to add a bill."); return; }
   var raw = id ? D.bills.filter(function (x) { return x.id === id; })[0] : null, b = raw ? billN(raw) : null;
   if (b && !billCan(b)) { toast("Only the payer or a Host can edit this bill."); return; }
-  var d0 = b ? b.date : todayStr(), pool = uniq(defaultAmong(d0).concat(S.me ? [S.me] : [])), among0 = b ? b.among : pool, items = b && b.items.length ? b.items : [{ n: "", p: "", who: [] }], NI = items.length;
+  var d0 = b ? b.date : /^\d{4}-\d{2}-\d{2}$/.test(date || "") ? date : todayStr(), pool = uniq(defaultAmong(d0).concat(S.me ? [S.me] : [])), among0 = b ? b.among : pool, items = b && b.items.length ? b.items : [{ n: "", p: "", who: [] }], NI = items.length;
   var body = '<div class="g2">' + fld("date", "date", "Date", d0) + sel("payer", "Paid by", playerOpts(), b ? b.payer : S.me) + "</div>" +
     segf("mode", "How is it split?", Object.keys(BMODE).map(function (k) { return { v: k, l: BMODE[k] }; }), b ? b.mode : "equal") +
     '<div id="totBox">' + fld("number", "total", "Bill total (LKR)", b && b.mode !== "items" ? b.total : "", 'inputmode="numeric" min="1"') + "</div>" +
@@ -3554,7 +3751,7 @@ function openBill(id) {
 function billPaid(key, v) {
   var k = String(key || "").split("|"), raw = D.bills.filter(function (x) { return x.id === k[0]; })[0]; if (!raw || !P[k[1]]) return;
   var b = billN(raw); if (!guard(billCan(b) || k[1] === S.me, "Only the payer, the person or a Host can mark this.")) return;
-  var o = {}; o[k[1]] = v === "1"; db.doc("bills/" + b.id).update({ paid: o }).then(function () { toast(v === "1" ? "Marked as paid" : "Marked as not paid"); }, fail);
+  var o = {}; o["paid." + k[1]] = v === "1"; db.doc("bills/" + b.id).update(o).then(function () { toast(v === "1" ? "Marked as paid" : "Marked as not paid"); }, fail);
 }
 function openGalAdd(date) {
   if (!guard(galCan(), "Sign in to add photos.")) return;
@@ -3594,20 +3791,6 @@ function openGalAdd(date) {
 function galWarn(day, n) {
   var left = galLeft(day);
   return left ? "Too many photos. Each playing day can hold " + GALMAX + " and " + galDayNo(day) + " has room for " + left + " more. Choose " + left + " or fewer." : galDayNo(day) + " already has its " + GALMAX + " photos. That's the limit for one playing day.";
-}
-function budCopy(sk) {
-  var t = budgetText(sk);
-  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { toast("Message copied"); }, function () { toast("Couldn't copy. Use the WhatsApp button."); });
-  else toast("Couldn't copy. Use the WhatsApp button.");
-}
-function openBank() {
-  if (!S.me || !P[S.me]) return; var b = bankOf(S.me);
-  openSheet("Your bank details", '<p class="hint" style="margin:0">Only signed-in club members can see these, in Finances and in payment messages, so they can pay you back.</p><div class="g2">' + fld("text", "bk_bank", "Bank", b.bank || "", 'maxlength="40" placeholder="e.g. BOC"') + fld("text", "bk_branch", "Branch", b.branch || "", 'maxlength="40"') + "</div>" + fld("text", "bk_name", "Account name", b.name || "", 'maxlength="60"') + fld("text", "bk_no", "Account number", b.no || "", 'maxlength="30" inputmode="numeric"'), function (form) {
-    var v = vals(form, ["bk_bank", "bk_branch", "bk_name", "bk_no"]);
-    if (v.bk_no && !/^[0-9 -]{4,30}$/.test(v.bk_no)) return "The account number can only have digits, spaces and dashes.";
-    if (v.bk_no && !v.bk_bank) return "Enter the bank name too.";
-    return db.doc("banks/" + S.me).set({ bank: clean(v.bk_bank, 40), branch: clean(v.bk_branch, 40), name: clean(v.bk_name, 60), no: clean(v.bk_no, 30), uid: S.myId || "", ts: Date.now() }).then(function () { return v.bk_no ? "Bank details saved" : "Bank details removed"; });
-  }, { noFocus: true });
 }
 function billCopy(id) {
   var raw = D.bills.filter(function (x) { return x.id === id; })[0]; if (!raw) return; var t = billText(billN(raw));
@@ -4075,10 +4258,12 @@ var RT = 0; function soon() { if (RT) return; RT = setTimeout(function () { RT =
 /* bank details: members only (the database rules keep them away from people who aren't signed in) */
 var MSUB = null, MERR = 0;
 function subBanks() {
-  if (MSUB && (!S.me || !S.myId || MSUB.me !== S.me)) { MSUB.off.forEach(function (f) { try { f(); } catch (e) {} }); MSUB = null; BANK = {}; MYPRIV = {}; MEMBERCOLS.forEach(function (n) { D[n] = []; }); }
+  if (MSUB && (!S.me || !S.myId || MSUB.me !== S.me || MSUB.lead !== isSA())) { MSUB.off.forEach(function (f) { try { f(); } catch (e) {} }); MSUB = null; BANK = {}; MYPRIV = {}; MEMBERCOLS.forEach(function (n) { D[n] = []; }); D.audit = []; }
   if (!db || !S.me || !S.myId || MSUB || Date.now() - MERR < 60000) return;
   var fail2 = function (e) { console.warn("members-only data", e && e.code); MERR = Date.now(); };
-  MSUB = { me: S.me, off: [] };
+  MSUB = { me: S.me, lead: isSA(), off: [] };
+  /* the activity log is for Club Leads only */
+  if (MSUB.lead) MSUB.off.push(db.collection("audit").onSnapshot(function (snap) { D.audit = snap.docs.filter(function (d) { return d.exists !== false; }).map(plain).filter(Boolean); soon(); }, function (e) { console.warn("activity log", e && e.code); }));
   MSUB.off.push(db.collection("banks").onSnapshot(function (snap) { var o = {}; snap.docs.forEach(function (d) { if (d.exists !== false) { var x = d.data() || {}; o[d.id] = { bank: clean(x.bank, 40), branch: clean(x.branch, 40), name: clean(x.name, 60), no: clean(x.no, 30) }; } }); BANK = o; soon(); }, fail2));
   MEMBERCOLS.forEach(function (name) { MSUB.off.push(db.collection(name).onSnapshot(function (snap) { D[name] = snap.docs.filter(function (d) { return d.exists !== false; }).map(plain).filter(Boolean); soon(); }, fail2)); });
   MSUB.off.push(db.doc("private/" + S.me).onSnapshot(function (d) { MYPRIV = d.exists ? d.data() || {} : {}; }, function () {}));
@@ -4172,7 +4357,7 @@ function tick() {
 function resetSubTabs() { S.boardTab = 0; S.teamsTab = "teams"; S.clubTab = "sessions"; S.finTab = ""; S.finDay = ""; S.perfSeg = "season"; S.playTab = ""; S.liveTab = ""; S.rbTab = 0; S.homeDay = {}; S.pracOpen = false; S.galSort = "day"; S.menuOpen = false; }
 var ACT = {
   revealok: function () { S.reveal = ""; S.revealSA = false; S.tab = "home"; render(); window.scrollTo(0, 0); },
-  nav: function (v) { if (S.tab === "home" && !S.view && v !== "home") pushH(); if (v !== S.tab) resetSubTabs(); S.tab = v; S.view = null; S.vid = null; STACK = []; S.menuOpen = false; render(); window.scrollTo(0, 0); },
+  nav: function (v, id, setup) { if (S.tab === "home" && !S.view && v !== "home") pushH(); if (v !== S.tab) resetSubTabs(); S.tab = v; if (typeof setup === "function") setup(); S.view = null; S.vid = null; STACK = []; S.menuOpen = false; render(); window.scrollTo(0, 0); },
   back: function () { goBack(); },
   close: function () { closeSheet(); },
   sheetdel: function () { if (SHEETDEL) SHEETDEL(); },
@@ -4183,14 +4368,14 @@ var ACT = {
   logout: function () { S.me = ""; S.noAuto = true; S.guest = false; S.gate = "welcome"; store("wts-me", ""); S.view = null; STACK = []; render(); },
   pmenu: function () { openPMenu(); },
   pedit: function (v, id) { openPlayerForm(id); },
-  bell: function () { store("wts-bell", String(Date.now())); S.tab = "club"; S.clubTab = "notices"; S.view = null; STACK = []; render(); window.scrollTo(0, 0); },
+  bell: function () { store("wts-bell", String(Date.now())); ACT.nav("club", null, function () { S.clubTab = "notices"; }); },
   seasonmenu: function () { S.menuOpen = !S.menuOpen; render(); },
   season: function (v) { S.season = v; S.seasonPicked = true; S.menuOpen = false; S.perfSeg = "season"; render(); },
   homeday: function (v) { S.homeDay[S.season] = v; render(); },
   btab: function (v) { S.boardTab = +v; render(); },
-  ttab: function (v) { S.tab = "teams"; S.view = null; S.teamsTab = v; render(); },
+  ttab: function (v) { if (S.tab !== "teams" || S.view) return ACT.nav("teams", null, function () { S.teamsTab = v; }); S.teamsTab = v; render(); },
   ctab: function (v) { S.clubTab = v; render(); },
-  sessions: function () { S.tab = "club"; S.clubTab = "sessions"; S.view = null; STACK = []; render(); window.scrollTo(0, 0); },
+  sessions: function () { ACT.nav("club", null, function () { S.clubTab = "sessions"; }); },
   rbjump: function (v) { var el = document.getElementById("rb-" + v); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); },
   ptab: function (v) { S.playTab = v; render(); },
   photo: function (v, id) { openLightbox(id); },
@@ -4202,9 +4387,9 @@ var ACT = {
   instx: function () { try { localStorage.setItem("wts-inst", "1"); } catch (e) {} render(); },
   galsort: function (v) { S.galSort = v === "fav" ? "fav" : "day"; render(); },
   galadd: function (v) { openGalAdd(v); },
-  galtab: function () { S.clubTab = "gallery"; ACT.nav("club"); },
+  galtab: function () { ACT.nav("club", null, function () { S.clubTab = "gallery"; }); },
   livetab: function (v) { S.liveTab = v; render(); },
-  golive: function () { S.tab = "play"; S.liveTab = "live"; S.view = null; STACK = []; render(); window.scrollTo(0, 0); },
+  golive: function () { ACT.nav("play", null, function () { S.liveTab = "live"; }); },
   badge: function (v, id) { openBadge(v, id); },
   rbtab: function (v) { S.rbTab = +v; render(); },
   rulebook: function (v) { S.rbTab = +v || 0; go("rulebook", null); },
@@ -4253,24 +4438,20 @@ var ACT = {
   breakend: function (v, id) { endBreak(id, v); },
   premove: function (v) { removePlayer(v); },
   rsvp: function (v, id) { setRsvp(id, v); },
-  donnew: function () { openDonation(""); },
-  donedit: function (v, id) { openDonation(id); },
   expnew: function (v, id) { openExpense("", v || "", id || ""); },
+  duepaid: function (v, id) { duePaid(id, v); },
+  duegot: function (v, id) { dueGot(id, v); },
+  dueundo: function (v, id) { dueUndo(id); },
+  copyacc: function (v, id) { copyAcc(id); },
   fincat: function (v) { S.finCat = v; render(); },
-  fintab: function (v) { S.finTab = v; render(); },
-  finseason: function (v) { S.finSeason = v; S.finDay = ""; render(); },
+  fintab: function (v) { S.finTab = v; S.finDay = ""; render(); },
   finday: function (v) { S.finDay = S.finDay === v ? "" : v; render(); },
-  settle: function (v, id) { settleUp(v, id); },
-  unsettle: function (v, id) { unsettle(id); },
-  billnew: function () { openBill(""); },
+  billnew: function (v) { openBill("", v); },
   billedit: function (v, id) { openBill(id); },
   bill: function (v, id) { go("bill", id); },
   billpaid: function (v, id) { billPaid(id, v); },
   billcopy: function (v, id) { billCopy(id); },
-  budcopy: function (v) { budCopy(v); },
-  bankedit: function () { openBank(); },
   expedit: function (v, id) { openExpense(id); },
-  repay: function (v, id) { repay(id); },
   shuttles: function (v) { shuttlesUsed(v); },
   notnew: function () { openNotice(""); },
   notedit: function (v, id) { openNotice(id); },
@@ -4352,7 +4533,7 @@ ACT.logout = function () { S.me = ""; S.noAuto = false; S.guest = false; S.gate 
   });
   subscribe();
 })();
-window.__wts = { compute: function (k) { return compute(k); }, plan: function (d) { return planDay(DAY[d]); }, fair: fairness, guest: resolveGuest, known: knownGuests, state: function () { return { me: S.me, host: isHost(), tab: S.tab, view: S.view, vid: S.vid, live: S.liveTab }; }, net: seasonNet, plan2: function (k) { return settlePlan(seasonNet(k)); }, billShares: function (i) { return billShares(billN(D.bills[i || 0])); }, openExpense: openExpense, wc: winChance, st: function (k, kind) { return standings(k, kind).map(function (x) { return { id: x.id, pts: x.pts, ok: x.ok, mp: x.mp }; }); }, titles: seasonTitles, fair: fairness, dayTeams: function (d) { return dayTeamsD(DAY[d]); }, card: function (k, key) { return (k === "season" ? seasonCardCanvas(key) : dayCardCanvas(key)).then(function (cv) { return cv ? cv.toDataURL("image/png") : null; }); } };
+window.__wts = { compute: function (k) { return compute(k); }, plan: function (d) { return planDay(DAY[d]); }, fair: fairness, guest: resolveGuest, known: knownGuests, state: function () { return { me: S.me, host: isHost(), tab: S.tab, view: S.view, vid: S.vid, live: S.liveTab }; }, dues: function () { return duesAll().pairs.map(function (p) { return { from: p.from, to: p.to, amt: p.amt, claims: p.claims.length }; }); }, billShares: function (i) { return billShares(billN(D.bills[i || 0])); }, openExpense: openExpense, wc: winChance, st: function (k, kind) { return standings(k, kind).map(function (x) { return { id: x.id, pts: x.pts, ok: x.ok, mp: x.mp }; }); }, titles: seasonTitles, fair: fairness, dayTeams: function (d) { return dayTeamsD(DAY[d]); }, card: function (k, key) { return (k === "season" ? seasonCardCanvas(key) : dayCardCanvas(key)).then(function (cv) { return cv ? cv.toDataURL("image/png") : null; }); } };
 /* Service worker: lets phones install the app. Only on the real site, never in previews. */
 if ("serviceWorker" in navigator && location.protocol === "https:" && /(^|\.)whatthesmash\.club$|github\.io$/.test(location.hostname)) {
   window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
