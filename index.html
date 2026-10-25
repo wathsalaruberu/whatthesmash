@@ -833,8 +833,8 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .rrow .p{justify-self:end;text-align:right}
 .pmc{font-style:normal;margin-left:4px;color:var(--sub);font-weight:700}
 /* head-to-head W/L, season rows */
-.wl b{font-weight:800;color:var(--sub)}.wl b.w{color:var(--lime)}
-.wl.big{font-size:16px;white-space:nowrap}.wl.big b{font-weight:900;color:#fff}.wl.big b.w{color:var(--lime)}
+.wl{display:inline;white-space:nowrap}.wl i{font-style:normal;font-weight:800;color:var(--sub);display:inline}.wl i.w{color:var(--lime)}
+.wl.big{font-size:16px}.wl.big i{font-weight:900;color:#fff}.wl.big i.w{color:var(--lime)}
 .sbs .fr button{color:var(--cyan)}
 /* team honours */
 .tch{display:flex;align-items:center;gap:14px;padding:14px;border-radius:22px;background:var(--surface)}
@@ -938,14 +938,14 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .prings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .pring{display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 4px 10px;border-radius:18px;background:rgba(10,10,20,.45);color:inherit;min-width:0}
 .pring.lead{background:radial-gradient(90% 70% at 50% 30%,rgba(255,255,255,.07),transparent 70%),rgba(10,10,20,.45)}
-.pr{--v:50;--c:#fff;position:relative;width:min(84px,100%);aspect-ratio:1;border-radius:50%;background:conic-gradient(var(--c) calc(var(--v)*1%),rgba(255,255,255,.08) 0);display:grid;place-items:center;margin-bottom:4px}
-.pr .av{width:calc(100% - 16px)!important;height:auto!important;aspect-ratio:1;font-size:20px!important;box-shadow:0 0 0 4px #12121f;border:0!important}
+.prg{--v:50;--c:#fff;position:relative;width:min(84px,100%);aspect-ratio:1;border-radius:50%;background:conic-gradient(var(--c) calc(var(--v)*1%),rgba(255,255,255,.08) 0);display:grid;place-items:center;margin-bottom:4px}
+.prg .av{width:calc(100% - 16px)!important;height:auto!important;aspect-ratio:1;font-size:20px!important;box-shadow:0 0 0 4px #12121f;border:0!important}
 .pp{font-size:20px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1}
 .pn{font-size:14px;font-weight:900;font-style:italic;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pring small{font-size:11px;color:var(--sub);font-weight:700;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .prest{margin:8px 2px 0;font-size:12.5px;color:var(--sub);font-weight:700;text-align:center}
 @media (max-width:360px){.pring{padding:10px 2px 8px}.pp{font-size:17px}.pn{font-size:13px}}
-@media (min-width:900px){.pr{width:96px}}
+@media (min-width:900px){.prg{width:96px}}
 /* photo viewer: the photo fits the space left, the like/comment/save row is always on screen */
 .lbox.gbox .gimg{flex:1 1 0!important;min-height:120px!important;overflow:hidden}
 .lbox.gbox .gimg img{position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%}
@@ -2115,7 +2115,7 @@ function homeChances() {
   var h = '<div class="sec"><div class="sh"><h2>Title chances</h2><span class="r">After ' + wc.done + " of " + wc.total + ' days</span></div><div class="prog"><div class="chance"><div class="h">Champion Team' + (wc.live ? "<span>Updates live</span>" : "") + '</div><div class="cbars">';
   h += wc.teams.map(function (t) { var c = tdef(t).color; return row("team", t, '<span class="cbn" style="color:' + c + '"><img src="' + tlogo(t) + '" alt="">' + esc(tname(t)) + "</span>", wc.lab[t], c); }).join("") + "</div></div>";
   if (wc.pots.length) {
-    h += '<div class="chance"><div class="h">Player of the Season<span>Top ' + wc.pots.length + '</span></div><div class="prings">' + wc.pots.map(function (x, i) { var t = teamOf(x.id), c = t ? tdef(t).color : "#a9a9c8"; return '<button type="button" class="pring' + (i === 0 ? " lead" : "") + '" data-act="perf" data-id="' + x.id + '" aria-label="' + esc(pname(x.id)) + " " + esc(x.lab) + '%"><span class="pr" style="--v:' + Math.max(+x.lab || 0, 1) + ";--c:" + c + '">' + av(x.id) + '</span><b class="pp">' + esc(x.lab) + '%</b><b class="pn" style="color:' + c + '">' + esc(pname(x.id)) + "</b><small>" + esc(tname(t) || "No team") + "</small></button>"; }).join("") + "</div>";
+    h += '<div class="chance"><div class="h">Player of the Season<span>Top ' + wc.pots.length + '</span></div><div class="prings">' + wc.pots.map(function (x, i) { var t = teamOf(x.id), c = t ? tdef(t).color : "#a9a9c8"; return '<button type="button" class="pring' + (i === 0 ? " lead" : "") + '" data-act="perf" data-id="' + x.id + '" aria-label="' + esc(pname(x.id)) + " " + esc(x.lab) + '%"><span class="prg" style="--v:' + Math.max(+x.lab || 0, 1) + ";--c:" + c + '">' + av(x.id) + '</span><b class="pp">' + esc(x.lab) + '%</b><b class="pn" style="color:' + c + '">' + esc(pname(x.id)) + "</b><small>" + esc(tname(t) || "No team") + "</small></button>"; }).join("") + "</div>";
     if (wc.rest > 0) h += '<p class="prest">Everyone else · ' + wc.rest + "%</p>";
     h += "</div>";
   }
@@ -3189,7 +3189,7 @@ function seasonRows(pid) {
   if (!rows.length) return "";
   return '<div class="sh"><h3>Season by season</h3><span class="r">Your record each month</span></div><div class="sbs"><div class="fh"><span>Season</span><span>Pos</span><span>Pts</span><span>W–L</span><span>Titles</span></div>' + rows.join("") + "</div>";
 }
-function wl(w, l, big) { return '<span class="wl' + (big ? " big" : "") + '"><b class="' + (w ? "w" : "") + '">' + w + "W</b>" + (big ? " · " : " ") + "<b>" + l + "L</b></span>"; }
+function wl(w, l, big) { return '<span class="wl' + (big ? " big" : "") + '"><i class="' + (w ? "w" : "") + '">' + w + "W</i>" + (big ? " · " : " ") + "<i>" + l + "L</i></span>"; }
 function bdRows(x, extra) {
   var rows = [["Singles wins", x.swin, "#ff174f"], ["Doubles wins", x.dwin, "#8b5cff"], ["Dominant bonus", x.dom, "#22d3ee"], ["Close losses", x.close, "#a9a9c8"], ["Upsets", x.ups, "#b6f23a"], ["Fastest match", x.fast, "#f4c542"]].concat(extra || []);
   var mx = Math.max.apply(null, [1].concat(rows.map(function (r) { return r[1] || 0; })));
