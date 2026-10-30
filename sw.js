@@ -1,6 +1,6 @@
 /* What the Smash service worker: network first, so every update arrives straight away.
    A saved copy of the app is only used when the phone is offline. */
-var CACHE = "wts-v3";
+var CACHE = "wts-v4";
 /* Tapping a notification opens the right place in the app. Registered first, so it wins over Firebase's own handler.
    Messages sent from the Firebase console carry a "link" label: rsvp, home, live or results */
 self.addEventListener("notificationclick", function (e) {
@@ -33,7 +33,7 @@ self.addEventListener("fetch", function (e) {
   var u = new URL(r.url); if (u.origin !== self.location.origin) return;
   var page = r.mode === "navigate";
   e.respondWith(fetch(r).then(function (res) {
-    if (res && res.ok && (page || /\.(png|json)$/.test(u.pathname))) { var c = res.clone(); caches.open(CACHE).then(function (ca) { ca.put(page ? "./" : r, c); }); }
+    if (res && res.ok && (page || /\.(png|json)$/.test(u.pathname))) { var c = res.clone(); caches.open(CACHE).then(function (ca) { ca.put(page ? u.pathname : r, c); }); }
     return res;
-  }).catch(function () { return caches.match(page ? "./" : r).then(function (m) { return m || Response.error(); }); }));
+  }).catch(function () { return caches.match(page ? u.pathname : r).then(function (m) { return m || Response.error(); }); }));
 });
