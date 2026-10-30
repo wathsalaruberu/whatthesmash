@@ -1141,6 +1141,15 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .arow.taken{opacity:.45}
 .lonc{display:inline-flex;align-items:center;gap:5px;color:#ff4d6d;font-weight:900;font-size:12px}
 .laccn{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:18px;background:rgba(244,197,66,.1);box-shadow:inset 0 0 0 1px rgba(244,197,66,.3);margin-bottom:10px}.laccn b{color:#ffd27a;font-size:14px}.laccn span{font-size:12.5px;color:var(--sub);font-weight:600}
+.lmyi{width:34px;height:34px;display:grid;place-items:center;font-size:22px;flex:none}
+.lav{padding:10px 0;border-top:1px solid var(--edge)}.lav:first-of-type{border-top:0}
+.lavh{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.lavh b{font-size:14px}.lavh span{font-size:11.5px;color:var(--sub);font-weight:700;text-align:right}
+.lavr{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.lavp{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;font-size:12.5px;font-weight:800;background:rgba(255,255,255,.06);color:var(--sub)}
+.lavp i{font-style:normal;font-weight:900}.lavp.y{background:rgba(182,242,58,.14);color:var(--lime)}.lavp.m{background:rgba(244,197,66,.14);color:#ffd27a}.lavp.n{background:rgba(255,45,85,.14);color:#ff7d9b}
+.lop{padding:12px;border-radius:18px;background:rgba(0,0,0,.22);box-shadow:inset 3px 0 0 var(--tc);margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.loph{display:flex;align-items:center;gap:8px}.loph img{width:30px;height:30px;border-radius:8px}.loph b{font-size:16px;font-style:italic;color:var(--tc)}.loph span{margin-left:auto;font-size:11.5px;color:var(--sub);font-weight:800}
+.lopk{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.lopk span{display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:12px;background:rgba(255,255,255,.05);font-size:12.5px}.lopk b{color:#fff}
+.lopr{display:flex;flex-wrap:wrap;gap:5px;align-items:center}.lopr small{width:100%;font-size:10px;font-weight:900;letter-spacing:.1em;color:var(--sub)}.lopr span{padding:4px 8px;border-radius:10px;background:rgba(255,255,255,.05);font-size:12px;font-weight:700}.lopr span.near{color:#ffd27a}.lopr span.full{color:#ff7d9b;text-decoration:line-through}.lopr em{font-size:12px;color:var(--dim)}
 </style>
 </head>
 <body>
@@ -4130,7 +4139,9 @@ function lCaptain(t) {
   h += '<div class="card"><div class="sh"><h3>Men\'s doubles pairs</h3><span class="r">Max ' + PAIRCAP + " each</span></div>" + prs.join("") + '<p class="muted tiny" style="margin:4px 0 0">Solid: played · light: planned. Your team plays ' + nMD + " men's doubles, so you need at least " + Math.ceil(nMD / PAIRCAP) + " pairs.</p></div>";
   var xe = xdRuleCheck(u.xd, men), xp = men.map(function (p) { var a = played.xd[p.id] || 0, b = (u.xd[p.id] || 0) - a; return '<div class="cpr"><span>' + esc(p.display) + '</span><span class="cbar x"><i style="width:' + Math.min(100, a / 3 * 100) + '%"></i><i class="pl" style="width:' + Math.min(100, b / 3 * 100) + '%"></i></span><b>' + a + (b ? "+" + b : "") + "</b></div>"; }).join("");
   h += '<div class="card"><div class="sh"><h3>Mixed doubles rotation</h3><span class="r">3×2 + 1×3</span></div>' + xp + (xe ? '<div class="cwarn">⚠ ' + esc(xe) + "</div>" : '<p class="muted tiny" style="margin:4px 0 0">Three men play 2 and one plays 3 over the season.</p>') + "</div>";
+  if (isCapOf(t)) h += '<button type="button" class="lmy" data-act="lfees"><span class="lmyi">💰</span><span><small>CLUB FEES</small><b>Collect from your team</b><em>Tick each player\'s fee when they pay you</em></span><i>›</i></button>';
   var rs = reservesOf(t); h += '<div class="card"><div class="sh"><h3>Squad</h3></div>' + teamMembers(t).map(function (p) { return '<div class="row" style="gap:8px">' + av(p.id, "sm") + "<b>" + esc(p.display) + '</b><span class="muted small">' + (lineOf(p.id) === "w" ? "Women's line-up" : "Men's line-up") + (captainOf(t) === p.id ? " · captain" : "") + "</span></div>"; }).join("") + (rs.length ? rs.map(function (p) { return '<div class="row" style="gap:8px">' + av(p.id, "sm") + "<b>" + esc(p.display) + '</b><span class="tag rsv">Reserve</span></div>'; }).join("") : '<p class="muted tiny" style="margin:4px 0 0">No reserve or replacement yet. Request one before ' + fmtD(LDEADLINE) + ".</p>") + (can ? '<button type="button" class="lnk" data-act="lrepreq" data-id="' + t + '">Request a replacement or reserve</button>' : "") + "</div>";
+  h += lAvail(t) + lOpp(t, sk);
   /* planner by Sunday */
   var days = D.days.filter(function (d) { return isLeagueDay(d) && !d.test; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
   days.forEach(function (d) {
@@ -4335,6 +4346,46 @@ function lPerfRest(pid) {
   return h;
 }
 
+/* ---------- captain: who's coming (from the RSVPs players already give; replying is optional) ---------- */
+function lAvail(t) {
+  var days = D.days.filter(function (d) { return isLeagueDay(d) && !d.test && d.status === "upcoming"; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; }).slice(0, 3);
+  if (!days.length) return "";
+  var ppl = teamMembers(t).concat(reservesOf(t)), lab = { yes: ["✓", "Coming", "y"], maybe: ["?", "Maybe", "m"], no: ["✕", "Can't", "n"] };
+  var h = '<div class="card"><div class="sh"><h3>Who\'s coming</h3><span class="r">From their replies</span></div>';
+  days.forEach(function (d, i) {
+    var r = d.rsvp || {}, n = { yes: 0, maybe: 0, no: 0, none: 0 }; ppl.forEach(function (p) { n[r[p.id] || "none"] = (n[r[p.id] || "none"] || 0) + 1; });
+    h += '<div class="lav"><div class="lavh"><b>' + fmtD(d.date, true) + '</b><span>' + n.yes + " coming" + (n.maybe ? " · " + n.maybe + " maybe" : "") + (n.no ? " · " + n.no + " can't" : "") + (n.none ? " · " + n.none + " no reply" : "") + '</span></div><div class="lavr">' + ppl.map(function (p) { var x = lab[r[p.id]] || ["–", "No reply", "x"]; return '<span class="lavp ' + x[2] + '"><i>' + x[0] + "</i>" + esc(p.display) + (p.reserve ? " (R)" : "") + "</span>"; }).join("") + "</div>";
+    if (i === 0 && n.none && isCapOf(t)) h += '<button type="button" class="lnk" data-act="lnudge" data-id="' + t + '" data-v="' + d.date + '">Remind the ' + n.none + " who haven't replied</button>";
+    h += "</div>";
+  });
+  return h + '<p class="muted tiny" style="margin:4px 0 0">Replying is optional. Players reply on Club → Sessions. Plan around the ones who can\'t make it.</p></div>';
+}
+function lNudge(t, date) {
+  var d = DAY[date]; if (!d || !guard(isCapOf(t) || isSA())) return;
+  var who = teamMembers(t).concat(reservesOf(t)).filter(function (p) { return !(d.rsvp || {})[p.id]; }).map(function (p) { return p.id; }); if (!who.length) return;
+  confirmSheet("Send a reminder?", esc(who.map(pname).join(", ")) + " will see a notice asking if they're coming on " + fmtD(d.date, true) + ".", "Send reminder", function () {
+    return db.collection("notices").add({ title: "Are you coming on " + fmtD(d.date) + "?", body: "Your " + tname(t) + " captain is planning the doubles. Reply on Club → Sessions: Attending, Maybe or Can't make it.", to: who, team: t, by: S.me, ts: Date.now() }).then(function () { return "Reminder sent"; });
+  });
+}
+/* ---------- captain: next opponents, from matches already played only (their plans stay private) ---------- */
+function lOpp(t, sk) {
+  var nd = D.days.filter(function (d) { return isLeagueDay(d) && !d.test && d.status !== "done"; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; })[0]; if (!nd) return "";
+  var opps = uniq(lDayMatches(nd).filter(function (m) { return m.ta === t || m.tb === t; }).map(function (m) { return m.ta === t ? m.tb : m.ta; }).filter(function (x) { return x && TEAM[x]; }));
+  if (!opps.length) return "";
+  var C = lcompute(sk), wl = function (x, k) { return x ? x.k[k].w + "–" + x.k[k].l : "0–0"; };
+  var h = '<div class="card"><div class="sh"><h3>Next opponents</h3><span class="r">' + fmtD(nd.date, true) + '</span></div><p class="muted tiny" style="margin:-2px 0 6px">From matches already played. Their plans are private and they can change pairs on the night.</p>';
+  opps.forEach(function (o) {
+    var u = lUsage(sk, o), men = menOf(o), x = C.tm[o], vs = lDayMatches(nd).filter(function (m) { return (m.ta === t && m.tb === o) || (m.tb === t && m.ta === o); }), kc = {}; vs.forEach(function (m) { kc[lCatOf(m)] = (kc[lCatOf(m)] || 0) + 1; });
+    var prs = []; men.forEach(function (a, i) { men.slice(i + 1).forEach(function (b) { var c = u.pairs[pairKey(a.id, b.id)] || 0; if (c) prs.push([a.display + " & " + b.display, c]); }); }); prs.sort(function (a, b) { return b[1] - a[1]; });
+    h += '<div class="lop" style="--tc:' + tdef(o).color + '"><div class="loph"><img src="' + tlogo(o) + '" alt=""><b>' + esc(tname(o)) + '</b><span>' + LKS.filter(function (k) { return kc[k]; }).map(function (k) { return kc[k] + " " + k; }).join(" · ") + " v you</span></div>";
+    h += '<div class="lopk">' + LKS.map(function (k) { return '<span style="--k:' + LCAT[k].col + '">' + catIcon(k, 16) + "<b>" + wl(x, k) + "</b></span>"; }).join("") + "</div>";
+    h += '<div class="lopr"><small>MEN\'S DOUBLES PAIRS USED</small>' + (prs.length ? prs.map(function (p) { return '<span class="' + (p[1] >= PAIRCAP ? "full" : p[1] >= PAIRCAP - 2 ? "near" : "") + '">' + esc(p[0]) + " <b>" + p[1] + "/" + PAIRCAP + "</b>" + (p[1] >= PAIRCAP ? " · done" : p[1] >= PAIRCAP - 2 ? " · " + (PAIRCAP - p[1]) + " left" : "") + "</span>"; }).join("") : '<em>None yet</em>') + "</div>";
+    h += '<div class="lopr"><small>MIXED DOUBLES SO FAR</small>' + men.map(function (p) { return "<span>" + esc(p.display) + " <b>" + (u.xd[p.id] || 0) + "</b></span>"; }).join("") + "</div></div>";
+  });
+  return h + "</div>";
+}
+LACT.lnudge = function (v, id) { lNudge(id, v); };
+
 /* ================= LEAGUE: CLUB LEAD SETUP, REQUESTS, FEES ================= */
 function lOn() { return D.days.some(function (d) { return isLeagueDay(d) && !d.test; }); }
 function lLoaded() { return D.matches.filter(function (m) { return isLMatch(m) && DAY[m.day] && !DAY[m.day].test; }).length; }
@@ -4495,14 +4546,19 @@ function lFeeCard() {
 }
 function lFeePlan(v) { var sk = lFeeSk(), f = lFeeDoc(sk, S.me); if (f && f.plan) return; db.doc("fees/" + sk + "_" + S.me).set({ sk: sk, pid: S.me, plan: v, paid: {}, claims: {}, uid: S.myId || "", ts: Date.now() }).then(function () { toast(v === "month" ? "Monthly fee chosen" : "Paying each Sunday"); }, fail); }
 function lFeePaid(amt) { var sk = lFeeSk(), o = {}; o["claims." + Date.now()] = +amt; db.doc("fees/" + sk + "_" + S.me).update(o).then(function () { toast("Sent. The Club Lead confirms it."); }, fail); }
+/* who can tick a fee as received: the Club Lead for everyone, a captain for their own team */
+function lFeeCan(pid) { return isSA() || (!!teamOf(pid) && isCapOf(teamOf(pid))); }
 function lFeesAdmin() {
-  if (!guard(isSA())) return;
-  var sk = lFeeSk(), ps = activePlayers().filter(function (p) { return p.team || p.reserve; }).sort(function (a, b) { return a.display.localeCompare(b.display); });
-  var rows = ps.map(function (p) { var x = lFeeDue(sk, p.id); return '<div class="lfr">' + av(p.id, "sm") + '<span class="t"><b>' + esc(p.display) + "</b><small>" + (x.plan ? (x.plan === "month" ? "Monthly" : "Per Sunday · " + x.days + " played") + " · paid " + money(x.paid) : "Not chosen yet") + "</small></span>" + (x.claim ? '<button type="button" class="btn sm got" data-act="lfeegot" data-id="' + p.id + '">Got ' + money(x.claim).replace("LKR ", "") + "</button>" : x.plan && x.left ? '<button type="button" class="btn sm ghost" data-act="lfeemark" data-id="' + p.id + '">Mark ' + money(x.left).replace("LKR ", "") + "</button>" : x.plan ? '<span class="lok">✓</span>' : "") + "</div>"; }).join("");
-  openSheet("Club fees · " + seasonShort(sk), '<p class="hint" style="margin:0">Each player chooses monthly or per Sunday in My dues, then taps "I\'ve paid". Confirm here when the money arrives.</p>' + rows, null);
+  if (!guard(isSA() || isCap(), "Only the Club Lead and captains collect club fees.")) return;
+  var sk = lFeeSk(), ps = activePlayers().filter(function (p) { return (p.team || p.reserve) && lFeeCan(p.id); }).sort(function (a, b) { return (teamOf(a.id) || "").localeCompare(teamOf(b.id) || "") || a.display.localeCompare(b.display); });
+  var c = lFeeCfg(), tot = 0; ps.forEach(function (p) { tot += lFeeDue(sk, p.id).paid; });
+  var rows = ps.map(function (p) { var x = lFeeDue(sk, p.id); return '<div class="lfr">' + av(p.id, "sm") + '<span class="t"><b>' + esc(p.display) + "</b><small>" + (x.plan ? (x.plan === "month" ? "Monthly" : "Per Sunday · " + x.days + " played") + " · paid " + money(x.paid) : "Not chosen yet") + "</small></span>" + (x.claim ? '<button type="button" class="btn sm got" data-act="lfeegot" data-id="' + p.id + '">Got ' + money(x.claim).replace("LKR ", "") + "</button>" : x.plan && x.left ? '<button type="button" class="btn sm ghost" data-act="lfeemark" data-id="' + p.id + '">Mark ' + money(x.left).replace("LKR ", "") + "</button>" : x.plan ? '<span class="lok">✓</span>' : '<span class="row" style="gap:4px"><button type="button" class="btn sm ghost" data-act="lfeenew" data-id="' + p.id + '" data-v="month">' + c.month.toLocaleString("en-US") + '</button><button type="button" class="btn sm ghost" data-act="lfeenew" data-id="' + p.id + '" data-v="day">' + c.day + "</button></span>") + "</div>"; }).join("");
+  openSheet((isSA() ? "Club fees · " : "Your team's fees · ") + seasonShort(sk), '<p class="hint" style="margin:0">' + (isSA() ? "" : "Collect the fee from your players and tick it here when you get it. ") + 'A player who taps "I\'ve paid" shows a <b>Got</b> button. Not chosen yet? Tap <b>' + c.month.toLocaleString("en-US") + "</b> (whole month) or <b>" + c.day + "</b> (this Sunday) when they pay you.</p><p class=\"muted small\" style=\"margin:4px 0 0\">Collected so far: <b>" + money(tot) + "</b></p>" + rows, null);
 }
-function lFeeGot(pid, mark) {
+function lFeeGot(pid, mark, plan) {
+  if (!guard(lFeeCan(pid), "Only the Club Lead or this player's captain can do that.")) return;
   var sk = lFeeSk(), f = lFeeDoc(sk, pid), o = {}, x = lFeeDue(sk, pid);
+  if (plan) { var amt = plan === "month" ? lFeeCfg().month : lFeeCfg().day, now = String(Date.now()), paid = {}, up = { plan: plan }; paid[now] = amt; up["paid." + now] = amt; (f ? db.doc("fees/" + sk + "_" + pid).update(up) : db.doc("fees/" + sk + "_" + pid).set({ sk: sk, pid: pid, plan: plan, paid: paid, claims: {}, ts: Date.now(), by: S.me })).then(function () { audit("Club fee received from " + pname(pid) + ": " + money(amt)); toast("Got " + money(amt) + " from " + pname(pid)); closeSheet(); setTimeout(lFeesAdmin, 300); }, fail); return; }
   if (mark) { o["paid." + Date.now()] = x.left; if (!f) { db.doc("fees/" + sk + "_" + pid).set({ sk: sk, pid: pid, plan: "month", paid: o, claims: {}, ts: Date.now() }).then(function () { toast("Marked paid"); lFeesAdmin(); }, fail); return; } }
   else Object.keys((f && f.claims) || {}).forEach(function (k) { o["paid." + k] = num(f.claims[k]); o["claims." + k] = fvDel(); });
   db.doc("fees/" + sk + "_" + pid).update(o).then(function () { toast("Confirmed"); closeSheet(); setTimeout(lFeesAdmin, 300); }, fail);
@@ -4517,6 +4573,7 @@ var LACT2 = {
   ltestclear: function () { lTestClear(); },
   laddp: function () { lAddPlayer(); },
   lfees: function () { lFeesAdmin(); },
+  lfeenew: function (v, id) { lFeeGot(id, false, v); },
   lfeeplan: function (v) { lFeePlan(v); },
   lfeepaid: function (v) { lFeePaid(v); },
   lfeegot: function (v, id) { lFeeGot(id, false); },
