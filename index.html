@@ -1158,6 +1158,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .sbs.sbs2 .fh,.sbs.sbs2 .fr{grid-template-columns:1.25fr 1.5fr .6fr .6fr .8fr 1fr}
 .sbt{display:flex;align-items:center;gap:5px;min-width:0}.sbt img{width:22px;height:22px;border-radius:6px;flex:none}.sbt i{font-style:normal;font-weight:800;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .thist{display:flex;flex-direction:column;gap:8px}.thr{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:18px;background:var(--surface)}.thr b{font-size:13px;letter-spacing:.06em;color:var(--sub);text-transform:uppercase}.thr span{display:flex;flex-wrap:wrap;gap:6px}.thr button{padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.07);font-size:13px;font-weight:800;color:#fff}
+.lpsc{gap:6px}.lps{display:flex;align-items:center;gap:8px;padding:6px 0}.lps img{width:26px;height:26px;border-radius:7px}.lps b{flex:1;font-size:14.5px;font-style:italic}.lps span{font-size:12.5px;font-weight:900}.lps .ok{color:var(--lime)}.lps .part{color:#ffd27a}.lps .none{color:#ff7d9b}
 </style>
 </head>
 <body>
@@ -3861,7 +3862,7 @@ function lCard(d, m, n, st) {
 /* the Play tab on a league day */
 function lViewPlay(d) {
   var h = "", sa = isSA(), st = lCanScore(d);
-  h += lAccessNote();
+  h += lAccessNote() + lPlanStatus(d);
   if (d.test) h += '<div class="testb">TEST RUN · nothing here counts. ' + (sa ? '<button type="button" class="lnk" data-act="ltestclear">Clear test run</button>' : "") + "</div>";
   if (d.status === "upcoming") {
     h += dayHead(d, "", isHost());
@@ -3994,10 +3995,14 @@ function lStartDbl(m, d) {
   toast("Opening the sealed pairs…");
   Promise.all([lPlanGet(m, m.ta), lPlanGet(m, m.tb)]).then(function (r) {
     var blind = ["a", "b"].filter(function (s, i) { return r[i] === "none"; });
-    if (!blind.length) { lStartReveal(m, d, got); return; }
-    /* no plan by the deadline: this team picks first, without seeing the other team's pair */
-    openSheet("Start · " + LCAT[k].n, '<p class="hint" style="margin:0 0 6px">' + esc(blind.map(function (s) { return tname(m["t" + s]); }).join(" and ")) + " didn't submit a plan by 7:00 PM, so " + (blind.length > 1 ? "they pick" : "it picks") + " now, before the other pair is shown.</p>" + blind.map(function (s) { return lPickHTML(m, d, s, "free"); }).join(""), function (form) {
-      for (var i = 0; i < blind.length; i++) { var ids = lPickRead(form, m, d, blind[i], "free"); if (typeof ids === "string") return ids; got[blind[i]] = ids; }
+    /* no plan by 7:00 PM: the app picks at random from the players who are here, within the pair limit and the mixed rotation */
+    var manual = [];
+    blind.forEach(function (s) { var ids = d.test ? null : lRandomPick(m, d, s); if (ids) got[s] = ids; else manual.push(s); });
+    if (blind.length && !manual.length) toast(blind.map(function (s) { return tname(m["t" + s]) + ": no plan, the app picked " + lNames(got[s]) + " at random"; }).join(" · "));
+    if (!manual.length) { lStartReveal(m, d, got); return; }
+    /* nobody eligible to pick at random (e.g. players missing): that captain picks, before the other pair is shown */
+    openSheet("Start · " + LCAT[k].n, '<p class="hint" style="margin:0 0 6px">' + esc(manual.map(function (s) { return tname(m["t" + s]); }).join(" and ")) + (d.test ? " had no plan. On a test run you pick by hand, so " : " had no plan and the app couldn't pick at random from the players here, so ") + (manual.length > 1 ? "they pick" : "it picks") + " now, before the other pair is shown.</p>" + manual.map(function (s) { return lPickHTML(m, d, s, "free"); }).join(""), function (form) {
+      for (var i = 0; i < manual.length; i++) { var ids = lPickRead(form, m, d, manual[i], "free"); if (typeof ids === "string") return ids; got[manual[i]] = ids; }
       closeSheet(); setTimeout(function () { lStartReveal(m, d, got); }, 50); return "";
     }, { save: "Lock in", noFocus: true });
   });
@@ -4293,11 +4298,13 @@ function lCaptain(t) {
   h += lAvail(t) + lOpp(t, sk);
   /* planner by Sunday */
   var days = D.days.filter(function (d) { return isLeagueDay(d); }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
-  h += '<div class="lseal">🔒 <b>Sealed pairs.</b> Submit your plan by <b>7:00 PM</b> on the playing day. Nobody else can see it, not even the Club Lead. Each match\'s pairs are revealed when the match before it on that court starts. After 7:00 PM only a player who didn\'t turn up can be swapped. No plan? You pick at the start, before seeing theirs.</div>';
+  h += '<div class="lseal">🔒 <b>Sealed pairs.</b> Submit your plan by <b>7:00 PM</b> on the playing day. Nobody else can see it, not even the Club Lead. Each match\'s pairs are revealed when the match before it on that court starts. After 7:00 PM only a player who didn\'t turn up can be swapped. No plan by 7:00 PM? The app picks a random pair from your players who are there when the match starts.</div>';
   days.forEach(function (d) {
     var ms = lDayMatches(d).filter(function (m) { return (m.k === "MD" || m.k === "XD") && (m.ta === t || m.tb === t); }); if (!ms.length) return;
     var lk = Date.now() >= lDue(d.date) || d.status === "done";
-    h += '<div class="lsd"><div class="lsdh"><b>' + (d.test ? "TEST · " : "") + fmtD(d.date, true) + "</b><span>" + (d.status === "done" ? "Played" : lk ? "🔒 Locked" : "Locks " + fmtD(d.date) + " · 7:00 PM") + " · " + plural(ms.length, "doubles match", "doubles matches") + "</span></div>";
+    var pd0 = lPlanDone(t, d.date), soon0 = lDue(d.date) - Date.now();
+    if (can && !lk) lPlanCount(t, d.date);
+    h += '<div class="lsd"><div class="lsdh"><b>' + (d.test ? "TEST · " : "") + fmtD(d.date, true) + "</b><span>" + (d.status === "done" ? "Played" : lk ? "🔒 Locked" : (soon0 < 864e5 ? "Locks in " + lLeft(soon0) : "Locks " + fmtD(d.date) + " · 7:00 PM")) + " · " + (lk ? plural(ms.length, "doubles match", "doubles matches") : pd0.n + " of " + pd0.of + " planned") + "</span></div>";
     ms.forEach(function (m) {
       var opp = m.ta === t ? m.tb : m.ta, n = lDayMatches(d).indexOf(m) + 1, p = plan[m.id], cur = "";
       if (m.status !== "planned") cur = '<span class="muted small">' + (m.status === "done" ? (m.wo ? "Walkover" : "Played: " + lNames(m.ta === t ? m.a : m.b)) : "In play") + "</span>";
@@ -4318,8 +4325,16 @@ function lPlanSet(mid, v) {
   else ids = cur[0] === pid ? [] : [pid];
   var o = m.ta === t ? m.tb : m.ta, doc = { m: m.id, t: t, o: o, day: m.day, ids: ids, by: S.me, ts: Date.now() };
   PLANS[key] = ids.length ? doc : null; CACHE = {}; render();
-  (ids.length ? db.doc("plans/" + key).set(doc) : db.doc("plans/" + key).delete()).catch(function (e) { fail(e); });
+  (ids.length ? db.doc("plans/" + key).set(doc) : db.doc("plans/" + key).delete()).then(function () { lPlanCount(t, m.day); }, function (e) { fail(e); });
 }
+/* how many of a team's doubles that day have a complete plan (two men for men's doubles, one man for mixed) */
+function lPlanDone(t, date) {
+  var d = DAY[date]; if (!d) return { n: 0, of: 0 };
+  var ms = lDayMatches(d).filter(function (m) { return LCAT[lCatOf(m)].dbl && (m.ta === t || m.tb === t); }), n = 0;
+  ms.forEach(function (m) { var x = PLANS[lPlanKey(m.id, t)]; if (m.status !== "planned" || (x && x.ids && x.ids.length === (m.k === "MD" ? 2 : 1))) n++; });
+  return { n: n, of: ms.length };
+}
+function lPlanCount(t, date) { var c = lPlanDone(t, date), d = DAY[date]; if (!d || !isCapOf(t)) return; var cur = d.pc && d.pc[t]; if (cur && cur.n === c.n && cur.of === c.of) return; var u = {}; u["pc." + t] = { n: c.n, of: c.of, ts: Date.now() }; db.doc("days/" + date).update(u).catch(function () {}); }
 var LACT = {
   lstart: function (v, id) { lStart(id); },
   lscore: function (v, id) { go("score", id); },
@@ -4390,7 +4405,7 @@ function lRules() {
   h += sec("Points", '<table class="lptab"><tr><th></th><th>Win</th><th>Dominant</th><th>Close loss</th><th>Walkover</th><th>Forfeit</th></tr>' + LKS.map(row).join("") + "</table>" + li(["Dominant win: your opponent scores less than half the target.", "Close loss: you lose by 2, or by 1 at the cap.", "Games go to 11 (singles) or 15 (doubles), win by 2, capped at 15 and 21 (30 for games to 21).", "Full squad: +5 team points every Sunday all 5 are present (+2 if the team used its reserve)."]));
   h += sec("Absences and walkovers", li(["Walkover win: your opponent isn't here. Forfeit: you aren't. Singles forfeits come off the player and the team, doubles off the team.", "A walkover is only given for a player marked <b>absent</b>, and never for someone who has already played that night. In doubles, only if the team can't field a pair (or a man and a woman for mixed) from the players who are here. The Club Lead records it.", "Late is not absent: a late player's matches move to the end of the night.", "Out of time: unplayed matches move to the next Sunday. Anything left after the last Sunday is cancelled, 0 each.", "Reserve stand-in: the match is played. The opponent gets stand-in credit (+3 MS, +4 MD, +6 WS and XD), the team using its reserve takes −1 MS or −2 otherwise. The absent player's profile records nothing."]));
   h += sec("Retired hurt", li(["Stopping mid-match for an injury is a loss: the other side gets a normal win (10, 15 or 20) with no bonus, the side that retired gets 0.", "A player who retires is out for the rest of the night. Their remaining singles become forfeits and they can't be picked for doubles.", "No substitutes mid-match. In doubles the whole pair retires.", "Injured before the match starts? That's absent: a walkover to the opponent.", "Only the Club Lead records a retirement."]));
-  h += sec("Doubles rules", li(["Men's Doubles: each pair plays at most " + PAIRCAP + " matches all season. At " + PAIRCAP + " that pair is done. Pick another eligible pair or forfeit.", "Mixed Doubles: each team plays 9. Three men play 2 and one plays 3.", "<b>Sealed pairs:</b> captains submit their pairs and mixed picks in the captain app by 7:00 PM on the playing day. Nobody else can see them, not even the Club Lead.", "A match's pairs are revealed when the match before it on that court starts, and filled in automatically when it starts.", "After 7:00 PM only a player who didn't turn up can be swapped. No injury swaps.", "No plan by 7:00 PM? That captain picks at the start, before the other pair is shown."]));
+  h += sec("Doubles rules", li(["Men's Doubles: each pair plays at most " + PAIRCAP + " matches all season. At " + PAIRCAP + " that pair is done. Pick another eligible pair or forfeit.", "Mixed Doubles: each team plays 9. Three men play 2 and one plays 3.", "<b>Sealed pairs:</b> captains submit their pairs and mixed picks in the captain app by 7:00 PM on the playing day. Nobody else can see them, not even the Club Lead.", "A match's pairs are revealed when the match before it on that court starts, and filled in automatically when it starts.", "After 7:00 PM only a player who didn't turn up can be swapped. No injury swaps.", "No plan by 7:00 PM? The app picks a random eligible pair (pair limit and mixed rotation respected) from that team's players who are there, when the match starts."]));
   h += sec("Titles", li(["Overall Team Champion: most team points across all four categories plus full-squad bonuses.", "Men's and Women's Singles Champions: most points in their singles. Reserves are ranked, but the title goes to the top squad member.", "Men's Doubles and Mixed Doubles Champions: the team with the most points in that category.", "Ties: more wins, then head-to-head, then point difference (walkovers excluded), then fewer forfeits."]));
   h += sec("Every Sunday", li(["Men's and Women's Player of the Day: the best win rate that night, from at least 3 matches. Ties go to point difference.", "Perfect Night title: win every match you play that night (at least 2). It goes in your trophy cabinet.", "Results are provisional until captains confirm or flag them and the Club Lead publishes."]));
   h += sec("Who does what", li(["Club Lead: runs the season, walkovers, stand-ins, and publishes results.", "Captains: start matches, keep score, plan pairs and the mixed rotation, confirm or flag results. A captain can hand a court to anyone to score.", "Replacement or reserve: one per team, before " + fmtD(LDEADLINE) + ", approved by the Club Lead."]));
@@ -4584,6 +4599,42 @@ function lRevealAsk(m) {
   });
 }
 
+/* random pick for a team without a plan. Seeded by the match and who is here, so undoing and restarting gives the same pick */
+function lSeedRand(str) { var h = 2166136261; for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return function () { h ^= h << 13; h ^= h >>> 17; h ^= h << 5; return ((h >>> 0) % 100000) / 100000; }; }
+function lRandomPick(m, d, s) {
+  var k = lCatOf(m), t = m["t" + s], here = function (id) { return (d.att || {})[id] === "p"; }, men = menOf(t).filter(function (p) { return here(p.id); }).map(function (p) { return p.id; }).sort();
+  var u = d.test ? { pairs: {}, xd: {} } : lUsage(d.season, t), rnd = lSeedRand(m.id + "|" + t + "|" + men.join(","));
+  if (k === "MD") {
+    var prs = []; men.forEach(function (a, i) { men.slice(i + 1).forEach(function (b) { if ((u.pairs[pairKey(a, b)] || 0) < PAIRCAP) prs.push([a, b]); }); });
+    if (!prs.length) return null; return prs[Math.floor(rnd() * prs.length)];
+  }
+  var w = womanOf(t), wr = reservesOf(t).filter(function (p) { return lineOf(p.id) === "w" && here(p.id); })[0], wid = w && here(w.id) ? w.id : wr ? wr.id : ""; if (!wid) return null;
+  var ok = men.filter(function (id) { if (d.test) return true; var c = Object.assign({}, u.xd); c[id] = (c[id] || 0) + 1; return !xdRuleCheck(c, menOf(t)); });
+  if (!ok.length) return null; return [ok[Math.floor(rnd() * ok.length)]];
+}
+
+/* ---------- Club Lead: are tonight's doubles plans in? (counts only) ---------- */
+function lPlanStatus(d) {
+  if (!isSA() || d.status === "done") return "";
+  var ts = TEAMS.filter(function (t) { return teamSize(t); }), due = lDue(d.date), left = due - Date.now();
+  var rows = ts.map(function (t) {
+    var tot = lDayMatches(d).filter(function (m) { return LCAT[lCatOf(m)].dbl && (m.ta === t || m.tb === t); }).length; if (!tot) return "";
+    var c = d.pc && d.pc[t] ? d.pc[t] : { n: 0, of: tot }, n = Math.min(c.n || 0, tot), full = n >= tot;
+    return '<div class="lps"><img src="' + tlogo(t) + '" alt=""><b style="color:' + tdef(t).color + '">' + esc(tname(t)) + '</b><span class="' + (full ? "ok" : n ? "part" : "none") + '">' + (full ? "✓ " + tot + " of " + tot : n ? "⏳ " + n + " of " + tot : "✕ not started") + "</span>" + (!full && left > 0 && captainOf(t) ? '<button type="button" class="btn sm ghost" data-act="lplanrem" data-id="' + t + '" data-v="' + d.date + '">Remind</button>' : "") + "</div>";
+  }).join("");
+  if (!rows) return "";
+  return '<div class="card lpsc"><div class="sh"><h3>Doubles plans</h3><span class="r">' + (left > 0 ? "Lock in " + lLeft(left) : "Locked at 7:00 PM") + '</span></div>' + rows + '<p class="muted tiny" style="margin:6px 0 0">Counts only. You never see the pairs. No plan by 7:00 PM: the app picks those pairs at random when each match starts, from the players who are there.</p></div>';
+}
+function lLeft(ms) { var m = Math.max(0, Math.round(ms / 60000)), h = Math.floor(m / 60); return h ? h + " h " + (m % 60) + " min" : m + " min"; }
+function lPlanRemind(t, date) {
+  var d = DAY[date], cap = captainOf(t); if (!d || !cap || !guard(isSA())) return;
+  var c = d.pc && d.pc[t] ? d.pc[t] : { n: 0 }, tot = lPlanDone(t, date).of, msg = "🧢 " + pname(cap) + ", your " + tname(t) + " doubles plan for " + fmtD(date) + " isn't complete (" + (c.n || 0) + " of " + tot + "). It locks at 7:00 PM. After that, unplanned matches get a random pair. Plan it here 👉 " + SITE + "/captain";
+  db.collection("notices").add({ title: "Doubles plan: " + (c.n || 0) + " of " + tot + " done", body: msg, to: [cap], team: t, by: S.me, ts: Date.now() }).then(function () { toast("Reminder sent in the app"); }, fail);
+  audit("Reminded " + pname(cap) + " about the " + tname(t) + " doubles plan");
+  try { window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank"); } catch (e) {}
+}
+LACT.lplanrem = function (v, id) { lPlanRemind(id, v); };
+
 /* ================= LEAGUE: CLUB LEAD SETUP, REQUESTS, FEES ================= */
 function lOn() { return D.days.some(function (d) { return isLeagueDay(d) && !d.test; }); }
 function lLoaded() { return D.matches.filter(function (m) { return isLMatch(m) && DAY[m.day] && !DAY[m.day].test; }).length; }
@@ -4626,7 +4677,7 @@ function lLoadSched() {
     body += "</div>";
   });
   var n = lLoaded();
-  openSheet((n ? "Reload" : "Load") + " the November schedule", body + (n ? '<p class="hint" style="color:#ffb35e">This deletes the ' + n + " loaded matches and loads them again.</p>" : ""), function (form) {
+  openSheet((n ? "Reload" : "Load") + " the November schedule", body + (n ? '<p class="hint" style="color:#ffb35e">This deletes the ' + n + " loaded matches and loads the same approved schedule again. Captains will need to re-submit their doubles plans.</p>" : "") + '<p class="hint">Takes up to a minute or two on mobile data. Keep the app open: the button shows progress.</p>', function (form) {
     var names = [], map = {}, tmap = {}, bad = "";
     Object.keys(T).forEach(function (tn, ti) { var tv = vals(form, ["t" + ti])["t" + ti]; if (!tv) bad = bad || "Choose the team for " + tn + "."; tmap[tn] = tv; T[tn].men.concat([T[tn].w]).forEach(function (x) { names.push(x); map[x] = form.elements["p_" + x].value; if (!map[x]) bad = bad || "Choose a profile for " + x + "."; }); });
     if (bad) return bad;
@@ -4640,8 +4691,11 @@ function lDoLoad(T, map, tmap) {
   var ts = Date.now(), creates = [], ids = {};
   Object.keys(T).forEach(function (tn) { T[tn].men.concat([T[tn].w]).forEach(function (x) { if (map[x] === "new") { var id = uid(); ids[x] = id; creates.push({ id: id, doc: { first: x, last: "", display: x.slice(0, 16), ini: lIni(x), gender: x === T[tn].w ? "f" : "m", arm: "", racket: {}, team: tmap[tn], uids: [], breaks: [], ts: ts, teamSince: "2026-11", dob: "" } }); } else ids[x] = map[x]; }); });
   var dates = LSCHED.dates, old = D.matches.filter(function (m) { return isLMatch(m) && dates.indexOf(m.day) >= 0; });
-  var chunks = function (list, f) { var out = Promise.resolve(); for (var i = 0; i < list.length; i += 20) (function (part) { out = out.then(function () { return Promise.all(part.map(f)); }); })(list.slice(i, i + 20)); return out; };
-  return chunks(old, function (m) { return db.doc("matches/" + m.id).delete(); })
+  /* work in batches and show progress on the button, so a slow connection never looks frozen */
+  var say = function (t) { var b = document.getElementById("fSave"); if (b) b.textContent = t; };
+  var chunks = function (list, f, label) { var out = Promise.resolve(), done = 0; for (var i = 0; i < list.length; i += 20) (function (part) { out = out.then(function () { if (label) say(label + " " + done + " of " + list.length + "…"); return Promise.all(part.map(f)).then(function () { done += part.length; if (label) say(label + " " + done + " of " + list.length + "…"); }); }); })(list.slice(i, i + 20)); return out; };
+  say("Starting…");
+  return chunks(old, function (m) { return db.doc("matches/" + m.id).delete(); }, "Clearing")
     .then(function () { return chunks(creates, function (c) { return db.doc("players/" + c.id).set(c.doc); }); })
     .then(function () { var ups = []; Object.keys(T).forEach(function (tn) { T[tn].men.concat([T[tn].w]).forEach(function (x) { if (map[x] === "new") return; ups.push({ id: ids[x], p: { team: tmap[tn], gender: x === T[tn].w ? "f" : "m", reserve: false, teamSince: "2026-11" } }); }); });
       /* anyone still on a team from October who isn't in a November squad leaves that team (their October results stay) */
@@ -4649,11 +4703,11 @@ function lDoLoad(T, map, tmap) {
       D.players.forEach(function (p) { if (p.team && !keep[p.id] && !p.removed) ups.push({ id: p.id, p: { team: "", reserve: false } }); });
       return chunks(ups, function (u) { return db.doc("players/" + u.id).update(u.p); }); })
     .then(function () { return Promise.all(Object.keys(T).map(function (tn) { return db.doc("teams/" + tmap[tn]).update({ captain: ids[T[tn].cap], capSince: "2026-11", archived: false }); })); })
-    .then(function () { var c = cfg(); return Promise.all(dates.map(function (dt) { var ex = DAY[dt], base = { date: dt, season: "2026-11", time: "20:00", end: "22:00", courts: ["1", "2"], venue: (ex && ex.venue) || c.venue }; return ex ? db.doc("days/" + dt).update(base) : db.doc("days/" + dt).set(Object.assign(base, { status: "upcoming", rsvp: {}, ts: ts, by: S.me })); })); })
+    .then(function () { var c = cfg(); return Promise.all(dates.map(function (dt) { var ex = DAY[dt], base = { date: dt, season: "2026-11", time: "20:00", end: "22:00", courts: ["1", "2"], venue: (ex && ex.venue) || c.venue }; return ex ? db.doc("days/" + dt).update(Object.assign({ pc: {} }, base)) : db.doc("days/" + dt).set(Object.assign(base, { status: "upcoming", rsvp: {}, ts: ts, by: S.me })); })); })
     .then(function () {
       var docs = []; LSCHED.days.forEach(function (day, di) { var dt = dates[di]; day.forEach(function (slot, si) { slot.split("|").forEach(function (x, ci) { var p = x.split(":"), k = p[0], dbl = LCAT[k].dbl; docs.push({ k: k, cat: "season", type: dbl ? "d" : "s", a: dbl ? [] : [ids[p[1]]], b: dbl ? [] : [ids[p[2]]], ta: dbl ? tmap[p[1]] : "", tb: dbl ? tmap[p[2]] : "", to: LCAT[k].to, day: dt, date: dt, slot: si + 1, court: String(ci + 1), ord: si * 2 + ci + 1, status: "planned", lg: 1, ts: ts, by: S.me }); }); }); });
       docs.forEach(function (d) { if (d.type === "s") { d.ta = tmap[Object.keys(T).filter(function (tn) { return T[tn].men.concat([T[tn].w]).some(function (x) { return ids[x] === d.a[0]; }); })[0]] || ""; d.tb = tmap[Object.keys(T).filter(function (tn) { return T[tn].men.concat([T[tn].w]).some(function (x) { return ids[x] === d.b[0]; }); })[0]] || ""; } });
-      return chunks(docs, function (d) { return db.collection("matches").add(d); }).then(function () { return docs.length; });
+      return chunks(docs, function (d) { return db.collection("matches").add(d); }, "Adding matches").then(function () { return docs.length; });
     })
     .then(function (n) { audit("Loaded the November schedule (" + n + " matches)"); return "Schedule loaded · " + n + " matches"; });
 }
@@ -4888,11 +4942,19 @@ function startDay(date) {
 }
 /* Club Lead: wipe a test run. The day goes back to Upcoming (RSVPs kept); its matches, attendance, order,
    and the costs and after play bills for that date are deleted */
+/* undo/reset a day: practice and open matches go, but the season's scheduled matches are kept and put back to waiting */
+function dayMatchesClear(date) {
+  var d = DAY[date], keep = d && isLeagueDay(d) && !d.test;
+  return Promise.all(dayMatches(date).map(function (m) {
+    if (keep && isLMatch(m)) { var u = { status: "planned", sa: 0, sb: 0, st: 0, en: 0, pts: "", wo: "", ret: "", retfor: "", sub: null, conf: null, flag: null, revealed: 0 }; if (LCAT[lCatOf(m)].dbl) { u.a = []; u.b = []; } return db.doc("matches/" + m.id).update(u); }
+    return db.doc("matches/" + m.id).delete();
+  }));
+}
 function resetDay(date) {
   var d = DAY[date]; if (!d || !guard(isSA(), "Only Club Leads can reset a day.")) return;
   var ms = dayMatches(date), ex = D.expenses.filter(function (x) { var e = exN(x); return e.kind === "day" && e.day === date; }), bl = D.bills.filter(function (b) { return b.date === date; });
-  confirmSheet("Reset " + fmtD(date) + "?", "For test runs. This deletes " + plural(ms.length, "match") + (ex.length ? ", " + plural(ex.length, "day cost") : "") + (bl.length ? ", " + plural(bl.length, "after play bill") : "") + ", attendance and the order, and puts the day back to Upcoming. RSVPs are kept. This can't be undone.", "Reset the day", function () {
-    return Promise.all(ms.map(function (m) { return db.doc("matches/" + m.id).delete(); }).concat(ex.map(function (x) { return db.doc("expenses/" + x.id).delete(); }), bl.map(function (b) { return db.doc("bills/" + b.id).delete(); }))).then(function () {
+  confirmSheet("Reset " + fmtD(date) + "?", (isLeagueDay(d) && !d.test ? "Scheduled season matches are kept and go back to waiting (scores cleared). This deletes practice and open matches" : "For test runs. This deletes " + plural(ms.length, "match")) + (ex.length ? ", " + plural(ex.length, "day cost") : "") + (bl.length ? ", " + plural(bl.length, "after play bill") : "") + ", attendance and the order, and puts the day back to Upcoming. RSVPs are kept. This can't be undone.", "Reset the day", function () {
+    return Promise.all([dayMatchesClear(date)].concat(ex.map(function (x) { return db.doc("expenses/" + x.id).delete(); }), bl.map(function (b) { return db.doc("bills/" + b.id).delete(); }))).then(function () {
       var drop = { id: 1, status: 1, att: 1, reps: 1, fmt: 1, squads: 1, lineup: 1, spare: 1, published: 1, publishedAt: 1, startedAt: 1, startedBy: 1, completedAt: 1, shuttles: 1, rounds: 1 }, x = {};
       Object.keys(d).forEach(function (k) { if (!drop[k] && d[k] !== undefined) x[k] = d[k]; });
       x.status = "upcoming"; x.att = {}; x.reps = {}; x.fmt = {};
@@ -4903,7 +4965,7 @@ function resetDay(date) {
 function undoStart(date) {
   var d = DAY[date]; if (!d) return;
   confirmSheet("Undo start?", "The day goes back to Upcoming. Attendance and the order you set are cleared.", "Undo", function () {
-    return Promise.all(dayMatches(date).map(function (m) { return db.doc("matches/" + m.id).delete(); })).then(function () { var x = {}; Object.keys(d).forEach(function (k) { if (k !== "id" && k !== "startedAt" && k !== "startedBy") x[k] = d[k]; }); x.status = "upcoming"; x.att = {}; x.reps = {}; x.fmt = {}; return db.doc("days/" + date).set(x); }).then(function () { audit("Undid start of " + fmtD(date)); return "Back to upcoming"; });
+    return dayMatchesClear(date).then(function () { var x = {}; Object.keys(d).forEach(function (k) { if (k !== "id" && k !== "startedAt" && k !== "startedBy") x[k] = d[k]; }); x.status = "upcoming"; x.att = {}; x.reps = {}; x.fmt = {}; return db.doc("days/" + date).set(x); }).then(function () { audit("Undid start of " + fmtD(date)); return "Back to upcoming"; });
   });
 }
 function setAtt(pid, v) {
@@ -6149,7 +6211,7 @@ ACT.logout = function () { pushOff(); PUSHREF = ""; S.me = ""; S.noAuto = false;
   });
   subscribe();
 })();
-window.__wts = { ds: function () { return [defaultSeason(), S.season]; }, tell: function (id) { lBillTell(id); }, cv: function (kind, key) { var f = kind === "season" ? lSeasonCanvas : kind === "race" ? lRaceCanvas : lDayCanvas; return f(key).then(function (c) { return c ? c.toDataURL("image/png") : ""; }); }, act: function (a, v, id) { ACT[a](v, id); }, badges: function (pid) { return badgeList(pid).map(function (b) { return b.n; }); }, cab: function (pid) { return cabinet(pid); }, lst: function (k, kind) { return lStandings(k, kind).map(function (x) { return { id: x.id, pts: x.pts, w: x.w, l: x.l, mp: x.mp, pd: x.pd, ff: x.ff, res: x.res, full: x.full }; }); }, linfo: function (id) { var m = lM(id); return m ? lInfo(m) : null; }, ltitles: function (k) { return lTitles(k); }, lday: function (d) { var C = lcompute(DAY[d].season), pd = C.perDay[d] || {}; return { potdm: pd.potdm, potdw: pd.potdw, perfect: pd.perfect, tm: Object.keys(pd.tm || {}).map(function (t) { return [t, pd.tm[t].pts, pd.tm[t].full || 0]; }) }; }, lusage: function (k, t) { return lUsage(k, t); }, lsum: function (d) { return lSummary(DAY[d]); }, cur: function () { var d = currentDay(); return d ? d.date : ""; }, compute: function (k) { return compute(k); }, plan: function (d) { return planDay(DAY[d]); }, fair: fairness, guest: resolveGuest, known: knownGuests, state: function () { return { me: S.me, host: isHost(), tab: S.tab, view: S.view, vid: S.vid, live: S.liveTab }; }, dues: function () { return duesAll().pairs.map(function (p) { return { from: p.from, to: p.to, amt: p.amt, claims: p.claims.length }; }); }, billShares: function (i) { return billShares(billN(D.bills[i || 0])); }, openExpense: openExpense, wc: winChance, st: function (k, kind) { return standings(k, kind).map(function (x) { return { id: x.id, pts: x.pts, ok: x.ok, mp: x.mp }; }); }, titles: seasonTitles, fair: fairness, dayTeams: function (d) { return dayTeamsD(DAY[d]); }, card: function (k, key) { return (k === "season" ? seasonCardCanvas(key) : dayCardCanvas(key)).then(function (cv) { return cv ? cv.toDataURL("image/png") : null; }); } };
+window.__wts = { ds: function () { return [defaultSeason(), S.season]; }, tell: function (id) { lBillTell(id); }, cv: function (kind, key) { var f = kind === "season" ? lSeasonCanvas : kind === "race" ? lRaceCanvas : lDayCanvas; return f(key).then(function (c) { return c ? c.toDataURL("image/png") : ""; }); }, act: function (a, v, id) { ACT[a](v, id); }, badges: function (pid) { return badgeList(pid).map(function (b) { return b.n; }); }, cab: function (pid) { return cabinet(pid); }, lst: function (k, kind) { return lStandings(k, kind).map(function (x) { return { id: x.id, pts: x.pts, w: x.w, l: x.l, mp: x.mp, pd: x.pd, ff: x.ff, res: x.res, full: x.full }; }); }, rpick: function (id, s, o) { o = o || {}; var m = lM(id); if (!m) return null; var d = Object.assign({}, DAY[m.day], o.att ? { att: o.att } : {}), real = lUsage; if (o.cap) lUsage = function () { var u = { pairs: {}, xd: {} }, men = menOf(m["t" + s]).map(function (p) { return p.id; }).filter(function (x) { return (d.att || {})[x] === "p"; }).sort(); men.forEach(function (a, i) { men.slice(i + 1).forEach(function (b) { if (o.cap === "all" || !(i === 0 && b === men[1])) u.pairs[pairKey(a, b)] = PAIRCAP; }); }); return u; }; try { var r = lRandomPick(m, d, s); } finally { lUsage = real; } return { ids: r, men: menOf(m["t" + s]).map(function (p) { return p.id; }).filter(function (x) { return (d.att || {})[x] === "p"; }).sort(), here: (r || []).every(function (x) { return (d.att || {})[x] === "p"; }), team: (r || []).every(function (x) { return teamOf(x) === m["t" + s]; }), woman: (womanOf(m["t" + s]) || {}).id || "" }; }, xdOf: function (date) { var x = lDayMatches(DAY[date]).filter(function (m) { return m.k === "XD"; })[0]; return x ? x.id : ""; }, linfo: function (id) { var m = lM(id); return m ? lInfo(m) : null; }, ltitles: function (k) { return lTitles(k); }, lday: function (d) { var C = lcompute(DAY[d].season), pd = C.perDay[d] || {}; return { potdm: pd.potdm, potdw: pd.potdw, perfect: pd.perfect, tm: Object.keys(pd.tm || {}).map(function (t) { return [t, pd.tm[t].pts, pd.tm[t].full || 0]; }) }; }, lusage: function (k, t) { return lUsage(k, t); }, lsum: function (d) { return lSummary(DAY[d]); }, cur: function () { var d = currentDay(); return d ? d.date : ""; }, compute: function (k) { return compute(k); }, plan: function (d) { return planDay(DAY[d]); }, fair: fairness, guest: resolveGuest, known: knownGuests, state: function () { return { me: S.me, host: isHost(), tab: S.tab, view: S.view, vid: S.vid, live: S.liveTab }; }, dues: function () { return duesAll().pairs.map(function (p) { return { from: p.from, to: p.to, amt: p.amt, claims: p.claims.length }; }); }, billShares: function (i) { return billShares(billN(D.bills[i || 0])); }, openExpense: openExpense, wc: winChance, st: function (k, kind) { return standings(k, kind).map(function (x) { return { id: x.id, pts: x.pts, ok: x.ok, mp: x.mp }; }); }, titles: seasonTitles, fair: fairness, dayTeams: function (d) { return dayTeamsD(DAY[d]); }, card: function (k, key) { return (k === "season" ? seasonCardCanvas(key) : dayCardCanvas(key)).then(function (cv) { return cv ? cv.toDataURL("image/png") : null; }); } };
 /* Service worker: lets phones install the app. Only on the real site, never in previews. */
 if ("serviceWorker" in navigator && location.protocol === "https:" && /(^|\.)whatthesmash\.club$|github\.io$/.test(location.hostname)) {
   window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
