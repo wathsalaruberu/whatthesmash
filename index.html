@@ -4311,11 +4311,13 @@ function lCaptain(t) {
       else if (m.k === "MD") cur = can && !lk ? '<span class="cpk">' + men.map(function (x) { var on = Array.isArray(p) && p.indexOf(x.id) >= 0; return '<button type="button" class="' + (on ? "on" : "") + '" data-act="lplan" data-id="' + m.id + '" data-v="' + t + "|" + x.id + '">' + esc(x.display) + "</button>"; }).join("") + "</span>" : '<span class="muted small">' + (Array.isArray(p) ? lNames(p) : "Not planned") + "</span>";
       else cur = can && !lk ? '<span class="cpk">' + men.map(function (x) { return '<button type="button" class="' + (p === x.id ? "on" : "") + '" data-act="lplan" data-id="' + m.id + '" data-v="' + t + "|" + x.id + '">' + esc(x.display) + "</button>"; }).join("") + "</span>" : '<span class="muted small">' + (typeof p === "string" ? esc(pname(p)) : "Not planned") + "</span>";
       var warn = ""; if (m.k === "MD" && Array.isArray(p) && p.length === 2 && (u.pairs[pairKey(p[0], p[1])] || 0) > PAIRCAP) warn = '<span class="cwarn">Over ' + PAIRCAP + "</span>";
-      h += '<div class="cfx">' + catIcon(m.k, 26) + '<span class="cft"><b>#' + n + " · v " + esc(tname(opp)) + "</b>" + cur + warn + "</span></div>";
+      var full = m.status === "planned" && (m.k === "MD" ? Array.isArray(p) && p.length === 2 : typeof p === "string" && p);
+      h += '<div class="cfx">' + catIcon(m.k, 26) + '<span class="cft"><b>#' + n + " · v " + esc(tname(opp)) + (can && !lk && m.status === "planned" ? (full ? ' <span style="color:var(--lime)">✓</span>' : ' <span class="muted small">' + (m.k === "MD" ? "pick 2" : "pick 1") + "</span>") : "") + "</b>" + cur + warn + "</span></div>";
     });
+    if (can && !lk) h += '<button type="button" class="btn big" style="margin-top:8px" data-act="lplanok" data-v="' + d.date + '">' + (pd0.n >= pd0.of ? "✓ Confirm plan · all " + pd0.of + " set" : "Confirm plan · " + pd0.n + " of " + pd0.of + " set") + "</button>";
     h += "</div>";
   });
-  return h + '<p class="muted tiny" style="text-align:center">Plans save as you tap. Change them freely until 7:00 PM on the playing day.</p>';
+  return h + '<p class="muted tiny" style="text-align:center">Each tap is saved straight away. Tap Confirm plan to check everything is in. You can still change it until 7:00 PM on the playing day.</p>';
 }
 function lPlanSet(mid, v) {
   var t = v.split("|")[0], pid = v.split("|")[1], m = lM(mid); if (!m || !isCapOf(t) || m.status !== "planned") return;
@@ -4363,7 +4365,8 @@ var LACT = {
   lmysched: function () { go("mysched", null); },
   lcaptain: function (v, id) { if (!isCapOf(id)) { toast("Only this team's captain can open its plan."); return; } go("captain", id); },
   lplanreset: function (v, id) { if (!guard(isSA())) return; confirmSheet("Reset " + tname(id) + "'s plan?", "Clears every planned pair and mixed pick for this team that hasn't been played. You won't see the plan. The captain can plan again (before 7:00 PM on a playing day).", "Reset the plan", function () { var ms = D.matches.filter(function (m) { return isLMatch(m) && LCAT[lCatOf(m)].dbl && m.status === "planned" && (m.ta === id || m.tb === id); }); return Promise.all(ms.map(function (m) { return db.doc("plans/" + lPlanKey(m.id, id)).delete().catch(function () {}); })).then(function () { audit("Reset the doubles plan of " + tname(id)); return "Plan reset"; }); }); },
-  lplan: function (v, id) { lPlanSet(id, v); }
+  lplan: function (v, id) { lPlanSet(id, v); },
+  lplanok: function (v) { lPlanConfirm(v); }
 };
 /* ---------- live card on Home ---------- */
 function lLiveNow(d, mini) {
@@ -4635,6 +4638,20 @@ function lPlanRemind(t, date) {
 }
 LACT.lplanrem = function (v, id) { lPlanRemind(id, v); };
 
+/* captain taps Confirm: re-save every plan for that Sunday and say what is still missing */
+function lPlanConfirm(date) {
+  var t = TEAMS.filter(isCapOf)[0]; if (!t) return; var d = DAY[date]; if (!d) return;
+  if (Date.now() >= lDue(date)) { toast("Plans locked at 7:00 PM."); return; }
+  var ms = lDayMatches(d).filter(function (m) { return LCAT[lCatOf(m)].dbl && (m.ta === t || m.tb === t) && m.status === "planned"; });
+  var miss = [], saves = [];
+  ms.forEach(function (m) { var key = lPlanKey(m.id, t), x = PLANS[key]; if (x && x.ids && x.ids.length === (m.k === "MD" ? 2 : 1)) saves.push(db.doc("plans/" + key).set(x)); else miss.push("#" + (lDayMatches(d).indexOf(m) + 1)); });
+  Promise.all(saves).then(function () {
+    lPlanCount(t, date);
+    if (miss.length) openSheet("Plan not complete", '<p>' + saves.length + " of " + ms.length + " matches are set. Still to pick: <b>" + miss.join(", ") + "</b>.</p><p class=\"hint\">Men's doubles need 2 players, mixed needs 1 man. Unplanned matches get a random pair at the start.</p>", function () { closeSheet(); return ""; }, { save: "OK" });
+    else toast("✓ Plan confirmed: all " + ms.length + " doubles set for " + fmtD(date) + ". Only you can see it.");
+  }, function (e) { fail(e); toast("Couldn't save. Check your connection and tap Confirm again."); });
+}
+
 /* ================= LEAGUE: CLUB LEAD SETUP, REQUESTS, FEES ================= */
 function lOn() { return D.days.some(function (d) { return isLeagueDay(d) && !d.test; }); }
 function lLoaded() { return D.matches.filter(function (m) { return isLMatch(m) && DAY[m.day] && !DAY[m.day].test; }).length; }
@@ -4652,6 +4669,8 @@ function lAdminCard() {
   h += '<button type="button" class="r" data-act="laddp"><span>Add a player<small>Create a profile so their matches can be scored before they sign in</small></span><b>›</b></button>';
   h += '<button type="button" class="r" data-act="lfees"><span>Club fees<small>LKR ' + lFeeCfg().month.toLocaleString("en-US") + " a month, or " + lFeeCfg().day + " a Sunday</small></span><b>›</b></button>";
   if (rq.length) h += '<div class="r col"><span>Replacement and reserve requests</span>' + rq.map(function (j) { return '<div class="lreq">' + lReqText(j) + '<span class="row" style="gap:6px"><button type="button" class="btn sm ghost" data-act="lreqno" data-id="' + j.id + '">Decline</button><button type="button" class="btn sm" data-act="lreqok" data-id="' + j.id + '">Approve</button></span></div>'; }).join("") + "</div>";
+  var apr = D.joins.filter(function (j) { return (j.kind === "repl" || j.kind === "reserve") && j.status === "approved"; });
+  if (apr.length) h += '<div class="r col"><span>Approved squad changes</span>' + apr.map(function (j) { return '<div class="lreq">' + lReqText(j) + '<span class="row" style="gap:6px"><button type="button" class="btn sm ghost" data-act="lrequndo" data-id="' + j.id + '">Undo</button></span></div>'; }).join("") + "</div>";
   return h + "</div>";
 }
 function lReqText(j) {
@@ -4687,9 +4706,14 @@ function lLoadSched() {
   }, { save: n ? "Reload schedule" : "Load schedule", noFocus: true });
 }
 function lIni(name) { var up = String(name).toUpperCase().replace(/[^A-Z]/g, ""), taken = {}; D.players.forEach(function (p) { if (!p.removed) taken[p.ini] = 1; }); for (var i = 1; i < up.length; i++) { var c = up[0] + up[i]; if (!taken[c]) return c; } for (var a = 65; a < 91; a++) { var c2 = up[0] + String.fromCharCode(a); if (!taken[c2]) return c2; } return "XX"; }
+var LLOADING = 0;
 function lDoLoad(T, map, tmap) {
+  if (LLOADING) return Promise.resolve("Already loading. Keep the app open."); LLOADING = 1;
   var ts = Date.now(), creates = [], ids = {};
   Object.keys(T).forEach(function (tn) { T[tn].men.concat([T[tn].w]).forEach(function (x) { if (map[x] === "new") { var id = uid(); ids[x] = id; creates.push({ id: id, doc: { first: x, last: "", display: x.slice(0, 16), ini: lIni(x), gender: x === T[tn].w ? "f" : "m", arm: "", racket: {}, team: tmap[tn], uids: [], breaks: [], ts: ts, teamSince: "2026-11", dob: "" } }); } else ids[x] = map[x]; }); });
+  /* approved replacements stay in place: the new player takes the old player's slot in the squad and in every match */
+  var reps = D.joins.filter(function (j) { return j.status === "approved" && j.inn; });
+  reps.forEach(function (j) { if (j.kind === "repl") Object.keys(ids).forEach(function (x) { if (ids[x] === j.out) ids[x] = j.inn; }); });
   var dates = LSCHED.dates, old = D.matches.filter(function (m) { return isLMatch(m) && dates.indexOf(m.day) >= 0; });
   /* work in batches and show progress on the button, so a slow connection never looks frozen */
   var say = function (t) { var b = document.getElementById("fSave"); if (b) b.textContent = t; };
@@ -4700,6 +4724,7 @@ function lDoLoad(T, map, tmap) {
     .then(function () { var ups = []; Object.keys(T).forEach(function (tn) { T[tn].men.concat([T[tn].w]).forEach(function (x) { if (map[x] === "new") return; ups.push({ id: ids[x], p: { team: tmap[tn], gender: x === T[tn].w ? "f" : "m", reserve: false, teamSince: "2026-11" } }); }); });
       /* anyone still on a team from October who isn't in a November squad leaves that team (their October results stay) */
       var keep = {}; Object.keys(ids).forEach(function (x) { keep[ids[x]] = 1; });
+      reps.forEach(function (j) { if (j.kind === "reserve") { keep[j.inn] = 1; ups.push({ id: j.inn, p: { team: j.team, reserve: true, gender: j.g || "m" } }); } });
       D.players.forEach(function (p) { if (p.team && !keep[p.id] && !p.removed) ups.push({ id: p.id, p: { team: "", reserve: false } }); });
       return chunks(ups, function (u) { return db.doc("players/" + u.id).update(u.p); }); })
     .then(function () { return Promise.all(Object.keys(T).map(function (tn) { return db.doc("teams/" + tmap[tn]).update({ captain: ids[T[tn].cap], capSince: "2026-11", archived: false }); })); })
@@ -4709,7 +4734,7 @@ function lDoLoad(T, map, tmap) {
       docs.forEach(function (d) { if (d.type === "s") { d.ta = tmap[Object.keys(T).filter(function (tn) { return T[tn].men.concat([T[tn].w]).some(function (x) { return ids[x] === d.a[0]; }); })[0]] || ""; d.tb = tmap[Object.keys(T).filter(function (tn) { return T[tn].men.concat([T[tn].w]).some(function (x) { return ids[x] === d.b[0]; }); })[0]] || ""; } });
       return chunks(docs, function (d) { return db.collection("matches").add(d); }, "Adding matches").then(function () { return docs.length; });
     })
-    .then(function (n) { audit("Loaded the November schedule (" + n + " matches)"); return "Schedule loaded · " + n + " matches"; });
+    .then(function (n) { LLOADING = 0; audit("Loaded the November schedule (" + n + " matches)"); return "Schedule loaded · " + n + " matches"; }, function (e) { LLOADING = 0; throw e; });
 }
 /* ---------- test run ---------- */
 function lTestCreate() {
@@ -4833,6 +4858,7 @@ var LACT2 = {
   lrepreq: function (v, id) { lRepReq(id); },
   lreqok: function (v, id) { lReqDecide(id, true); },
   lreqno: function (v, id) { lReqDecide(id, false); },
+  lrequndo: function (v, id) { lReqUndo(id); },
   lsignins: function () { lSignins(); },
   lunlink: function (v, id) { if (!guard(isSA())) return; var p = P[id]; if (!p) return; confirmSheet("Unlink " + p.display + "'s account?", "Use this if someone picked the wrong name. The profile, team and results stay. The next person who signs in and picks " + esc(p.display) + " gets it.", "Unlink", function () { return db.doc("players/" + id).update({ uids: [] }).then(function () { audit("Unlinked the account from " + p.display); return "Unlinked"; }); }); },
   lbillcopy: function (v, id) { var b = D.bills.filter(function (x) { return x.id === id; })[0]; if (b) lCopy(billWaText(billN(b))); },
@@ -4873,6 +4899,54 @@ function lAccessNote() {
   if (isCap() && !host) return '<div class="laccn"><b>Captain tools switching on</b><span>Ask the Club Lead to open the app once. Until then starting matches and scoring won\'t save.</span></div>';
   if (!mem && P[S.me].team) return '<div class="laccn"><b>Almost set</b><span>Your profile is linked. Club money, fees and bank details open once the Club Lead\'s app syncs, usually within minutes.</span></div>';
   return "";
+}
+
+/* Club Lead's app: make sure every approved replacement is in place (squad and remaining November matches).
+   Repairs a schedule reload or a manual team change that left the old player's name on matches. */
+var HEALDONE = {};
+function lHealReps() {
+  if (!db || !isSA() || S.status !== "ok" || !D.joins || !D.matches.length) return;
+  D.joins.filter(function (j) { return j.kind === "repl" && j.status === "approved" && j.inn && j.out && P[j.inn]; }).forEach(function (j) {
+    var ms = D.matches.filter(function (m) { return isLMatch(m) && m.status === "planned" && ((m.ta === j.team && (m.a || []).indexOf(j.out) >= 0) || (m.tb === j.team && (m.b || []).indexOf(j.out) >= 0)); });
+    var pu = P[j.inn].team !== j.team || (P[j.out] && P[j.out].team === j.team);
+    var key = j.id + "|" + ms.length + "|" + pu; if (!ms.length && !pu) return; if (HEALDONE[key]) return; HEALDONE[key] = 1;
+    var ops = ms.map(function (m) { return db.doc("matches/" + m.id).update({ a: (m.a || []).map(function (x) { return x === j.out && m.ta === j.team ? j.inn : x; }), b: (m.b || []).map(function (x) { return x === j.out && m.tb === j.team ? j.inn : x; }) }); });
+    if (P[j.inn].team !== j.team) ops.push(db.doc("players/" + j.inn).update({ team: j.team, reserve: false, teamSince: "2026-11" }));
+    if (P[j.out] && P[j.out].team === j.team) ops.push(db.doc("players/" + j.out).update({ team: "", replacedBy: j.inn }));
+    if (captainOf(j.team) === j.out) ops.push(db.doc("teams/" + j.team).update({ captain: j.inn }));
+    Promise.all(ops).then(function () { if (ms.length) { audit("Moved " + ms.length + " of " + pname(j.out) + "'s matches to " + pname(j.inn) + " (approved replacement)"); toast(pname(j.inn) + " now has " + pname(j.out) + "'s " + plural(ms.length, "match", "matches")); } }, function (e) { HEALDONE[key] = 0; console.warn("heal", e && e.code); });
+  });
+}
+
+/* Club Lead: undo an approved replacement or reserve. The old player gets his place and his remaining matches back,
+   the new player leaves the team, and the team can ask again. */
+function lReqUndo(id) {
+  var j = D.joins.filter(function (x) { return x.id === id; })[0]; if (!j || !guard(isSA())) return;
+  var t = j.team, inn = j.inn, out = j.out;
+  openSheet("Undo this squad change?", '<p class="hint">' + lReqText(j) + "</p><p>" + (j.kind === "repl" ? esc(pname(out)) + " goes back into " + esc(tname(t)) + " and gets all his remaining matches back. " + esc(pname(inn)) + " leaves the team (his profile stays, so he can join another team later)." : esc(pname(inn)) + " stops being " + esc(tname(t)) + "'s reserve.") + " " + esc(tname(t)) + " can ask for a replacement or reserve again.</p>", function () {
+    var ops = [db.doc("joins/" + id).update({ status: "undone", undoneAt: Date.now() })];
+    if (inn && P[inn] && P[inn].team === t) ops.push(db.doc("players/" + inn).update({ team: "", reserve: false }));
+    if (j.kind === "repl" && out && P[out]) {
+      ops.push(db.doc("players/" + out).update({ team: t, reserve: false, replacedBy: "", teamSince: "2026-11" }));
+      D.matches.filter(function (m) { return isLMatch(m) && m.status === "planned" && ((m.ta === t && (m.a || []).indexOf(inn) >= 0) || (m.tb === t && (m.b || []).indexOf(inn) >= 0)); }).forEach(function (m) { ops.push(db.doc("matches/" + m.id).update({ a: (m.a || []).map(function (x) { return x === inn && m.ta === t ? out : x; }), b: (m.b || []).map(function (x) { return x === inn && m.tb === t ? out : x; }) })); });
+      if (captainOf(t) === inn) ops.push(db.doc("teams/" + t).update({ captain: out }));
+    }
+    j.status = "undone";
+    return Promise.all(ops).then(function () { audit("Undid " + (j.kind === "repl" ? "replacement" : "reserve") + " for " + tname(t)); return "Undone. " + (j.kind === "repl" ? pname(out) + " is back in " + tname(t) + "." : ""); });
+  }, { save: "Undo it" });
+}
+
+/* Club Lead's app: a schedule loaded twice leaves two copies of matches. Keep one of each (a started or played copy wins),
+   delete only extra copies that haven't started. */
+var DEDUPING = 0;
+function lDedupe() {
+  if (!db || !isSA() || S.status !== "ok" || DEDUPING || !D.matches.length) return;
+  var g = {}; D.matches.filter(function (m) { return isLMatch(m) && m.day && m.slot; }).forEach(function (m) { var k = [m.day, m.slot, m.court, m.k, m.ta, m.tb, (m.k === "MD" || m.k === "XD") ? "" : (m.a || []).join(",") + "v" + (m.b || []).join(",")].join("|"); (g[k] = g[k] || []).push(m); });
+  var del = [];
+  Object.keys(g).forEach(function (k) { var a = g[k]; if (a.length < 2) return; a.sort(function (x, y) { var sx = x.status === "planned" ? 1 : 0, sy = y.status === "planned" ? 1 : 0; return sx - sy || (x.ts || 0) - (y.ts || 0) || (x.id < y.id ? -1 : 1); }); a.slice(1).forEach(function (m) { if (m.status === "planned") del.push(m); }); });
+  if (!del.length) return; DEDUPING = 1;
+  var out = Promise.resolve(); for (var i = 0; i < del.length; i += 20) (function (part) { out = out.then(function () { return Promise.all(part.map(function (m) { return db.doc("matches/" + m.id).delete(); })); }); })(del.slice(i, i + 20));
+  out.then(function () { DEDUPING = 0; audit("Removed " + del.length + " duplicate matches (schedule loaded twice)"); toast("Removed " + del.length + " duplicate matches"); }, function (e) { DEDUPING = 0; console.warn("dedupe", e && e.code); });
 }
 
 /* ================= ACTIONS & FORMS ================= */
@@ -5855,7 +5929,7 @@ function render() {
     else if (S.tab === "teams") h = viewTeams();
     else if (S.tab === "club") h = viewClub();
     else h = viewHome();
-  } catch (e) { console.error(e); h = hdr("What the Smash") + '<div class="empty"><b>Something went wrong</b>Pull down to refresh, or go back to Home.</div>'; }
+  } catch (e) { console.error(e); h = hdr("What the Smash", true) + '<div class="empty"><b>Something went wrong</b>Pull down to refresh, or go back to Home.<small style="display:block;margin-top:10px;opacity:.6;font-size:11px;word-break:break-all">' + esc((S.tab || "") + "/" + (S.view || "") + " · " + (e && e.message || e) + " · " + String(e && e.stack || "").split("\n").slice(1, 3).join(" ").replace(/https?:\/\/[^\s)]+/g, "")) + '</small><button type="button" class="btn sm" style="margin-top:12px" data-act="nav" data-v="home">Go to Home</button></div>'; }
   if (!S.me && S.guest) h = '<div class="priv" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span>You\'re looking around as a guest.</span><button type="button" class="btn sm" data-act="gate" data-v="welcome">Log in</button></div>' + h;
   app.innerHTML = h; if (CAPMODE) { app.className = "v-captain capmode"; nav.hidden = true; return; } app.className = "v-" + (S.view || S.tab) + (S.tab === "play" && !S.view && app.querySelector(".nowp, .lr .tlogo") ? " lt-live" : "");
   nav.hidden = false;
@@ -5920,7 +5994,7 @@ function pushToggle(on) {
   toast("Turning on…");
   pushOn().then(function () { try { localStorage.setItem("wts-pushx", "1"); } catch (e) {} toast("Notifications on 🔔"); try { navigator.serviceWorker.ready.then(function (r) { r.showNotification("You're in 🏸", { body: "Notifications are on. See you on court!", icon: "icon-192.png", data: { link: "home" } }); }); } catch (e) {} render(); }, function (e) { toast((e && e.userMsg) || "Couldn't turn on notifications."); render(); });
 }
-var RT = 0; function soon() { if (RT) return; RT = setTimeout(function () { RT = 0; rebuild(); D.days = RAW.days.map(normDay); rebuild(); resolveMe(); subBanks(); syncRoles(); try { lPlanSync(); lPrevSync(); } catch (e) { console.warn(e); } moveBirthDates(); stdTime(); subGal(); pushRefresh(); render(); }, 30); }
+var RT = 0; function soon() { if (RT) return; RT = setTimeout(function () { RT = 0; rebuild(); D.days = RAW.days.map(normDay); rebuild(); resolveMe(); subBanks(); syncRoles(); try { lPlanSync(); lPrevSync(); lDedupe(); lHealReps(); } catch (e) { console.warn(e); } moveBirthDates(); stdTime(); subGal(); pushRefresh(); render(); }, 30); }
 /* bank details: members only (the database rules keep them away from people who aren't signed in) */
 var MSUB = null, MERR = 0;
 function subBanks() {
