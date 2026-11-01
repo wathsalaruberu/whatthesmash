@@ -4973,7 +4973,15 @@ function lSchedSpecs(di) { var out = []; LSCHED.days[di].forEach(function (slot,
 function lD1Plan() {
   var T = LSCHED.teams, tid = {}, bad = [], id = {};
   Object.keys(T).forEach(function (tn) { tid[tn] = lTeamId(tn); if (!tid[tn]) bad.push("team " + tn); });
-  var who = function (nm) { if (id[nm] !== undefined) return id[nm]; var tn = Object.keys(T).filter(function (x) { return T[x].men.concat([T[x].w]).indexOf(nm) >= 0; })[0] || LD1.team; var r = lNameId(nm, tid[tn]); if (!r) bad.push(nm); return (id[nm] = r); };
+  /* first, read who is who from the loaded schedule itself (each singles slot already holds the right player),
+     so a display name like "Saga" or "Niraj0909" doesn't matter */
+  var votes = {};
+  LSCHED.dates.forEach(function (dt, di) { lSchedSpecs(di).forEach(function (s) { if (s.dbl) return; D.matches.forEach(function (m) { if (!isLMatch(m) || m.k !== s.k || String(m.slot) !== String(s.slot) || String(m.court) !== s.court || (m.day !== dt && m.moved !== dt)) return; [[s.a, (m.a || [])[0]], [s.b, (m.b || [])[0]]].forEach(function (x) { if (!x[1] || !P[x[1]] || x[0] === LD1.out) return; var v = votes[x[0]] = votes[x[0]] || {}; v[x[1]] = (v[x[1]] || 0) + 1; }); }); }); });
+  Object.keys(votes).forEach(function (nm) { var v = votes[nm]; id[nm] = Object.keys(v).sort(function (x, y) { return v[y] - v[x]; })[0]; });
+  /* Niraj: the approved Samurais replacement, if there is one */
+  D.joins.forEach(function (j) { if (j.kind === "repl" && j.status === "approved" && j.inn && P[j.inn] && (P[j.inn].display || P[j.inn].first || "").toLowerCase().indexOf(LD1.inn.toLowerCase()) === 0) id[LD1.inn] = j.inn; });
+  if (id[LD1.inn] && id[LD1.out] === undefined) { var ish = lNameId(LD1.out, ""); if (ish && ish !== id[LD1.inn]) id[LD1.out] = ish; }
+  var who = function (nm) { if (id[nm] !== undefined && id[nm] !== "") return id[nm]; var tn = Object.keys(T).filter(function (x) { return T[x].men.concat([T[x].w]).indexOf(nm) >= 0; })[0] || LD1.team; var r = lNameId(nm, tid[tn]); if (!r) bad.push(nm); return (id[nm] = r); };
   var rep = function (nm) { return nm === LD1.out ? LD1.inn : nm; };
   Object.keys(T).forEach(function (tn) { T[tn].men.concat([T[tn].w]).forEach(function (nm) { who(rep(nm)); }); }); who(LD1.out);
   var teamOfName = function (nm) { return tid[Object.keys(T).filter(function (x) { return T[x].men.concat([T[x].w]).indexOf(nm) >= 0 || (x === LD1.team && nm === LD1.inn); })[0]]; };
