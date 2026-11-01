@@ -2868,7 +2868,8 @@ function teamVars(t) { var x = tdef(t); return "--tglow:" + x.glow + ";--tline:"
 function viewTeams() {
   var h = hdr("Teams"), tab = S.teamsTab, sk = S.season || defaultSeason();
   if (seasonsAll().length) { h += seasonPicker(); if (seasonPast(sk)) h += '<div class="pastnote"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>Squads as they were in ' + seasonLabel(sk) + ". Viewing only.</div>"; }
-  h += '<div class="tabs" style="grid-template-columns:repeat(3,1fr)">' + [["teams", "Teams"], ["pairs", "Pairs"], ["players", "Players"]].map(function (x) { return '<button type="button" class="' + (tab === x[0] ? "on" : "") + '" data-act="ttab" data-v="' + x[0] + '">' + x[1] + "</button>"; }).join("") + "</div>";
+  var lgT = isLeague(sk); if (lgT && tab === "pairs") tab = "teams";
+  h += '<div class="tabs" style="grid-template-columns:repeat(' + (lgT ? 2 : 3) + ',1fr)">' + (lgT ? [["teams", "Teams"], ["players", "Players"]] : [["teams", "Teams"], ["pairs", "Pairs"], ["players", "Players"]]).map(function (x) { return '<button type="button" class="' + (tab === x[0] ? "on" : "") + '" data-act="ttab" data-v="' + x[0] + '">' + x[1] + "</button>"; }).join("") + "</div>";
   if (tab === "teams") h += teamsList();
   else if (tab === "pairs") h += pairsList();
   else h += playersList();
@@ -2944,10 +2945,12 @@ function pairsList() {
 }
 function playerRow(p) { var br = onBreak(p), rk = racketText(p, 1); return '<button type="button" class="li' + (br ? " off" : "") + '" data-act="perf" data-id="' + p.id + '">' + av(p.id) + '<span class="t"><b>' + esc(p.display) + " " + roleTag(p.id) + (br ? ' <span class="tag brk">On break</span>' : "") + "</b><small>" + esc(p.first + " " + p.last) + (rk ? " · " + esc(rk) : "") + '</small></span><span class="ch">›</span></button>'; }
 function playersList() {
-  var h = '<p class="muted small" style="margin:0">New players join from the login screen, then ask to join a team.</p>';
+  var lg = lOn() && isLeague(S.season || defaultSeason());
+  var h = '<p class="muted small" style="margin:0">' + (lg ? "Squads are set for the season. Players without a team play practice and open matches." : "New players join from the login screen, then ask to join a team.") + "</p>";
   TEAMS.concat([""]).forEach(function (t) {
-    var ps = activePlayers().filter(function (p) { return teamOf(p.id) === t; }).sort(function (a, b) { return a.display.localeCompare(b.display); });
+    var ps = activePlayers().filter(function (p) { return teamOf(p.id) === t; }).sort(function (a, b) { return (a.reserve ? 1 : 0) - (b.reserve ? 1 : 0) || a.display.localeCompare(b.display); });
     if (!ps.length && !t) return;
+    if (lg && t && !ps.length) return;
     h += '<div class="grp" style="color:' + (t ? tdef(t).light : "var(--sub)") + '">' + esc(t ? tname(t) : "No team yet") + " · " + ps.length + '</div><div class="list">' + (ps.length ? ps.map(playerRow).join("") : '<div class="empty">No players yet.</div>') + "</div>";
   });
   return h;
@@ -3456,6 +3459,7 @@ function seasonRows(pid) {
   var rows = seasonsAll().slice().sort().reverse().map(function (k) {
     var C = compute(k), x = C.pl[pid]; if (!x || !x.pts && !(x.w + x.l)) return null;
     var st = isLeague(k) ? lStandings(k, lineOf(pid) === "w" ? "WS" : "MS") : standings(k, "all"), i = st.map(function (z) { return z.id; }).indexOf(pid), si = seasonInfo(k), ti = seasonTitles(k), pr = myPairOf(pid), tm = seasonTeamOf(pid, k);
+    if (isLeague(k) && i >= 0) i = st[i].rk ? st[i].rk - 1 : -1;
     var got = ti ? TT.filter(function (z) { return z[0] === "pair" ? pr && ti.pair === pr : z[0] === "team" ? tm && ti.team === tm : ti[z[0]] === pid; }) : [];
     return '<div class="fr' + (k === S.season ? " on" : "") + '"><button type="button" data-act="season" data-v="' + k + '">' + MON[+k.slice(5, 7) - 1] + " " + k.slice(0, 4) + (si.status !== "done" ? ' <span class="dotl">●</span>' : "") + "</button><span class=\"sbt\">" + (tm && TEAM[tm] ? '<img src="' + tlogo(tm) + '" alt="" title="' + esc(tname(tm)) + '"><i style="color:' + tdef(tm).color + '">' + esc(tname(tm)) + "</i>" : "–") + "</span><span>" + (i >= 0 ? ordinal(i + 1) : "–") + "</span><span>" + fmtPts(x.pts) + "</span><span>" + x.w + "–" + x.l + '</span><span class="tti">' + got.map(function (z) { return '<img src="' + timg(z[1]) + '" alt="' + z[2] + '" title="' + z[2] + '">'; }).join("") + "</span></div>";
   }).filter(Boolean);
@@ -3730,13 +3734,16 @@ function lStandOf(C, kind) {
   }
   var val = function (id) { var x = map[id]; return x ? (k ? x.k[k].pts : x.pts) : 0; }, get = function (id, f) { var x = map[id]; return x ? (k ? x.k[k][f] : x[f]) : 0; };
   ids.sort(function (a, b) { return val(b) - val(a) || get(b, "w") - get(a, "w") || (lH2H(C.all, b, a, k, team) - lH2H(C.all, a, b, k, team)) || get(b, "pd") - get(a, "pd") || get(a, "ff") - get(b, "ff") || (team ? tname(a) : pname(a)).localeCompare(team ? tname(b) : pname(b)); });
-  return ids.map(function (id) { return { id: id, pts: val(id), w: get(id, "w"), l: get(id, "l"), mp: get(id, "mp"), pd: get(id, "pd"), ff: get(id, "ff"), wo: get(id, "wo"), full: team && !k && map[id] ? map[id].full || 0 : 0, res: !team && isReserve(id), x: map[id] || null, team: team }; });
+  var out = ids.map(function (id) { return { id: id, pts: val(id), w: get(id, "w"), l: get(id, "l"), mp: get(id, "mp"), pd: get(id, "pd"), ff: get(id, "ff"), wo: get(id, "wo"), full: team && !k && map[id] ? map[id].full || 0 : 0, res: !team && isReserve(id), x: map[id] || null, team: team }; });
+  /* a rank only for those who have played (or had a walkover / forfeit); nobody ranks before a ball is hit */
+  var n = 0; out.forEach(function (x) { x.played = x.team ? !!(x.pts || x.w || x.l) : x.mp + (x.wo || 0) + (x.ff || 0) > 0; x.rk = x.played ? ++n : 0; });
+  return out;
 }
 function lStandings(sk, kind) { return memo("lst" + sk + kind, function () { return lStandOf(lcompute(sk), kind); }); }
 function lTitles(sk) {
   return memo("lti" + sk, function () {
     var si = seasonInfo(sk); if (!si.final) return null;
-    var top = function (kind, n) { return lStandings(sk, kind).filter(function (x) { return !x.res && (x.pts || x.mp); }).slice(0, n || 1).map(function (x) { return x.id; }); };
+    var top = function (kind, n) { return lStandings(sk, kind).filter(function (x) { return !x.res && x.played; }).slice(0, n || 1).map(function (x) { return x.id; }); };
     var ms = top("MS", 3), ws = top("WS", 3), ov = lStandings(sk, "OV");
     return { ov: ov[0] && ov[0].pts > (ov[1] ? ov[1].pts : -1e9) ? ov[0].id : null, ms1: ms[0], ms2: ms[1], ms3: ms[2], ws1: ws[0], ws2: ws[1], ws3: ws[2], md: top("MD")[0], xd: top("XD")[0], s1: ms[0], s2: ms[1], s3: ms[2], team: ov[0] ? ov[0].id : null, pots: null, pair: null };
   });
@@ -4209,7 +4216,7 @@ function lBoard() {
     var who = team ? '<img class="tlogo" src="' + tlogo(x.id) + '" alt=""><span class="t"><span class="nmrow"><b style="color:' + tdef(x.id).color + '">' + esc(tname(x.id)) + "</b></span>" + (k === "OV" && x.full ? '<span class="tmn">Full squad +' + x.full + "</span>" : "") + "</span>"
       : '<span class="avs">' + av(x.id) + '</span><span class="t"><span class="nmrow"><b>' + nm(x.id) + "</b>" + (x.res ? ' <span class="tag rsv">Reserve</span>' : "") + '</span><span class="tmn" style="color:' + (t ? tdef(t).light : "var(--dim)") + '">' + (t ? '<img src="' + tlogo(t) + '" alt="">' + esc(tname(t)) : "No team") + "</span>" + (f ? '<span class="form fl">' + f + "</span>" : "") + "</span>";
     var c3 = team ? (x.pd > 0 ? "+" : "") + x.pd : x.mp ? Math.round((x.w - (x.wo || 0)) / x.mp * 100) + "%" : "–";
-    h += '<button type="button" class="tr' + (i === 0 && (x.pts || mp) ? " top" : "") + '" data-act="' + act + '" data-id="' + x.id + '"><span class="pos">' + (i + 1) + '</span><span class="who">' + who + '</span><span class="n">' + mp + '</span><span class="n">' + x.w + "–" + x.l + '</span><span class="n">' + c3 + '</span><span class="pts">' + fmtPts(x.pts) + "</span></button>";
+    h += '<button type="button" class="tr' + (x.rk === 1 ? " top" : "") + '" data-act="' + act + '" data-id="' + x.id + '"><span class="pos">' + (x.rk || "–") + '</span><span class="who">' + who + '</span><span class="n">' + mp + '</span><span class="n">' + x.w + "–" + x.l + '</span><span class="n">' + c3 + '</span><span class="pts">' + fmtPts(x.pts) + "</span></button>";
   });
   h += "</div>";
   h += '<p class="muted tiny" style="margin:0 4px">' + (team ? "MP: matches incl. walkovers · PD: rally points won minus lost (walkovers excluded)." + (k === "OV" ? " Overall adds every category plus full-squad bonuses." : "") : "Win% counts played matches only. Reserves are ranked but the title goes to the top squad member.") + " Ties: more wins, then head-to-head, then point difference, then fewer forfeits.</p>";
@@ -4226,7 +4233,7 @@ function lHomeRaces() {
   if (lProvisional(sk).length) h += '<div class="lprov sm"><b>Includes provisional results</b><span>Waiting for captains and the Club Lead.</span></div>';
   h += '<div class="lraces">';
   LBT.forEach(function (b, i) {
-    var k = b[0], team = k === "OV" || k === "MD" || k === "XD", st = lStandings(sk, k).filter(function (x) { return !x.res || live; }).slice(0, team ? 4 : 3), lt = LTITLE[k];
+    var k = b[0], team = k === "OV" || k === "MD" || k === "XD", st = lStandings(sk, k).filter(function (x) { return (!x.res || live) && x.played; }).slice(0, team ? 4 : 3), lt = LTITLE[k];
     if (!live && T) {
       var w = st[0]; if (!w) return;
       var ph = team ? '<img class="tlogo" src="' + tlogo(w.id) + '" alt="">' : av(w.id, "lg"), nmx = team ? '<span style="color:' + tdef(w.id).color + '">' + esc(tname(w.id)) + "</span>" : nm(w.id);
@@ -4369,7 +4376,7 @@ LACT.capteam = function (v) { S.capTeam = v; render(); };
 /* ---------- player page: November categories ---------- */
 function lPerfBlock(pid) {
   var sk = S.season, C = lcompute(sk), x = C.pl[pid], line = lineOf(pid), K = line === "w" ? ["WS", "XD"] : ["MS", "MD", "XD"];
-  var st = lStandings(sk, line === "w" ? "WS" : "MS"), rank = st.map(function (z) { return z.id; }).indexOf(pid);
+  var st = lStandings(sk, line === "w" ? "WS" : "MS"), me0 = st.filter(function (z) { return z.id === pid; })[0], rank = me0 && me0.rk ? me0.rk - 1 : -1;
   var h = '<div class="sh"><h3>' + seasonLabel(sk) + '</h3><span class="r">' + (isReserve(pid) ? "Reserve" : line === "w" ? "Women's line-up" : "Men's line-up") + "</span></div>";
   h += '<div class="lpb"><div class="lpr"><img src="' + timg("singles-champion") + '" alt=""><b>' + (rank >= 0 ? ordinal(rank + 1) : "–") + "</b><small>" + (line === "w" ? "Women's" : "Men's") + " Singles</small></div>" + K.map(function (k) { var y = x ? x.k[k] : lBlank(); return '<div class="lpk" style="--k:' + LCAT[k].col + '">' + catIcon(k, 28) + "<b>" + y.w + "–" + y.l + "</b><small>" + fmtPts(y.pts) + " pts" + (y.wo ? " · " + y.wo + " WO" : "") + "</small></div>"; }).join("") + "</div>";
   if (pid === S.me) h += '<button type="button" class="lmy" data-act="lmysched">' + catIcon(line === "w" ? "WS" : "MS", 34) + "<span><small>NOVEMBER</small><b>My schedule</b><em>Every match, Sunday by Sunday</em></span><i>›</i></button>";
@@ -4451,7 +4458,7 @@ function lSeasonCanvas(sk) {
 function lRaceCanvas(date) {
   var d = DAY[date]; if (!d) return Promise.resolve(null); var sk = d.season;
   var n = lDays(sk).filter(function (x) { return x.status === "done" && x.date <= date; }).length, total = lDays(sk).length;
-  var R = asOf(date, function () { return LBT.map(function (b) { return { k: b[0], st: lStandings(sk, b[0]).filter(function (x) { return !x.res && (x.pts || x.mp); }).slice(0, 3) }; }); });
+  var R = asOf(date, function () { return LBT.map(function (b) { return { k: b[0], st: lStandings(sk, b[0]).filter(function (x) { return !x.res && x.played; }).slice(0, 3) }; }); });
   var W = 1080, H = 1920, cv = document.createElement("canvas"); cv.width = W; cv.height = H; var c = cv.getContext("2d");
   var team = function (k) { return k === "OV" || k === "MD" || k === "XD"; };
   return Promise.all([ASSET.logo].concat(R.map(function (z) { return timg(LTITLE[z.k][0]); })).map(shImg)).then(function (im) {
