@@ -4964,7 +4964,8 @@ function lTeamId(nm) { return TEAMS.filter(function (t) { return tname(t).toLowe
 function lNameId(nm, t) {
   var n = nm.toLowerCase(), all = D.players.filter(function (p) { return !p.removed; });
   var hit = function (p) { return (p.display || "").toLowerCase() === n || (p.first || "").toLowerCase() === n || (p.display || "").toLowerCase().split(" ")[0] === n; };
-  var c = all.filter(hit); if (c.length > 1 && t) { var c2 = c.filter(function (p) { return p.team === t; }); if (c2.length) c = c2; }
+  var c = all.filter(hit); if (!c.length) c = all.filter(function (p) { return (p.display || "").toLowerCase().indexOf(n) === 0 || (p.first || "").toLowerCase().indexOf(n) === 0; });
+  if (c.length > 1 && t) { var c2 = c.filter(function (p) { return p.team === t; }); if (c2.length) c = c2; }
   return c.length ? c[0].id : "";
 }
 /* the schedule as match specs: ord → {k, slot, court, a/b names or teams} */
@@ -6085,7 +6086,7 @@ function pushToggle(on) {
   toast("Turning on…");
   pushOn().then(function () { try { localStorage.setItem("wts-pushx", "1"); } catch (e) {} toast("Notifications on 🔔"); try { navigator.serviceWorker.ready.then(function (r) { r.showNotification("You're in 🏸", { body: "Notifications are on. See you on court!", icon: "icon-192.png", data: { link: "home" } }); }); } catch (e) {} render(); }, function (e) { toast((e && e.userMsg) || "Couldn't turn on notifications."); render(); });
 }
-var RT = 0; function soon() { if (RT) return; RT = setTimeout(function () { RT = 0; rebuild(); D.days = RAW.days.map(normDay); rebuild(); resolveMe(); subBanks(); syncRoles(); try { lPlanSync(); lPrevSync(); lDedupe(); lHealReps(); } catch (e) { console.warn(e); } moveBirthDates(); stdTime(); subGal(); pushRefresh(); render(); }, 30); }
+var RT = 0; function soon() { if (RT) return; RT = setTimeout(function () { RT = 0; rebuild(); D.days = RAW.days.map(normDay); rebuild(); resolveMe(); subBanks(); syncRoles(); try { lPlanSync(); lPrevSync(); lHealReps(); } catch (e) { console.warn(e); } moveBirthDates(); stdTime(); subGal(); pushRefresh(); render(); }, 30); }
 /* bank details: members only (the database rules keep them away from people who aren't signed in) */
 var MSUB = null, MERR = 0;
 function subBanks() {
