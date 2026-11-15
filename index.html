@@ -3910,6 +3910,7 @@ function lCard(d, m, n, st) {
   if (st && d && d.status === "live") {
     if (m.status === "planned" && lPairGone(m, d).some(function (s) { return canManageTeam(m["t" + s]); })) acts += '<button type="button" class="btn sm" style="box-shadow:inset 0 0 0 2px #ffb020" data-act="lchg" data-id="' + m.id + '">⇄ Change player</button>';
     if (m.status === "planned") acts += '<button type="button" class="btn sm lime" data-act="lstart" data-id="' + m.id + '">▶ Start</button>' + (isHost() ? '<button type="button" class="lnk" data-act="llater" data-id="' + m.id + '">Late? Move to the end</button>' : "") + (sa ? '<button type="button" class="lnk" data-act="lwo" data-id="' + m.id + '">Walkover</button>' + (LCAT[k].dbl ? "" : '<button type="button" class="lnk" data-act="lsub" data-id="' + m.id + '">Stand-in</button>') : "");
+    if (sa && LCAT[k].dbl && (m.status === "planned" || live)) acts += '<button type="button" class="btn sm" style="box-shadow:inset 0 0 0 2px #b44bff" data-act="lfree" data-id="' + m.id + '">✎ Pick players</button>';
     if (live) acts += '<button type="button" class="btn sm lime" data-act="mfin" data-id="' + m.id + '">Enter score</button><button type="button" class="lnk" data-act="munstart" data-id="' + m.id + '">Undo start</button>' + (sa ? '<button type="button" class="lnk" data-act="lret" data-id="' + m.id + '">Retired hurt</button>' : "");
   }
   if (st && done && m.ret && sa && !(d && d.published)) acts += '<button type="button" class="lnk" data-act="lretundo" data-id="' + m.id + '">Undo retirement</button>';
@@ -4611,7 +4612,7 @@ function lPerfRest(pid) {
     form.push({ r: r.w === s ? "w" : "l", t: LCAT[r.k].dbl ? "d" : "s" });
   });
   var tot = x ? x.pts : 0, h = "";
-  var wins = x ? K.reduce(function (a, k) { return a + x.k[k].w - x.k[k].wo; }, 0) : 0, mp = x ? K.reduce(function (a, k) { return a + x.k[k].mp - x.k[k].wo; }, 0) : 0;
+  var wins = x ? K.reduce(function (a, k) { return a + x.k[k].w - x.k[k].wo; }, 0) : 0, mp = x ? K.reduce(function (a, k) { return a + x.k[k].mp; }, 0) : 0; /* mp already leaves walkovers out */
   h += '<div class="wl"><div><small>Matches won</small><b>' + (mp ? Math.round(wins / mp * 100) + "%" : "–") + "</b><span>Won " + wins + " of " + mp + "</span></div><div><small>Points</small><b>" + fmtPts(tot) + "</b><span>" + seasonLabel(sk).replace(" Season", "") + "</span></div></div>";
   h += form10(form.slice(-10));
   var rows = [["Wins", b.w, "#ff174f"], ["Dominant bonus", b.dom, "#22d3ee"], ["Close-loss bonus", b.cl, "#a9a9c8"], ["Walkover wins", b.wo, "#b6f23a"], ["Stand-in credit", b.cr, "#f4c542"]];
@@ -5611,6 +5612,31 @@ function lPairEdit(m, d, start) {
     return go(p);
   }, { save: start ? "Start match" : "Save pair", noFocus: true });
 }
+/* Club Lead: pick any two players from each team's squad or reserves for a doubles match.
+   For absents and late arrivals on the night: no plan, pair-limit or mixed-rotation checks, and no stand-in penalty. */
+function lFreePair(id) {
+  var m = lM(id), d = m && DAY[m.day]; if (!m || !d || !guard(isSA(), "Only the Club Lead can pick doubles players freely.")) return;
+  var k = lCatOf(m), att = d.att || {};
+  var side = function (s) {
+    var t = m["t" + s], cur = (m[s] || []).slice(), pool = teamMembers(t).concat(reservesOf(t));
+    pool.sort(function (x, y) { return (lineOf(x.id) === "w") - (lineOf(y.id) === "w") || (att[y.id] === "p") - (att[x.id] === "p"); });
+    return '<div class="lpick"><b style="color:' + tdef(t).color + '">' + esc(tname(t)) + "</b>" + checks("f" + s, pool.map(function (p) { return { v: p.id, l: esc(p.display) + (lineOf(p.id) === "w" ? " · woman" : "") + (p.reserve ? " · reserve" : "") + (att[p.id] === "p" ? "" : att[p.id] === "a" ? " · marked absent" : " · not marked here") }; }), cur) + "</div>";
+  };
+  openSheet("Pick players · " + LCAT[k].n, '<p class="hint" style="margin:0 0 6px">Tick two players for each team. Anyone ticked is marked present. Pair limits, the mixed rotation and stand-in penalties don\'t apply' + (k === "XD" ? ". Mixed needs one man and one woman." : ".") + "</p>" + side("a") + side("b"), function (form) {
+    var p = { revealed: 1, sub: null }, up = {};
+    for (var i = 0; i < 2; i++) {
+      var s = ["a", "b"][i], t = m["t" + s], ids = checked(form, "f" + s);
+      if (ids.length !== 2) return "Tick exactly two players for " + tname(t) + ".";
+      if (k === "XD") { var mn = ids.filter(function (x) { return lineOf(x) === "m"; }), wm = ids.filter(function (x) { return lineOf(x) === "w"; }); if (mn.length !== 1 || wm.length !== 1) return tname(t) + ": mixed doubles needs one man and one woman."; ids = [mn[0], wm[0]]; }
+      var busy = ids.filter(function (x) { return (att[x] === "r"); }); if (busy.length) return pname(busy[0]) + " retired hurt tonight and can't play.";
+      p[s] = ids; ids.forEach(function (x) { if (att[x] !== "p") up["att." + x] = "p"; });
+    }
+    return db.doc("matches/" + m.id).update(p).then(function () { return Object.keys(up).length ? db.doc("days/" + d.date).update(up) : null; }).then(function () {
+      audit("Picked players · " + LCAT[k].n + " · " + lNames(p.a) + " v " + lNames(p.b)); closeSheet(); render(); toast("Pairs set: " + lNames(p.a) + " v " + lNames(p.b)); return "";
+    });
+  }, { save: "Save players", noFocus: true });
+}
+LACT2.lfree = function (v, id) { lFreePair(id); };
 LACT2.lchg = function (v, id) { var m = lM(id), d = m && DAY[m.day]; if (m && d) lPairEdit(m, d, false); };
 
 /* ---------- Club Lead: which accounts may use the scorer tablet ---------- */
