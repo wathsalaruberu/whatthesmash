@@ -3915,6 +3915,7 @@ function lCard(d, m, n, st) {
   }
   if (st && done && m.ret && sa && !(d && d.published)) acts += '<button type="button" class="lnk" data-act="lretundo" data-id="' + m.id + '">Undo retirement</button>';
   else if (st && done && !(d && d.published && !sa)) acts += m.wo ? (sa ? '<button type="button" class="lnk" data-act="lwoundo" data-id="' + m.id + '">Undo walkover</button>' : "") : '<button type="button" class="lnk" data-act="mscore" data-id="' + m.id + '">Edit score</button>';
+  if (sa && m.status === "np" && d && d.status === "live") acts += '<button type="button" class="btn sm lime" data-act="lnpback" data-id="' + m.id + '">↺ Bring back to play</button>';
   if (sa && m.status === "planned" && m.sub && m.sub.id) acts += '<button type="button" class="lnk" data-act="lsubundo" data-id="' + m.id + '">Undo stand-in</button>';
   /* captains confirm or flag their team's results before the Club Lead publishes */
   var conf = "";
@@ -5637,6 +5638,8 @@ function lFreePair(id) {
   }, { save: "Save players", noFocus: true });
 }
 LACT2.lfree = function (v, id) { lFreePair(id); };
+/* a match marked Not played (a player marked absent) goes back to waiting, e.g. the player turned up late */
+LACT2.lnpback = function (v, id) { var m = lM(id), d = m && DAY[m.day]; if (!m || !d || m.status !== "np" || !guard(isSA())) return; db.doc("matches/" + m.id).update({ status: "planned" }).then(function () { audit("Brought back " + LCAT[lCatOf(m)].n + " · " + lNames(m.a) + " v " + lNames(m.b)); toast("Back in the queue. Mark the players present, or use ✎ Pick players."); }, fail); };
 LACT2.lchg = function (v, id) { var m = lM(id), d = m && DAY[m.day]; if (m && d) lPairEdit(m, d, false); };
 
 /* ---------- Club Lead: which accounts may use the scorer tablet ---------- */
