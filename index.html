@@ -507,8 +507,8 @@ button.prac small{color:var(--sub)}
 .xs .xp{display:inline-flex;align-items:center;gap:4px}.xs>span{display:inline-flex;flex-wrap:wrap;align-items:center;gap:3px 5px}.xs .amp{font-style:normal;color:var(--dim);font-size:11px}
 .side.pl{display:flex;flex-direction:column;gap:6px;align-items:flex-start}.side.pl.r{align-items:flex-end}.pp1{display:flex;align-items:center;gap:6px}.side.pl.r .pp1{flex-direction:row-reverse;text-align:right}.pp1 b{display:block;font-size:13.5px;font-weight:900;font-style:italic;line-height:1.1}.pp1 small{display:block;font-size:10.5px;color:var(--sub);font-weight:700}
 .pickh{margin:4px 0 0;font-size:20px;font-weight:900;font-style:italic}
-.pickt .t small{line-height:1.35}.pickt .avrow,.tc2 .avrow{display:flex;gap:3px;margin-top:4px}.pickt.dim{opacity:.55}.gs{filter:grayscale(1)}
-.tc2{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;border-radius:22px;background:radial-gradient(120% 120% at 0% 0%,var(--tg),transparent 60%),var(--surface);border:1.5px solid var(--edge)}
+.pickt .t small{line-height:1.35}.pickt .avrow,.tc2 .avrow{display:flex;flex-wrap:wrap;align-items:center;gap:3px;margin-top:4px;min-width:0}.pickt.dim{opacity:.55}.gs{filter:grayscale(1)}
+.tc2{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;border-radius:22px;background:radial-gradient(120% 120% at 0% 0%,var(--tg),transparent 60%),var(--surface);border:1.5px solid var(--edge)}
 .tc2>img{width:64px;height:64px;object-fit:contain}.tc2 .t{min-width:0;display:flex;flex-direction:column}.tc2 b{font-size:19px;font-style:italic;font-weight:900;color:var(--tc)}.tc2 small{color:var(--sub);font-size:12px;font-weight:700}
 .tc2 .pv{font-weight:900;font-size:22px;text-align:right;line-height:1}.tc2 .pv small{display:block;font-size:10px}
 .uncl{display:flex;flex-wrap:wrap;gap:10px;padding:12px;border-radius:20px;background:var(--surface);align-items:flex-start}.uncl button{display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.6}.uncl img{width:56px;height:56px;object-fit:contain;filter:grayscale(1)}.uncl span{font-size:11.5px;font-weight:800;color:var(--sub)}.uncl small{flex-basis:100%;color:var(--sub);font-size:12px;font-weight:600}
@@ -1119,7 +1119,7 @@ body.tabm #app{max-width:1400px!important;display:block!important;columns:auto!i
 .sring b{font-size:19px;font-weight:900;line-height:1}.sring small{font-size:10px;font-weight:800;color:var(--sub)}
 .stbar{height:8px;border-radius:8px;background:rgba(255,255,255,.08);overflow:hidden}.stbar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--pink),#8b5cff,var(--lime))}
 .lwamsg{white-space:pre-wrap;padding:12px 14px;border-radius:16px;background:rgba(37,211,102,.08);box-shadow:inset 0 0 0 1px rgba(37,211,102,.25);font-size:14px;font-weight:600;line-height:1.4}
-.rsvchip{display:inline-flex;align-items:center;margin-left:6px;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:800;color:#ffd27a;background:rgba(244,197,66,.12);box-shadow:inset 0 0 0 1px rgba(244,197,66,.35)}
+.rsvchip{display:inline-flex;align-items:center;margin-left:4px;white-space:nowrap;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:800;color:#ffd27a;background:rgba(244,197,66,.12);box-shadow:inset 0 0 0 1px rgba(244,197,66,.35)}
 .lcttabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:5px;border-radius:22px;background:var(--surface)}
 .lcttabs button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 6px;border-radius:17px;color:var(--sub);min-height:58px}
 .lcttabs button b{font-size:18px;font-weight:900;font-style:italic}.lcttabs button small{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800}
@@ -6455,12 +6455,15 @@ function teamLeave(t) {
 function openBreakOpen(p) { return (p.breaks || []).some(function (b) { return b.from <= todayStr() && !b.to; }); }
 function teamRelease(t) {
   if (!guard(canManageTeam(t), "Only the captain or the Club Lead can remove players.")) return;
-  var mem = teamMembers(t).filter(function (p) { return p.id !== S.me; });
+  var mem = teamMembers(t).concat(reservesOf(t)).filter(function (p) { return p.id !== S.me; });
   if (!mem.length) { toast("No one else in " + tname(t) + " to remove."); return; }
-  var opts = [{ v: "", l: "Choose a player" }].concat(mem.map(function (p) { return { v: p.id, l: p.display + (captainOf(t) === p.id ? " · captain" : "") }; }));
+  var games = function (pid) { return D.matches.filter(function (m) { return (m.a || []).concat(m.b || []).indexOf(pid) >= 0; }).length; };
+  var opts = [{ v: "", l: "Choose a player" }].concat(mem.map(function (p) { var g = games(p.id); return { v: p.id, l: p.display + (captainOf(t) === p.id ? " · captain" : "") + (p.reserve ? " · reserve" : "") + " · " + (g ? plural(g, "match", "matches") : "no matches") + ((p.uids || []).length ? "" : " · not signed in") }; }));
   openSheet("Remove a player from " + tname(t), sel("pid", "Player", opts, "") + '<p class="hint">They stay in the club and can join another team. Points and results already played stay with ' + esc(tname(t)) + ". Their pair with this team ends.</p>", function (form) {
     var pid = vals(form, ["pid"]).pid, p = P[pid]; if (!p) return "Choose a player.";
     if (teamOf(pid) !== t) return "That player is no longer in " + tname(t) + ".";
+    /* a spare profile (never signed in, never played) is a duplicate: retire it instead of leaving it without a team */
+    if (!(p.uids || []).length && !games(pid)) return db.doc("players/" + pid).update({ removed: true, removedAt: Date.now() }).then(function () { audit("Deleted a spare profile: " + p.display + " (" + tname(t) + ")"); return p.display + " (spare profile) deleted"; });
     return setTeam(pid, "", pname(pid) + " removed from " + tname(t) + " by " + pname(S.me)).then(function () { return pname(pid) + " removed from " + tname(t); });
   }, { save: "Remove" });
 }
