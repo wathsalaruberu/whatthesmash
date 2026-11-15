@@ -4160,11 +4160,15 @@ function lWoWhy(m, d, s) {
 function lWalkover(id) {
   var m = lM(id), d = m && DAY[m.day]; if (!m || !d || !guard(isSA() || lTabletOk(), "Only the Club Lead or the scorer tablet records walkovers.")) return;
   var k = lCatOf(m), nm2 = function (s) { return LCAT[k].dbl ? tname(m["t" + s]) : pname((m[s] || [])[0]) + " · " + tname(lSideTeam(m, s)); };
-  var Pt = LPTS[k], ok = ["a", "b"].filter(function (s) { return !lWoWhy(m, d, s); });
+  var Pt = LPTS[k], lead = isSA(), ok = lead ? ["a", "b"] : ["a", "b"].filter(function (s) { return !lWoWhy(m, d, s); });
+  /* the Club Lead can give a walkover even when the app thinks a side could play; it shows why and asks to confirm */
+  var warn = lead ? ["a", "b"].map(function (s) { return lWoWhy(m, d, s); }).filter(Boolean) : [];
   if (!ok.length) { openSheet("No walkover", '<p class="muted" style="margin:0">A walkover is only for a side that genuinely isn\'t here.</p><ul class="rbl stack">' + ["a", "b"].map(function (s) { return '<li><span class="rl">' + esc(lWoWhy(m, d, s)) + "</span></li>"; }).join("") + "</ul>", null); return; }
-  openSheet("Walkover", segf("abs", "Who is absent?", ok.map(function (s) { return { v: s, l: nm2(s) }; }).concat(ok.length === 2 ? [{ v: "ab", l: "Both absent" }] : []), ok.length === 1 ? ok[0] : "") + '<p class="hint">Only sides marked absent (and not seen playing tonight) are listed. The present side gets ' + Pt.wo + " walkover points. The absent side takes the forfeit (" + Pt.ff + ")" + (LCAT[k].dbl ? ", on the team." : ", on the player and the team.") + (ok.length === 2 ? " <b>Both absent:</b> no winner, both sides take the forfeit." : "") + "</p>", function (form) {
-    var s = vals(form, ["abs"]).abs; if (!s) return "Choose who is absent."; var why = s === "ab" ? lWoWhy(m, d, "a") || lWoWhy(m, d, "b") : lWoWhy(m, d, s); if (why) return why;
-    return db.doc("matches/" + m.id).update({ wo: s, status: "done", sa: 0, sb: 0, st: 0, en: Date.now(), by: S.me }).then(function () { audit(s === "ab" ? "Both absent: " + nm2("a") + " and " + nm2("b") : "Walkover: " + nm2(s) + " absent"); return s === "ab" ? "Recorded: both absent, no winner" : "Walkover recorded"; });
+  openSheet("Walkover", segf("abs", "Who is absent?", ok.map(function (s) { return { v: s, l: nm2(s) }; }).concat(ok.length === 2 ? [{ v: "ab", l: "Both absent" }] : []), ok.length === 1 ? ok[0] : "") + '<p class="hint">Only sides marked absent (and not seen playing tonight) are listed. The present side gets ' + Pt.wo + " walkover points. The absent side takes the forfeit (" + Pt.ff + ")" + (LCAT[k].dbl ? ", on the team." : ", on the player and the team.") + (ok.length === 2 ? " <b>Both absent:</b> no winner, both sides take the forfeit." : "") + "</p>" + (warn.length ? '<div class="lrev seal" style="margin:8px 0">⚠ The app thinks ' + esc(warn.join(" ")) + '</div><label class="ck" style="display:flex;gap:8px;align-items:center;font-weight:700"><input type="checkbox" name="force" value="1"> Give the walkover anyway (Club Lead decision)</label>' : ""), function (form) {
+    var s = vals(form, ["abs"]).abs; if (!s) return "Choose who is absent."; var why = s === "ab" ? lWoWhy(m, d, "a") || lWoWhy(m, d, "b") : lWoWhy(m, d, s);
+    if (why && !lead) return why;
+    if (why && !checked(form, "force").length) return "Tick \"Give the walkover anyway\" to confirm.";
+    return db.doc("matches/" + m.id).update({ wo: s, status: "done", sa: 0, sb: 0, st: 0, en: Date.now(), by: S.me }).then(function () { audit((s === "ab" ? "Both absent: " + nm2("a") + " and " + nm2("b") : "Walkover: " + nm2(s) + " absent") + (why ? " (Club Lead decision)" : "")); return s === "ab" ? "Recorded: both absent, no winner" : "Walkover recorded"; });
   }, { save: "Record walkover", noFocus: true });
 }
 /* retired hurt: a loss with 0 points, and the player is out for the rest of the night (their singles become forfeits) */
